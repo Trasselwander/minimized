@@ -9,26 +9,21 @@ namespace Server
 {
     class SQLite
     {
-        static SqliteConnection GetConnection // 
-        {
-            get
-            {
-                return new SqliteConnection("Data Source=minimal.db;Version=3");
-            }
-        }
+        public static SqliteConnection GetConnection()
+           => new SqliteConnection("Data Source=minimal.db;Version=3"); 
 
 
-        static void InitDatabase()
+        public static void InitDatabase()
         {
 
-            GetConnection.Query(@"CREATE TABLE IF NOT EXISTS users (
+            GetConnection().Query(@"CREATE TABLE IF NOT EXISTS users (
                                     ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
                                     name CHAR(20) NOT NULL,
                                     hash CHAR(255) NOT NULL,
                                     salt CHAR(255) NOT NULL,
                                     email CHAR(50))");
 
-            GetConnection.Query(@"CREATE TABLE IF NOT EXISTS userdata (
+            GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userdata (
                                     ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
                                     UID INT NOT NULL,
                                     LID INT NOT NULL,
@@ -43,7 +38,7 @@ namespace Server
                                     losses INT,
                                     level INT NOT NULL)");
 
-            GetConnection.Query(@"CREATE TABLE IF NOT EXISTS userstats (
+            GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userstats (
                                     ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
                                     UID INT NOT NULL,
                                     life INT NOT NULL,
@@ -53,17 +48,17 @@ namespace Server
                                     magicattack INT NOT NULL,
                                     magicdefence INT NOT NULL)");
 
-            GetConnection.Query(@"CREATE TABLE IF NOT EXISTS userhats (
+            GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userhats (
                                     ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
                                     UID INT NOT NULL,
                                     HID INT NOT NULL)");
 
-            GetConnection.Query(@"CREATE TABLE IF NOT EXISTS leagues (
+            GetConnection().Query(@"CREATE TABLE IF NOT EXISTS leagues (
                                     ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
                                     start INT NOT NULL,
                                     duration INT NOT NULL)");
 
-            GetConnection.Query(@"CREATE TABLE IF NOT EXISTS hats (
+            GetConnection().Query(@"CREATE TABLE IF NOT EXISTS hats (
                                     ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
                                     name CHAR(50) NOT NULL,
                                     url CHAR(70) NOT NULL)");
