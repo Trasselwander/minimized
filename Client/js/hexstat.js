@@ -84,7 +84,7 @@ function hexstat(id) {
 
         var test = { time: 0 };
         var that = this;
-        createjs.Tween.get(test).to({ time: 1 }, 1000, createjs.Ease.cubicInOut).addEventListener("change", function () {
+        createjs.Tween.get(test).to({ time: 1 }, 2000, createjs.Ease.quintInOut).addEventListener("change", function () {
             that.drawData(life * test.time, speed * test.time, physattack * test.time, physdefence * test.time, magattack * test.time, magdefence * test.time);
             that.stage.update();
         });
