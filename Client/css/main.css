@@ -1,2 +1,10 @@
-﻿body {
+﻿body, html {
+    margin: 0;
+    padding: 0;
 }
+
+canvas {
+    margin: 100px auto;
+    display: block;
+}
+
