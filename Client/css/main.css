@@ -26,15 +26,12 @@ canvas {
       border-left: none;
       border-top: none;
       border-bottom: none; }
+      .content #characters .char .hat {
+        position: absolute; }
   .content .info {
     margin: 20px;
     background-color: rgba(0, 0, 0, 0.03);
     padding: 20px; }
     .content .info span {
       display: block; }
-
-/*.lastcontent {
-    display: table-cell;
-    border: none;
-}*/
 
