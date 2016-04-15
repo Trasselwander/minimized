@@ -1,4 +1,5 @@
 ﻿using Nancy;
+using Server.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Server.Modules
         public HelperModule(string path) : base(path) { }
         public HelperModule() { }
 
+        public UserService Users = new UserService();
 
         public static Response CreateResponse(HttpStatusCode status)
         {

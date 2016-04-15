@@ -7,7 +7,7 @@ using Dapper;
 
 namespace Server.Services
 {
-    class UserService
+    public class UserService
     {
         public User GetUser(string name)
             => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE name=@name",new { name = name }).FirstOrDefault();
