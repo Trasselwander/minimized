@@ -31,7 +31,13 @@ canvas {
   .content .info {
     margin: 20px;
     background-color: rgba(0, 0, 0, 0.03);
-    padding: 20px; }
+    padding: 20px;
+    overflow: auto; }
+    .content .info .statholder {
+      float: right; }
     .content .info span {
       display: block; }
+    .content .info canvas {
+      margin: 0;
+      float: left; }
 

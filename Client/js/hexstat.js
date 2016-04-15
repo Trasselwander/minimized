@@ -6,7 +6,7 @@ function hexstat(id) {
     this.stage = new createjs.Stage(id);
 
     this.level = 20;
-    this.maxskill = this.level * 4 / 2;
+    this.maxskill = 200; //this.level * 4 / 2;
 
     this.drawOutline = function () {
         if (this.stage.getChildByName("outline") != null) return;
