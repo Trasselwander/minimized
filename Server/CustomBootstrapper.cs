@@ -11,11 +11,5 @@ namespace Server
         {
             pipelines.OnError.AddItemToEndOfPipeline((ctx, exception) => { return null; });
         }
-
-        protected override void ConfigureConventions(NancyConventions conventions)
-        {
-            conventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("/", "content"));
-            base.ConfigureConventions(conventions);
-        }
     }
 }

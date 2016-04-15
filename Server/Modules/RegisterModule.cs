@@ -2,9 +2,9 @@
 
 namespace Server.Modules
 {
-    public class LoginModule : HelperModule
+    class RegisterModule : HelperModule
     {
-        public LoginModule()
+        public RegisterModule()
             : base("api/login")
         {
             Get["/"] = parameters =>
