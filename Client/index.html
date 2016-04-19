@@ -2,51 +2,92 @@
 <html>
 <head>
     <title>A minimal game</title>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/overview.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.5">
 </head>
 <body>
-    <div class="content">
-        <div id="characters">
-            <div class="char">
-                <img src="img/Character.png" />
-            </div>
-            <div class="char">
-                <img src="img/Character.png" />
-                <img src="img/VikingHat.png" class="hat" />
-            </div>
-            <div class="char">
-                <img src="img/Character.png" />
-            </div>
-            <div class="char">
-                <img src="img/Character.png" />
-            </div>
-            <div class="char">
-                <img src="img/Character.png" />
-            </div>
-            <div class="char">
-                <img src="img/Character.png" />
-            </div>
-            <div class="char">
-                <img src="img/Character.png" />
-            </div>
+    <div id="login" class="content">
+        <div class="holder">
+            <h1>Login</h1>
+            <input type="text" id="login_name" placeholder="Username" class="inline" />
+            <input type="password" id="login_password" placeholder="Password" class="inline" />
+            <input type="button" value="Login" id="login_btn" class="inline" />
+            <span id="reg">Register</span>
         </div>
-        <div class="info">
-            <canvas id="main" width="200" height="200"></canvas>
-            <div class="statholder">
-                <span>LV</span>
-                <span>EXP</span>
-                <span>BESTRANK</span>
-                <span>HAT</span>
-                <span>AGE</span>
-                <span>WINS</span>
-                <span>LOSSES</span>
+    </div>
+    <div id="register" class="content">
+        <div class="holder">
+            <h1>Register</h1>
+            <input type="text" id="register_name" placeholder="Username" class="inline" />
+            <input type="password" id="register_password" placeholder="Password" class="inline" />
+            <input type="text" id="register_email" placeholder="Email" class="inline" />
+            <input type="button" value="Register" id="register_btn" class="inline" />
+            <span id="log">Back</span>
+        </div>
+    </div>
+    <div id="overview" class="content">
+        <div class="holder">
+            <div id="characters">
+                <div class="char">
+                    <img src="img/Character.png" />
+                </div>
+                <div class="char">
+                    <img src="img/Character.png" />
+                    <img src="img/VikingHat.png" class="hat" />
+                </div>
+                <div class="char">
+                    <img src="img/Character.png" />
+                </div>
+                <div class="char">
+                    <img src="img/Character.png" />
+                </div>
+                <div class="char">
+                    <img src="img/Character.png" />
+                </div>
+                <div class="char">
+                    <img src="img/Character.png" />
+                </div>
+                <div class="char">
+                    <img src="img/Character.png" />
+                </div>
+            </div>
+            <div class="info">
+                <canvas id="main" width="200" height="200"></canvas>
+                <div class="statholder">
+                    <span>LV</span>
+                    <span>EXP</span>
+                    <span>BESTRANK</span>
+                    <span>HAT</span>
+                    <span>AGE</span>
+                    <span>WINS</span>
+                    <span>LOSSES</span>
+                </div>
             </div>
         </div>
     </div>
+
+    <script>
+        screens = {
+            login: {
+                elm: document.getElementById("login"),
+            },
+            register: {
+                elm: document.getElementById("register"),
+            },
+            overview: {
+                elm: document.getElementById("overview"),
+            }
+        }
+    </script>
+
     <script src="lib/tweenjs.min.js"></script>
     <script src="lib/easeljs.min.js"></script>
     <script src="js/hexstat.js"></script>
-    <script src="js/app.js"></script>
+
+    <script src="js/helper.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/login.js"></script>
 </body>
 </html>

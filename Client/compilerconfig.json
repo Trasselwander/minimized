@@ -6,5 +6,9 @@
   {
     "outputFile": "css/login.css",
     "inputFile": "css/login.scss"
+  },
+  {
+    "outputFile": "css/overview.css",
+    "inputFile": "css/overview.scss"
   }
 ]
