@@ -5,8 +5,8 @@ function hexstat(id) {
     if (this.canvas == null) return;
     this.stage = new createjs.Stage(id);
 
-    this.level = 20;
     this.maxskill = 200; //this.level * 4 / 2;
+    this.size = 75 / 2;
 
     this.drawOutline = function () {
         if (this.stage.getChildByName("outline") != null) return;
@@ -15,20 +15,20 @@ function hexstat(id) {
         outline.name = "outline";
         outline.x = this.canvas.width / 2;
         outline.y = this.canvas.height / 2;
-        outline.graphics.beginStroke("#e4e4e4").setStrokeStyle(1).drawPolyStar(0, 0, this.maxskill, 6, 0, -90);
+        outline.graphics.beginStroke("#e4e4e4").setStrokeStyle(1).drawPolyStar(0, 0, this.size, 6, 0, -90);
         this.stage.addChild(outline);
     }
 
     this.drawData = function (life, speed, physattack, physdefence, magattack, magdefence) {
         //if (this.stage.getChildByName("data") != null) return;
 
-        var points = [{ x: 0, y: -Math.min(this.maxskill, life) },
-                      { x: Math.min(this.maxskill, speed) * Math.cos(toRadians(30)), y: -Math.min(this.maxskill, speed) * Math.sin(toRadians(30)) },
-                      { x: Math.min(this.maxskill, physattack) * Math.cos(toRadians(30)), y: Math.min(this.maxskill, physattack) * Math.sin(toRadians(30)) },
-                      { x: 0, y: Math.min(this.maxskill, physdefence) },
-                      { x: -Math.min(this.maxskill, magattack) * Math.cos(toRadians(30)), y: Math.min(this.maxskill, magattack) * Math.sin(toRadians(30)) },
-                      { x: -Math.min(this.maxskill, magdefence) * Math.cos(toRadians(30)), y: -Math.min(this.maxskill, magdefence) * Math.sin(toRadians(30)) },
-                      { x: 0, y: -Math.min(this.maxskill, life) }];
+        var points = [{ x: 0, y: -(Math.min(this.maxskill, life) / this.maxskill * this.size) },
+                      { x: (Math.min(this.maxskill, speed) / this.maxskill * this.size) * Math.cos(toRadians(30)), y: -(Math.min(this.maxskill, speed) / this.maxskill * this.size) * Math.sin(toRadians(30)) },
+                      { x: (Math.min(this.maxskill, physattack) / this.maxskill * this.size) * Math.cos(toRadians(30)), y: (Math.min(this.maxskill, physattack) / this.maxskill * this.size) * Math.sin(toRadians(30)) },
+                      { x: 0, y: (Math.min(this.maxskill, physdefence) / this.maxskill * this.size) },
+                      { x: -(Math.min(this.maxskill, magattack) / this.maxskill * this.size) * Math.cos(toRadians(30)), y: (Math.min(this.maxskill, magattack) / this.maxskill * this.size) * Math.sin(toRadians(30)) },
+                      { x: -(Math.min(this.maxskill, magdefence) / this.maxskill * this.size) * Math.cos(toRadians(30)), y: -(Math.min(this.maxskill, magdefence) / this.maxskill * this.size) * Math.sin(toRadians(30)) },
+                      { x: 0, y: -(Math.min(this.maxskill, life) / this.maxskill * this.size) }];
 
         if (this.data) this.stage.removeChild(this.data); // I don't know if it is possible to edit moveTo cordinates.
 
@@ -49,12 +49,12 @@ function hexstat(id) {
     this.drawLines = function () {
         if (this.stage.getChildByName("line") != null) return;
 
-        var points = [{ x: 0, y: -this.maxskill },
-              { x: this.maxskill * Math.cos(toRadians(30)), y: -this.maxskill * Math.sin(toRadians(30)) },
-              { x: this.maxskill * Math.cos(toRadians(30)), y: this.maxskill * Math.sin(toRadians(30)) },
-              { x: 0, y: this.maxskill },
-              { x: -this.maxskill * Math.cos(toRadians(30)), y: this.maxskill * Math.sin(toRadians(30)) },
-              { x: -this.maxskill * Math.cos(toRadians(30)), y: -this.maxskill * Math.sin(toRadians(30)) }];
+        var points = [{ x: 0, y: -this.size },
+              { x: this.size * Math.cos(toRadians(30)), y: -this.size * Math.sin(toRadians(30)) },
+              { x: this.size * Math.cos(toRadians(30)), y: this.size * Math.sin(toRadians(30)) },
+              { x: 0, y: this.size },
+              { x: -this.size * Math.cos(toRadians(30)), y: this.size * Math.sin(toRadians(30)) },
+              { x: -this.size * Math.cos(toRadians(30)), y: -this.size * Math.sin(toRadians(30)) }];
 
         for (var i = 0; i < 3; i++) {
             var line = new createjs.Shape();
