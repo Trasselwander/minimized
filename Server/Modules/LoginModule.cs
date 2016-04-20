@@ -9,7 +9,8 @@ namespace Server.Modules
         {
             Get["/"] = parameters =>
             {
-                return CreateResponse(HttpStatusCode.Forbidden);
+                Services.UserService.User user = AuthorizeUser();
+                return CreateResponse(HttpStatusCode.OK);
             };
         }
     }

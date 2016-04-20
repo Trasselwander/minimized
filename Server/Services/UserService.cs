@@ -10,14 +10,7 @@ namespace Server.Services
     public class UserService
     {
         public User GetUser(string name)
-            => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE name=@name",new { name = name }).FirstOrDefault();
-   
-        public User GetUserFromID(string ID)
-            => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE ID=@ID", new { ID = ID }).FirstOrDefault();
-   
-        public User GetIDFromRank(string ID)
-            => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE ID=@ID", new { ID = ID }).FirstOrDefault();
-
+            => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE name=@name", new { name = name }).FirstOrDefault();
 
         public User GetUserByEmail(string email)
             => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE email=@email", new { email = email }).FirstOrDefault();
@@ -26,16 +19,17 @@ namespace Server.Services
         public UserData GetUserData(int uid)
             => SQLite.GetConnection().Query<UserData>("SELECT * FROM usersdata WHERE UID=@uid", new { uid = uid }).FirstOrDefault();
 
+        public UserData GetUserData(string name)
+            => SQLite.GetConnection().Query<UserData>("SELECT * FROM usersdata INNER JOIN users ON userdata.UID=users.ID AND users.name=@name", new { name = name }).FirstOrDefault();
+
 
         public UserStats GetUserStats(int uid)
             => SQLite.GetConnection().Query<UserStats>("SELECT * FROM usersstats WHERE UID=@uid", new { uid = uid }).FirstOrDefault();
 
-
-        public UserData GetUserData(string name)
-            => SQLite.GetConnection().Query<UserData>("SELECT * FROM usersdata INNER JOIN users ON userdata.UID=users.ID AND users.name=@name", new { name = name }).FirstOrDefault();
-
         public UserStats GetUserStats(string name)
             => SQLite.GetConnection().Query<UserStats>("SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND users.name=@name", new { name = name }).FirstOrDefault();
+
+
 
         public List<User> GetUsersFromRank(int rank)
         {
@@ -50,7 +44,19 @@ namespace Server.Services
             return uses;
         }
 
-        public class User {
+        public User CreateUser(string name, string hash, string email)
+        {
+            User u = new User() { name = name, hash = hash, email = email };
+            CryptoService.HashAndSavePassword(hash, u);
+            int i = SQLite.GetConnection().Query<int>("INSERT INTO users (name, email, hash, salt)VALUES(@name, @email, @hash, @salt)", new { name = u.name, email = u.email, hash = u.hash, salt = u.salt }).FirstOrDefault();
+
+
+
+            return u;
+        }
+
+        public class User
+        {
             public UserData userData { get; set; }
             public UserStats userStats { get; set; }
             public int ID { get; set; }

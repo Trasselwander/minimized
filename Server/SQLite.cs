@@ -17,49 +17,49 @@ namespace Server
         {
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS users (
-                                    ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                    ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                                     name CHAR(20) NOT NULL,
                                     hash CHAR(255) NOT NULL,
                                     salt CHAR(255) NOT NULL,
                                     email CHAR(50))");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userdata (
-                                    ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
-                                    UID INT NOT NULL,
-                                    LID INT NOT NULL,
-                                    HID INT NOT NULL,
-                                    rank INT NOT NULL,
-                                    bestrank INT NOT NULL,
-                                    score INT NOT NULL,
-                                    exp INT NOT NULL,
+                                    ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                    UID INTEGER NOT NULL,
+                                    LID INTEGER NOT NULL,
+                                    HID INTEGER NOT NULL,
+                                    rank INTEGER NOT NULL,
+                                    bestrank INTEGER NOT NULL,
+                                    score INTEGER NOT NULL,
+                                    exp INTEGER NOT NULL,
                                     hat CHAR(255),
-                                    age INT NOT NULL,
-                                    wins INT,
-                                    losses INT,
-                                    level INT NOT NULL)");
+                                    age INTEGER NOT NULL,
+                                    wins INTEGER,
+                                    losses INTEGER,
+                                    level INTEGER NOT NULL)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userstats (
-                                    ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
-                                    UID INT NOT NULL,
-                                    life INT NOT NULL,
-                                    speed INT NOT NULL,
-                                    physicalattack INT NOT NULL,
-                                    physicaldefence INT NOT NULL,
-                                    magicattack INT NOT NULL,
-                                    magicdefence INT NOT NULL)");
+                                    ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                    UID INTEGER NOT NULL,
+                                    life INTEGER NOT NULL,
+                                    speed INTEGER NOT NULL,
+                                    physicalattack INTEGER NOT NULL,
+                                    physicaldefence INTEGER NOT NULL,
+                                    magicattack INTEGER NOT NULL,
+                                    magicdefence INTEGER NOT NULL)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userhats (
-                                    ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
-                                    UID INT NOT NULL,
-                                    HID INT NOT NULL)");
+                                    ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                    UID INTEGER NOT NULL,
+                                    HID INTEGER NOT NULL)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS leagues (
-                                    ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
-                                    start INT NOT NULL,
-                                    duration INT NOT NULL)");
+                                    ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                    start INTEGER NOT NULL,
+                                    duration INTEGER NOT NULL)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS hats (
-                                    ID INT PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                    ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                                     name CHAR(50) NOT NULL,
                                     url CHAR(70) NOT NULL)");
         }

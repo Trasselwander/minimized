@@ -10,48 +10,41 @@ namespace Server.Modules
 {
     public class HelperModule : NancyModule
     {
-        public HelperModule(string path) : base(path) { }
         public HelperModule() { }
+        public HelperModule(string path) : base(path) { }
 
         public UserService Users = new UserService();
 
-
-
-
-
-        public UserService.User AuthorizeUser()
+        public UserService.User GetNameAndPasswordFromAuth()
         {
-            if (this.Request.Headers.Authorization == null)
+            if (this.Request.Headers.Authorization == null || !this.Request.Headers.Authorization.Contains(' '))
                 throw new HttpErrorException(HttpStatusCode.Unauthorized, "Missing login info.");
 
             string[] cred = UTF8Encoding.UTF8.GetString(Convert.FromBase64String(this.Request.Headers.Authorization.Split(' ')[1])).Split(':');
+            if (cred.Length != 2) throw new HttpErrorException(HttpStatusCode.Unauthorized, "Missing login info.");
+            return new UserService.User() { name = cred[0], hash = cred[1] };
+        }
 
+        public UserService.User AuthorizeUser()
+        {
+            UserService.User auth = GetNameAndPasswordFromAuth();
+            UserService.User u = Users.GetUser(auth.name);
 
-            UserService.User u = Users.GetUser(cred[0]);
+            if (u == null) throw new HttpErrorException(HttpStatusCode.Unauthorized, "Missing login info.");
 
-            int hash = hashCode(u.hash + this.Request.Url.Path.Substring(1, this.Request.Url.Path.Length - 1));
-            if (hash + "" == cred[1])
+            if (CryptoService.IsCorrectPassword(auth.hash, u))
                 return u;
             else
                 throw new HttpErrorException(HttpStatusCode.BadRequest, "Wrong password.");
         }
+
         public static Response CreateResponse(HttpStatusCode status, string message)
         {
             byte[] b = UTF8Encoding.UTF8.GetBytes(message ?? "Error");
             Response r = new Response() { StatusCode = status };
             r.Contents = s => { try { s.Write(b, 0, b.Length); } catch (Exception) { } };
 
-
             return r;
-        }
-
-        public static int hashCode(string s)
-        {
-            int h = 0;
-            for (int i = 0; i < s.Length; i++)
-                h = 31 * h + s[i];
-
-            return h;
         }
 
         public static Response CreateResponse(HttpStatusCode status)

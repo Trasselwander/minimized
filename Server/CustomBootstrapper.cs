@@ -12,10 +12,14 @@ namespace Server
         {
             pipelines.OnError.AddItemToEndOfPipeline((ctx, exception) =>
             {
-                if (exception is HttpErrorException)
-                    return HelperModule.CreateResponse((exception as HttpErrorException).Status, (exception as HttpErrorException).Message);
+                return (exception is HttpErrorException) ? HelperModule.CreateResponse((exception as HttpErrorException).Status, (exception as HttpErrorException).Message) : null;
+            });
 
-                return null;
+            pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) =>
+            {
+                ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")
+                                .WithHeader("Access-Control-Allow-Methods", "POST,GET")
+                                .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type, Authorization");
             });
         }
     }

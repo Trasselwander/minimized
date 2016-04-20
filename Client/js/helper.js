@@ -1,33 +1,33 @@
 ﻿
 if (location.hostname == "localhost") {
-    host = "http://localhost:1234/";
+    host = "http://localhost:1234";
 } else {
     host = "";
 }
 
 user = {
-    name: localStorage.getItem("username"),
+    name: localStorage.getItem("name"),
     password: localStorage.getItem("password"), // HASHED
+    email: localStorage.getItem("email"), // HASHED
 
     save: function () {
-        localStorage.setItem("username", this.username);
-        localStorage.setItem("password", this.password);
+        if (this.name) localStorage.setItem("name", this.name);
+        if (this.password) localStorage.setItem("password", this.password);
+        if (this.email) localStorage.setItem("email", this.email);
     }
 }
 
-function sendRequest(action, callback, sign) { // implement send data.
+function sendRequest(action, callback) { // implement send data.
     if (!user.name || !user.password || user.password.length < 4) {
         swal("Error", "Bad username or password", "error");
         return;
     }
 
+    action = "/api" + action;
+
     var req = new XMLHttpRequest();
     req.open('GET', host + action, true);
-
-    if (sign)
-        req.setRequestHeader("Authorization", "Basic " + btoa(user.name + ":" + user.password)); // Hashed password!
-    else
-        req.setRequestHeader("Authorization", "Basic " + btoa(user.name + ":" + superhash(user.password + action)));
+    req.setRequestHeader("Authorization", "Basic " + btoa(user.name + ":" + user.password));
 
     req.onreadystatechange = function () {
         if (req.readyState == 4) {
