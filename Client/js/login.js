@@ -10,8 +10,6 @@ window.addEventListener("load", () => {
         user.name = document.getElementById("login_name").value;
         user.password = superhash(document.getElementById("login_password").value);
 
-        //function sendRequest(action, callback, sign) { // implement send data.
-
         console.log(user.name, user.password);
         sendRequest("/login/", (text, error) => {
             if (!error) {
@@ -24,10 +22,6 @@ window.addEventListener("load", () => {
 
             }
         });
-
-
-
-        //SendRequest();
     }
 
     document.getElementById("login_password").onkeypress = (e) => { //login from enter
@@ -35,8 +29,6 @@ window.addEventListener("load", () => {
         if (e.keyCode == 13) {
             user.name = document.getElementById("login_name").value;
             user.password = superhash(document.getElementById("login_password").value);
-
-            //function sendRequest(action, callback, sign) { // implement send data.
 
             console.log(user.name, user.password);
             sendRequest("/login/", (text, error) => {
@@ -47,7 +39,6 @@ window.addEventListener("load", () => {
                 }
                 else {
                     toggleScreen(screens.login.elm);
-
                 }
             });
         }
@@ -99,10 +90,8 @@ window.addEventListener("load", () => {
                     user.save();
                 }
             });
-
         }
     }
-
 
     document.getElementById("register_password_repeat").onkeyup = () => {
         if (document.getElementById("register_password").value != document.getElementById("register_password_repeat").value) {
@@ -116,7 +105,7 @@ window.addEventListener("load", () => {
     }
 
     document.getElementById("logout_btn").onclick = () => {
-        user.name = user.password = user.email = null;   // subject to change
+        user.remove();
         console.log(user);
         toggleScreen(screens.login.elm);
     }
@@ -124,9 +113,9 @@ window.addEventListener("load", () => {
 
 screens.login.elm.addEventListener("toggled", () => { //detoggled
     document.getElementById("logout_btn").classList.add("hidden");
-});//hide logout button
+});
+
 screens.login.elm.addEventListener("detoggled", () => { //detoggled
     document.getElementById("logout_btn").classList.remove("hidden");
     console.log("visible");
-
 });
