@@ -32,6 +32,15 @@ window.addEventListener("load", () => {
         user.password = superhash(document.getElementById("register_password").value);
         user.email = document.getElementById("register_email").value;
 
+        if (document.getElementById("register_password_repeat").classList.contains("wrong")) {
+            swal({
+                title: "Error!",
+                text: "Passwords do not match!",
+                type: "error",
+            });
+            return;
+        }
+
         console.log(user.name, user.password);
         sendRequest("/register/" + (user.email ? btoa(user.email) : ""), (text, error) => {
             if (!error) {

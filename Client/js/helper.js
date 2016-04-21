@@ -30,12 +30,12 @@ function sendRequest(action, callback) { // implement send data.
     req.setRequestHeader("Authorization", "Basic " + btoa(user.name + ":" + user.password));
 
     req.onreadystatechange = function () {
-        if (req.readyState == 4) {
-            if (req.status == 200) {
-                if (callback) callback(req.responseText);
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                if (callback) callback(this.responseText);
             } else {
-                console.log(req);
-                if (callback && !callback(req.responseText, req.response || true)) swal("Error", req.response, "error");
+                console.log(this);
+                if (callback && !callback(this.responseText, this.response || true)) swal("Error", this.response, "error");
             }
         }
     };
