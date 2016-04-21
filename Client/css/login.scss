@@ -32,7 +32,7 @@
         }
     }
 
-    #register_password, #register_name, #register_email, #register_btn {
+    #register_password, #register_name, #register_email, #register_btn, #register_password_repeat {
         border: 1px solid rgba(224, 114, 114, 0.50);
 
         &:hover, &:active {
@@ -57,6 +57,11 @@
                 cursor: pointer;
             }
         }
+        #register_password.wrong, #register_password_repeat.wrong {
+        border: 1px solid rgb(52, 146, 239);
+            
+}
+
     }
 
     .inline {
@@ -82,3 +87,4 @@
         }
     }
 }
+

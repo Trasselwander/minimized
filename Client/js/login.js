@@ -16,7 +16,12 @@ window.addEventListener("load", () => {
         sendRequest("/login/", (text, error) => {
             if (!error) {
                 toggleScreen(screens.overview.elm);
+                console.log(error + "hej");
                 user.save();
+            }
+            else {
+                toggleScreen(screens.login.elm);
+
             }
         });
 
@@ -34,6 +39,17 @@ window.addEventListener("load", () => {
                 user.save();
             }
         });
+    }
+
+    document.getElementById("register_password_repeat").onkeyup = () => {
+        if (document.getElementById("register_password").value != document.getElementById("register_password_repeat").value) {
+            document.getElementById("register_password_repeat").classList.add("wrong");
+            document.getElementById("register_password").classList.add("wrong");
+        }
+        else {
+            document.getElementById("register_password_repeat").classList.remove("wrong");
+            document.getElementById("register_password").classList.remove("wrong");
+        }
     }
 
     document.getElementById("logout_btn").onclick = () => {

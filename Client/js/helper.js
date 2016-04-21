@@ -34,7 +34,8 @@ function sendRequest(action, callback) { // implement send data.
             if (req.status == 200) {
                 if (callback) callback(req.responseText);
             } else {
-                if (callback && !callback(req.responseText, req.response)) swal("Error", req.response, "error");
+                console.log(req);
+                if (callback && !callback(req.responseText, req.response || true)) swal("Error", req.response, "error");
             }
         }
     };
