@@ -82,8 +82,8 @@ namespace Server.Services
         {
             public int ID { get; set; }
             public int UID { get; set; }
-            public int LID { get; set; }
-            public int HID { get; set; }
+            public int? LID { get; set; }
+            public int? HID { get; set; }
             public int rank { get; set; }
             public int bestrank { get; set; }
             public int score { get; set; }
