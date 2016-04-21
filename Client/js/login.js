@@ -35,12 +35,25 @@ window.addEventListener("load", () => {
             }
         });
     }
+
+    document.getElementById("logout_btn").onclick = () => {
+        user.name = user.password = user.email = null;   // subject to change
+        console.log(user);
+        toggleScreen(screens.login.elm);
+    }
 });
 
-screens.login.elm.addEventListener("toggled", () => {
+screens.login.elm.addEventListener("toggled", () => { //detoggled
     if (!user.name || !user.password) toggleScreen(screens.login.elm, true);
     else sendRequest("/login/", (text, error) => {
         if (!error) toggleScreen(screens.overview.elm);
         else toggleScreen(screens.login.elm, true);
+        document.getElementById("logout_btn").classList.add("hidden");
+        console.log("hidden");
     });
+});//hide logout button
+screens.login.elm.addEventListener("detoggled", () => { //detoggled
+    document.getElementById("logout_btn").classList.remove("hidden");
+    console.log("visible");
+
 });

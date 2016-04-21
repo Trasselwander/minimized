@@ -40,3 +40,14 @@
     margin: 5px 0;
     padding: 10px; }
 
+.menubar {
+  width: 100%;
+  display: inline-flex; }
+  .menubar #logout_btn {
+    position: relative;
+    z-index: 1;
+    margin: 5px auto;
+    font-size: 28px; }
+    .menubar #logout_btn:hover {
+      cursor: pointer; }
+

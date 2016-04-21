@@ -59,6 +59,7 @@ namespace Server.Services
         {
             public UserData userData { get; set; }
             public UserStats userStats { get; set; }
+            public int lastloggedin { get; set; }
             public int ID { get; set; }
             public string name { get; set; }
             public string hash { get; set; }

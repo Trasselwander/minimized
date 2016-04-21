@@ -19,7 +19,8 @@
       border-top: none;
       border-bottom: none; }
       #overview .holder #characters .char .hat {
-        position: absolute; }
+        position: absolute;
+        margin-left: 1px; }
   #overview .holder .info {
     margin: 20px;
     background-color: rgba(0, 0, 0, 0.03);

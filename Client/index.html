@@ -2,12 +2,16 @@
 <html>
 <head>
     <title>A minimal game</title>
+    <link rel="stylesheet" href="lib/fa/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" type="text/css" href="css/overview.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.5">
 </head>
 <body>
+
+
+
     <div id="login" class="content">
         <div class="holder">
             <h1>Login</h1>
@@ -42,6 +46,8 @@
                 </div>
                 <div class="char">
                     <img src="img/Character.png" />
+                    <img src="img/LinksHat.png" class="hat" />
+
                 </div>
                 <div class="char">
                     <img src="img/Character.png" />
@@ -67,7 +73,12 @@
             </div>
         </div>
     </div>
+    <div class="menubar">
+        <div id="logout_btn">
+            <i class="fa fa-sign-out"></i>
+        </div>
 
+    </div>
     <script>
         screens = {
             login: {

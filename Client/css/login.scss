@@ -66,3 +66,19 @@
         padding: 10px;
     }
 }
+
+.menubar {
+    width: 100%;
+    display: inline-flex;
+
+    & #logout_btn {
+        position: relative;
+        z-index: 1;
+        margin: 5px auto;
+        font-size: 28px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
