@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Newtonsoft.Json;
 
 namespace Server.Services
 {
@@ -65,11 +66,15 @@ namespace Server.Services
         {
             public UserData userData { get; set; }
             public UserStats userStats { get; set; }
+            [JsonIgnore]
             public int lastloggedin { get; set; }
             public int ID { get; set; }
             public string name { get; set; }
+            [JsonIgnore]
             public string hash { get; set; }
+            [JsonIgnore]
             public string salt { get; set; }
+            [JsonIgnore]
             public string email { get; set; }
         }
 
