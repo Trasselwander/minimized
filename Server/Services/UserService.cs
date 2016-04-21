@@ -48,9 +48,9 @@ namespace Server.Services
         {
             User u = new User() { name = name, hash = hash, email = email };
             CryptoService.HashAndSavePassword(hash, u);
-            int i = SQLite.GetConnection().Query<int>("INSERT INTO users (name, email, hash, salt)VALUES(@name, @email, @hash, @salt)", new { name = u.name, email = u.email, hash = u.hash, salt = u.salt }).FirstOrDefault();
-
-
+            SQLite.GetConnection().QueryMultiple(@"INSERT INTO users (name, email, hash, salt)VALUES(@name, @email, @hash, @salt); 
+                                                   INSERT INTO userstats (UID)VALUES(SELECT UID FROM users WHERE users.name = @name);
+                                                   INSERT INTO userdata (UID, rank, bestrank, age)VALUES(SELECT UID FROM users WHERE users.name = @name, SELECT COUNT(*) FROM users);", new { name = u.name, email = u.email, hash = u.hash, salt = u.salt });
 
             return u;
         }
@@ -77,7 +77,6 @@ namespace Server.Services
             public int bestrank { get; set; }
             public int score { get; set; }
             public int exp { get; set; }
-            public string hat { get; set; }
             public long age { get; set; }
             public int wins { get; set; }
             public int losses { get; set; }
