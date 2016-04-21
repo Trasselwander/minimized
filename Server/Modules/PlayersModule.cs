@@ -4,20 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nancy;
+using Newtonsoft.Json;
 
 namespace Server.Modules
 {
-    class PlayersModule : HelperModule
+    public class PlayersModule : HelperModule
     {
         public PlayersModule()
             : base("api/players")
         {
             Get["/list"] = parameters =>
             {
-                Services.UserService.User user = AuthorizeUser();
+                //Services.UserService.User user = AuthorizeUser();
 
+                var a = Users.GetUsersFromRank(10);
 
-                return CreateResponse(HttpStatusCode.Forbidden);
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(a));
             };
 
         }

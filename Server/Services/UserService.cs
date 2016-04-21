@@ -33,10 +33,10 @@ namespace Server.Services
 
         public List<User> GetUsersFromRank(int rank)
         {
-            List<User> uses = null;
-            SQLite.GetConnection().Query<User, UserStats, DBNull>("SELECT * FROM users INNER JOIN userstats ON userstats.UID=users.ID AND abs(@rank - user.rank) <= 3", (users, userstats) =>
+            List<User> uses = new List<User>();
+            SQLite.GetConnection().Query<User, UserData, DBNull>("SELECT * FROM users INNER JOIN userdata ON userdata.UID=users.ID AND abs(@rank - userdata.rank) <= 3", (users, userstats) =>
                {
-                   users.userStats = userstats;
+                   users.userData = userstats;
                    uses.Add(users);
 
                    return null;
