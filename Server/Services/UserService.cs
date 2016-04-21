@@ -57,7 +57,7 @@ namespace Server.Services
 	                                                   (SELECT COUNT(*) FROM users) AS rank, 
 	                                                   (SELECT COUNT(*) FROM users) AS bestrank, 
 	                                                   @time as time 
-                                                   FROM users WHERE users.name = @name;", new { name = u.name, email = u.email, hash = u.hash, salt = u.salt, time = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds });
+                                                   FROM users WHERE users.name = @name;", new { name = u.name, email = u.email, hash = u.hash, salt = u.salt, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
 
             return u;
         }
