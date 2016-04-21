@@ -44,13 +44,7 @@ window.addEventListener("load", () => {
 });
 
 screens.login.elm.addEventListener("toggled", () => { //detoggled
-    if (!user.name || !user.password) toggleScreen(screens.login.elm, true);
-    else sendRequest("/login/", (text, error) => {
-        if (!error) toggleScreen(screens.overview.elm);
-        else toggleScreen(screens.login.elm, true);
-        document.getElementById("logout_btn").classList.add("hidden");
-        console.log("hidden");
-    });
+    document.getElementById("logout_btn").classList.add("hidden");
 });//hide logout button
 screens.login.elm.addEventListener("detoggled", () => { //detoggled
     document.getElementById("logout_btn").classList.remove("hidden");
