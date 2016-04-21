@@ -18,6 +18,12 @@
       border-left: none;
       border-top: none;
       border-bottom: none; }
+      #overview .holder #characters .char .char_name {
+        display: block;
+        text-align: center;
+        position: relative;
+        top: -13px;
+        line-height: 0; }
       #overview .holder #characters .char .hat {
         position: absolute;
         margin-left: 1px; }
@@ -29,7 +35,7 @@
     #overview .holder .info .statholder {
       float: right; }
     #overview .holder .info span {
-      display: block; }
+      display: inline-block; }
     #overview .holder .info canvas {
       margin: 0;
       float: left; }

@@ -15,9 +15,9 @@ namespace Server.Modules
         {
             Get["/list"] = parameters =>
             {
-                //Services.UserService.User user = AuthorizeUser();
-
-                var a = Users.GetUsersFromRank(10);
+                Services.UserService.User user = AuthorizeUser();
+                user.userData = Users.GetUserData(user.ID);
+                var a = Users.GetUsersFromRank(user.userData.rank);
 
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(a));
             };

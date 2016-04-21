@@ -4,20 +4,40 @@ document.getElementById("overview").addEventListener("toggled", () => {
     setTimeout(function () {
         hex.animate(40, 10, 30, 15, 8, 35)
     }, 1000);
+    console.log("updated");
 
     getPlayers();
 });
 
-var init = false;
 
 document.getElementById("overview").addEventListener("players", () => {
-    if (!init) {
 
-        for (var p in players) {
+    var chars = document.getElementsByClassName("char_name");
+    var me = players.indexOf(players.filter(p=> p.name == user.name)[0]);
 
-        }
 
-        // Visa oss själva
-        init = true;
+    chars[3].innerHTML = "me";
+
+    for (var i = 0; i < me; i++) {
+        chars[i + 3 - me].innerHTML = players[i].name;
+
     }
+
+    for (var i = me + 1; i < players.length; i++) {
+        chars[i + 3 - me].innerHTML = players[i].name;
+    }
+
+
+    // Visa oss själva
+
+    document.getElementById("char_level").innerHTML = players[me].userData.level;
+    document.getElementById("char_exp").innerHTML = players[me].userData.exp;
+    document.getElementById("char_bestrank").innerHTML = players[me].userData.bestrank;
+    document.getElementById("char_hat").innerHTML = "not implemented";
+    document.getElementById("char_age").innerHTML = (new Date()).getTime() - players[me].userData.age;
+    document.getElementById("char_wins").innerHTML = players[me].userData.wins;
+    document.getElementById("char_losses").innerHTML = players[me].userData.losses;
+
+
+
 });

@@ -24,6 +24,14 @@
                 border-top: none;
                 border-bottom: none;
 
+                & .char_name {
+                    display: block;
+                    text-align: center;
+                    position: relative;
+                    top: -13px;
+                    line-height: 0;
+                }
+
                 & .hat {
                     position: absolute;
                     margin-left: 1px;
@@ -42,7 +50,7 @@
             }
 
             & span {
-                display: block;
+                display: inline-block;
             }
 
             & canvas {

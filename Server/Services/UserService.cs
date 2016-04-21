@@ -18,7 +18,7 @@ namespace Server.Services
 
 
         public UserData GetUserData(int uid)
-            => SQLite.GetConnection().Query<UserData>("SELECT * FROM usersdata WHERE UID=@uid", new { uid = uid }).FirstOrDefault();
+            => SQLite.GetConnection().Query<UserData>("SELECT * FROM userdata WHERE UID=@uid", new { uid = uid }).FirstOrDefault();
 
         public UserData GetUserData(string name)
             => SQLite.GetConnection().Query<UserData>("SELECT * FROM usersdata INNER JOIN users ON userdata.UID=users.ID AND users.name=@name", new { name = name }).FirstOrDefault();

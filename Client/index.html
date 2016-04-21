@@ -11,9 +11,6 @@
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.5">
 </head>
 <body>
-
-
-
     <div id="login" class="content">
         <div class="holder">
             <h1>Login</h1>
@@ -39,39 +36,66 @@
             <div id="characters">
                 <div class="char">
                     <img src="img/Character.png" />
+                    <span class="char_name"></span>
                 </div>
                 <div class="char">
                     <img src="img/Character.png" />
                     <img src="img/VikingHat.png" class="hat" />
+                    <span class="char_name"></span>
                 </div>
                 <div class="char">
                     <img src="img/Character.png" />
+                    <span class="char_name"></span>
                 </div>
                 <div class="char">
                     <img src="img/Character.png" />
                     <img src="img/LinksHat.png" class="hat" />
-
+                    <span class="char_name"></span>
                 </div>
                 <div class="char">
                     <img src="img/Character.png" />
+                    <span class="char_name"></span>
                 </div>
                 <div class="char">
                     <img src="img/Character.png" />
+                    <span class="char_name"></span>
                 </div>
                 <div class="char">
                     <img src="img/Character.png" />
+                    <span class="char_name"></span>
                 </div>
             </div>
             <div class="info">
                 <canvas id="main" width="200" height="200"></canvas>
                 <div class="statholder">
-                    <span>LV</span>
-                    <span>EXP</span>
-                    <span>BESTRANK</span>
-                    <span>HAT</span>
-                    <span>AGE</span>
-                    <span>WINS</span>
-                    <span>LOSSES</span>
+                    <div>
+                        <span>LV:</span>
+                        <span id="char_level"></span>
+                    </div>
+                    <div>
+                        <span>EXP:</span>
+                        <span id="char_exp"></span>
+                    </div>
+                    <div>
+                        <span>BESTRANK:</span>
+                        <span id="char_bestrank"></span>
+                    </div>
+                    <div>
+                        <span>HAT:</span>
+                        <span id="char_hat"></span>
+                    </div>
+                    <div>
+                        <span>AGE:</span>
+                        <span id="char_age"></span>
+                    </div>
+                    <div>
+                        <span>WINS:</span>
+                        <span id="char_wins"></span>
+                    </div>
+                    <div>
+                        <span>LOSSES:</span>
+                        <span id="char_losses"></span>
+                    </div>
                 </div>
             </div>
         </div>
