@@ -48,9 +48,14 @@ namespace Server.Services
         {
             User u = new User() { name = name, hash = hash, email = email };
             CryptoService.HashAndSavePassword(hash, u);
-            SQLite.GetConnection().QueryMultiple(@"INSERT INTO users (name, email, hash, salt)VALUES(@name, @email, @hash, @salt); 
-                                                   INSERT INTO userstats (UID)VALUES(SELECT UID FROM users WHERE users.name = @name);
-                                                   INSERT INTO userdata (UID, rank, bestrank, age)VALUES(SELECT UID FROM users WHERE users.name = @name, SELECT COUNT(*) FROM users);", new { name = u.name, email = u.email, hash = u.hash, salt = u.salt });
+            SQLite.GetConnection().QueryMultiple(@"INSERT INTO users (name, email, hash, salt, lastloggedin)VALUES(@name, @email, @hash, @salt, @time); 
+                                                   INSERT INTO userstats (UID) SELECT ID AS UID FROM users WHERE users.name = @name;
+                                                   INSERT INTO userdata (UID, rank, bestrank, age) 
+                                                   SELECT ID AS UID, 
+	                                                   (SELECT COUNT(*) FROM users) AS rank, 
+	                                                   (SELECT COUNT(*) FROM users) AS bestrank, 
+	                                                   @time as time 
+                                                   FROM users WHERE users.name = @name;", new { name = u.name, email = u.email, hash = u.hash, salt = u.salt, time = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds });
 
             return u;
         }
