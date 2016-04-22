@@ -6,38 +6,30 @@
         display: block;
         max-width: 1050px;
 
-        & #characters {
+        & .char {
+            display: table-cell;
             height: 150px;
-            width: 100%;
+            white-space: normal;
+            background-repeat: no-repeat;
             border: 1px #e4e4e4 solid;
-            overflow: hidden;
-            display: table;
-            border-right: none;
+            border-left: none;
+            border-top: none;
+            border-bottom: none;
 
-            & .char {
-                display: table-cell;
-                height: 150px;
-                white-space: normal;
-                background-repeat: no-repeat;
-                border: 1px #e4e4e4 solid;
-                border-left: none;
-                border-top: none;
-                border-bottom: none;
+            & .char_name {
+                display: block;
+                text-align: center;
+                position: relative;
+                top: -13px;
+                line-height: 0;
+            }
 
-                & .char_name {
-                    display: block;
-                    text-align: center;
-                    position: relative;
-                    top: -13px;
-                    line-height: 0;
-                }
-
-                & .hat {
-                    position: absolute;
-                    margin-left: 1px;
-                }
+            & .hat {
+                position: absolute;
+                margin-left: 1px;
             }
         }
+
 
         & .info {
             margin: 20px;
