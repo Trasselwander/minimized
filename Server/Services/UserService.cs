@@ -92,6 +92,7 @@ namespace Server.Services
             public int wins { get; set; }
             public int losses { get; set; }
             public int level { get; set; }
+            public int skillpoints { get; set; }
         }
 
         public class UserStats

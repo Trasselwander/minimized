@@ -36,7 +36,8 @@ namespace Server
                                     age INTEGER NOT NULL,
                                     wins INTEGER NOT NULL DEFAULT 0,
                                     losses INTEGER NOT NULL DEFAULT 0,
-                                    level INTEGER NOT NULL DEFAULT 1)");
+                                    level INTEGER NOT NULL DEFAULT 1,
+                                    skillpoints INTEGER DEFAULT 0)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userstats (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
