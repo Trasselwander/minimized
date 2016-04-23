@@ -67,7 +67,7 @@ namespace Server.Services
             public UserData userData { get; set; }
             public UserStats userStats { get; set; }
             [JsonIgnore]
-            public int lastloggedin { get; set; }
+            public long lastloggedin { get; set; }
             public int ID { get; set; }
             public string name { get; set; }
             [JsonIgnore]
