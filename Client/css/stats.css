@@ -1,0 +1,20 @@
+﻿.stats-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  max-width: 600px; }
+  .stats-table th {
+    text-align: left; }
+  .stats-table tr {
+    border-bottom: 1px solid #ddd; }
+    .stats-table tr:last-child {
+      border-bottom: none; }
+    .stats-table tr:first-child {
+      /*Overrides :last-child*/
+      border-bottom: 1px solid #ddd; }
+  .stats-table th, .stats-table td {
+    padding: 4px;
+    border-right: 1px solid #ddd;
+    min-width: 40px; }
+    .stats-table th:last-child, .stats-table td:last-child {
+      border-right: none; }
+

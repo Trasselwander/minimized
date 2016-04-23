@@ -10,5 +10,9 @@
   {
     "outputFile": "css/overview.css",
     "inputFile": "css/overview.scss"
+  },
+  {
+    "outputFile": "css/stats.css",
+    "inputFile": "css/stats.scss"
   }
 ]

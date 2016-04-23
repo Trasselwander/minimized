@@ -1,53 +1,55 @@
 ﻿
 #overview {
 
-    & .holder {
-        margin: 100px auto;
+    .holder {
+        margin: 50px auto;
         display: block;
         max-width: 1050px;
 
-        & .char {
-            display: table-cell;
-            height: 150px;
-            white-space: normal;
-            background-repeat: no-repeat;
-            border: 1px #e4e4e4 solid;
-            border-left: none;
-            border-top: none;
-            border-bottom: none;
+        .menu {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 35px;
 
-            & .char_name {
-                display: block;
-                text-align: center;
-                position: relative;
-                top: -13px;
-                line-height: 0;
-            }
-
-            & .hat {
-                position: absolute;
-                margin-left: 1px;
+            button {
+                padding:4px;
             }
         }
 
-
-        & .info {
+        .info {
             margin: 20px;
-            background-color: rgba(0, 0, 0, 0.03);
+            background-color: rgba(0, 0, 0, 0.02);
             padding: 20px;
             overflow: auto;
+            font-size: 0;
 
-            & .statholder {
-                float: right;
+            .one-third {
+                table, canvas {
+                    margin: 0 auto;
+                }
             }
 
-            & span {
-                display: inline-block;
-            }
+            .hats {
+                .hat {
+                    display: inline-block;
 
-            & canvas {
-                margin: 0;
-                float: left;
+                    &.active img {
+                        background-color: rgba(0, 0, 0, 0.2);
+                    }
+
+                    span {
+                        text-align: center;
+                        display: block;
+                        font-size: 12px;
+                        position: relative;
+                        top: -15px;
+                        margin: -20px;
+                    }
+                }
+
+                img {
+                    width: 100px;
+                }
             }
         }
     }

@@ -2,6 +2,7 @@
 document.getElementById("overview").addEventListener("toggled", () => {
     var hex = new hexstat("main");
     setTimeout(function () {
+        hex.maxskill = 40; // max of animate arguments
         hex.animate(40, 10, 30, 15, 8, 35)
     }, 1000);
     console.log("updated");
@@ -33,11 +34,18 @@ document.getElementById("overview").addEventListener("players", () => {
     document.getElementById("char_level").innerHTML = players[me].userData.level;
     document.getElementById("char_exp").innerHTML = players[me].userData.exp;
     document.getElementById("char_bestrank").innerHTML = players[me].userData.bestrank;
+    document.getElementById("char_rank").innerHTML = players[me].userData.bestrank;
     document.getElementById("char_hat").innerHTML = "not implemented";
     document.getElementById("char_age").innerHTML = (new Date()).getTime() - players[me].userData.age;
     document.getElementById("char_wins").innerHTML = players[me].userData.wins;
     document.getElementById("char_losses").innerHTML = players[me].userData.losses;
 
 
-
+    document.getElementById("char_life").innerHTML = players[me].userStats.life;
+    document.getElementById("char_exp").innerHTML = players[me].userData.exp;
+    document.getElementById("char_bestrank").innerHTML = players[me].userData.bestrank;
+    document.getElementById("char_hat").innerHTML = "not implemented";
+    document.getElementById("char_age").innerHTML = (new Date()).getTime() - players[me].userData.age;
+    document.getElementById("char_wins").innerHTML = players[me].userData.wins;
+    document.getElementById("char_losses").innerHTML = players[me].userData.losses;
 });

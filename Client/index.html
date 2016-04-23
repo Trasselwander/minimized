@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" type="text/css" href="css/overview.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/stats.css">
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.5">
 </head>
 <body>
@@ -33,50 +34,137 @@
     </div>
     <div id="overview" class="content">
         <div class="holder">
-                <div class="char">
-                    <img src="img/Character.png" />
-                    <span class="char_name"></span>
+            <div class="menu">
+                <button>Attackera</button>
+                <button>Tävlingar</button>
+                <button>Logga ut</button>
             </div>
+
+
+            <h3>Info</h3>
+            <div class="info" style="font-size:initial">
+                <strong>Adam</strong> är <strong>3 dagar</strong>, <strong>4 timmmar</strong> och <strong>27 minuter</strong> gammal. Just nu bär han <strong>Links hat</strong>, och efter <strong>30 minuters</strong> hårt arbete är han fortfarande aktiv och letar för fullt efter nya hattar.
+            </div>
+            <h3>Statistik</h3>
             <div class="info">
-                <canvas id="main" width="200" height="200"></canvas>
-                <div class="statholder">
-                    <div>
-                        <span>LV:</span>
-                        <span id="char_level"></span>
+                <div class="one-third">
+                    <canvas id="main" width="200" height="200"></canvas>
+                </div>
+                <div class="one-third">
+                    <table class="stats-table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Liv:
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Snabbhet:
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Attack:
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Försvar:
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Magi attack:
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Magi försvar:
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="one-third">
+                    <table class="stats-table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    LV:
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    EXP:
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Rank:
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Bästa rank:
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Vunnit:
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Förlorat:
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <h3>Hattar</h3>
+            <div class="info" style="font-size:initial">
+                Tyvärr har Adam inga hattar än.
+            </div>
+            <h3>Hattar2</h3>
+            <div class="info" style="font-size:initial">
+                <div class="hats">
+                    <div class="hat">
+                        <img src="img/CowBoyHat.png" />
+                        <span>Cowboy hatten</span>
                     </div>
-                    <div>
-                        <span>EXP:</span>
-                        <span id="char_exp"></span>
+                    <div class="hat active">
+                        <img src="img/LinksHat.png" />
+                        <span>Links hat</span>
                     </div>
-                    <div>
-                        <span>BESTRANK:</span>
-                        <span id="char_bestrank"></span>
+                    <div class="hat">
+                        <img src="img/MagicHat.png" />
+                        <span>Den magiska hatten</span>
                     </div>
-                    <div>
-                        <span>HAT:</span>
-                        <span id="char_hat"></span>
+                    <div class="hat">
+                        <img src="img/VikingHat.png" />
+                        <span>Vikingarnas hat</span>
                     </div>
-                    <div>
-                        <span>AGE:</span>
-                        <span id="char_age"></span>
-                    </div>
-                    <div>
-                        <span>WINS:</span>
-                        <span id="char_wins"></span>
-                    </div>
-                    <div>
-                        <span>LOSSES:</span>
-                        <span id="char_losses"></span>
+                    <div class="hat">
+                        <img src="img/GoldenHat.png" />
+                        <span>Guld hatten</span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="menubar">
-        <div id="logout_btn">
-            <i class="fa fa-sign-out"></i>
-        </div>
-
     </div>
     <script>
         screens = {
@@ -100,5 +188,7 @@
     <script src="js/index.js"></script>
     <script src="js/players.js"></script>
     <script src="js/login.js"></script>
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic" rel="stylesheet" />
 </body>
 </html>

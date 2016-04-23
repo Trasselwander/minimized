@@ -1,0 +1,31 @@
+﻿.stats-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    max-width: 600px;
+
+    & th {
+        text-align: left;
+    }
+
+    & tr {
+        border-bottom: 1px solid #ddd;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        &:first-child { /*Overrides :last-child*/
+            border-bottom: 1px solid #ddd;
+        }
+    }
+
+    & th, & td {
+        padding: 4px;
+        border-right: 1px solid #ddd;
+        min-width: 40px;
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+}

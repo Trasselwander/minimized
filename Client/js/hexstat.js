@@ -6,7 +6,7 @@ function hexstat(id) {
     this.stage = new createjs.Stage(id);
 
     this.maxskill = 200; //this.level * 4 / 2;
-    this.size = 75 / 2;
+    this.size = this.canvas.width / 2;
 
     this.drawOutline = function () {
         if (this.stage.getChildByName("outline") != null) return;
@@ -19,7 +19,7 @@ function hexstat(id) {
         this.stage.addChild(outline);
     }
 
-    this.drawData = function (life, speed, physattack, physdefence, magattack, magdefence) {
+    this.drawData = function (life, speed, physattack, physdefence, magattack, magdefence, color) {
         //if (this.stage.getChildByName("data") != null) return;
 
         var points = [{ x: 0, y: -(Math.min(this.maxskill, life) / this.maxskill * this.size) },
@@ -36,7 +36,7 @@ function hexstat(id) {
         data.name = "data";
         data.x = this.canvas.width / 2;
         data.y = this.canvas.height / 2;
-        data.graphics.beginFill("DeepSkyBlue").moveTo(0, 0);
+        data.graphics.beginFill(color || "DeepSkyBlue").moveTo(0, 0);
 
         for (var p in points) data.graphics.lineTo(points[p].x, points[p].y);
 
@@ -88,6 +88,25 @@ function hexstat(id) {
             that.drawData(life * test.time, speed * test.time, physattack * test.time, physdefence * test.time, magattack * test.time, magdefence * test.time);
             that.stage.update();
         });
+
+        // Use ticker instead
+        //function init() {
+        //    stage = new createjs.Stage("demoCanvas");
+
+        //    circle = new createjs.Shape();
+        //    circle.graphics.beginFill("red").drawCircle(0, 0, 40);
+        //    circle.y = 50;
+        //    stage.addChild(circle);
+
+        //    createjs.Ticker.on("tick", tick);
+        //    createjs.Ticker.setFPS(30);
+        //}
+
+        //function tick(event) {
+        //    circle.x = circle.x + 5;
+        //    if (circle.x > stage.canvas.width) { circle.x = 0; }
+        //    stage.update(event); // important!!
+        //}
     }
 }
 
