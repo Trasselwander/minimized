@@ -13,15 +13,21 @@ namespace Server.Modules
         public PlayersModule()
             : base("api/players")
         {
-            Get["/list"] = parameters =>
+            //Get["/list"] = parameters =>
+            //{
+            //    Services.UserService.User user = AuthorizeUser();
+            //    user.userData = Users.GetUserData(user.ID);
+            //    var a = Users.GetUsersFromRank(user.userData.rank);
+
+            //    return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(a));
+            //};
+            Get["/player"] = parameters =>
             {
                 Services.UserService.User user = AuthorizeUser();
-                user.userData = Users.GetUserData(user.ID);
-                var a = Users.GetUsersFromRank(user.userData.rank);
+                Users.GetUserDataAndStats(user);
 
-                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(a));
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(user));
             };
-
         }
     }
 }

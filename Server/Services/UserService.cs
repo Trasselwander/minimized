@@ -25,11 +25,16 @@ namespace Server.Services
 
 
         public UserStats GetUserStats(int uid)
-            => SQLite.GetConnection().Query<UserStats>("SELECT * FROM usersstats WHERE UID=@uid", new { uid = uid }).FirstOrDefault();
+            => SQLite.GetConnection().Query<UserStats>("SELECT * FROM userstats WHERE UID=@uid", new { uid = uid }).FirstOrDefault();
 
         public UserStats GetUserStats(string name)
             => SQLite.GetConnection().Query<UserStats>("SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND users.name=@name", new { name = name }).FirstOrDefault();
 
+        public void GetUserDataAndStats(User user)
+        {
+            user.userData = GetUserData(user.ID);
+            user.userStats = GetUserStats(user.ID);
+        }
 
 
         public List<User> GetUsersFromRank(int rank)
