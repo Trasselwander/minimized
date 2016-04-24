@@ -9,7 +9,7 @@ body {
   font-family: 'Source Sans Pro', sans-serif, Arial; }
 
 canvas {
-  margin: 100px auto;
+  margin: 0 auto;
   display: block; }
 
 .content {
@@ -29,6 +29,12 @@ canvas {
   width: 33.33%;
   /* as @passatgt mentioned in the comment, for the older browsers fallback */
   width: calc(100% / 3);
+  display: inline-block;
+  font-size: initial; }
+
+.one-half {
+  width: 50%;
+  /* as @passatgt mentioned in the comment, for the older browsers fallback */
   display: inline-block;
   font-size: initial; }
 

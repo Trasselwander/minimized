@@ -80,10 +80,8 @@ function randomInt(min, max) {
 
 window.addEventListener("load", () => {
     if (!user.name || !user.password) toggleScreen(screens.login.elm);
-
     else sendRequest("/login/", (text, error) => {
         if (!error) {
-            screens.overview.elm.dispatchEvent(new Event("detoggled"));
             toggleScreen(screens.overview.elm);
         }
         else {

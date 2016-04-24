@@ -35,15 +35,17 @@
     <div id="overview" class="content">
         <div class="holder">
             <div class="menu">
-                <button>Attackera</button>
+                <button id="attack_btn">Attackera</button>
                 <button>Tävlingar</button>
-                <button>Logga ut</button>
+                <button id="logout_btn">Logga ut</button>
             </div>
 
 
             <h3>Info</h3>
             <div class="info" style="font-size:initial">
-                <strong>Adam</strong> är <strong>3 dagar</strong>, <strong>4 timmmar</strong> och <strong>27 minuter</strong> gammal. Just nu bär han <strong>Links hat</strong>, och efter <strong>30 minuters</strong> hårt arbete är han fortfarande aktiv och letar för fullt efter nya hattar.
+                <div>
+                    <strong>Adam</strong> är <strong>3 dagar</strong>, <strong>4 timmmar</strong> och <strong>27 minuter</strong> gammal. Just nu bär han <strong>Links hat</strong>, och efter <strong>30 minuters</strong> hårt arbete är han fortfarande aktiv och letar för fullt efter nya hattar. Just nu ligger <strong>Adam</strong> på rank <strong>1</strong>.
+                </div>
             </div>
             <h3>Statistik</h3>
             <div class="info">
@@ -164,8 +166,181 @@
                     </div>
                 </div>
             </div>
+            <h3>Top 10</h3>
+            <div class="info">
+                <table class="stats-table" style="font-size:initial">
+                    <thead>
+                        <tr>
+                            <th>
+                                Rank
+                            </th>
+                            <th>
+                                Namn
+                            </th>
+                            <th>
+                                Poäng
+                            </th>
+                            <th>
+                                Level
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Adam</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Adam</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Adam</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Adam</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Adam</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Adam</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Adam</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Adam</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Adam</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Adam</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+    <div id="attack" class="content">
+        <div class="holder">
+
+            <h3>Attackera</h3>
+            <div class="info">
+                <div class="one-half">
+                    <canvas id="canvas_attack" width="300" height="300"></canvas>
+                </div>
+                <div class="one-half">
+                    <table class="stats-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    Adam
+                                </th>
+                                <th>
+                                    Adam2
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Liv:
+                                </td>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>-1</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Snabbhet:
+                                </td>
+                                <td>4</td>
+                                <td>2</td>
+                                <td>+2</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Attack:
+                                </td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Försvar:
+                                </td>
+                                <td>6</td>
+                                <td>5</td>
+                                <td style="color:rgb(16, 176, 16)">+1</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Magi attack:
+                                </td>
+                                <td>4</td>
+                                <td>6</td>
+                                <td style="color:red">-2</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Magi försvar:
+                                </td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>tot:</td>
+                                <td style="color:rgb(15, 125, 219)">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="menu">
+                <button>Attackera</button>
+                <button>Nästa match</button>
+                <button id="cancel_btn">Avbryt</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         screens = {
             login: {
@@ -176,6 +351,9 @@
             },
             overview: {
                 elm: document.getElementById("overview"),
+            },
+            attack: {
+                elm: document.getElementById("attack"),
             }
         }
     </script>
@@ -185,6 +363,7 @@
     <script src="js/hexstat.js"></script>
 
     <script src="js/helper.js"></script>
+    <script src="js/attack.js"></script>
     <script src="js/index.js"></script>
     <script src="js/players.js"></script>
     <script src="js/login.js"></script>

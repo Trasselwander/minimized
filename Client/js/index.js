@@ -7,9 +7,15 @@ document.getElementById("overview").addEventListener("toggled", () => {
     }, 1000);
     console.log("updated");
 
-    getPlayers();
+    //getPlayers();
 });
 
+
+window.addEventListener("load", () => {
+    document.getElementById("attack_btn").onclick = () => {
+        toggleScreen(screens.attack.elm);
+    }
+});
 
 document.getElementById("overview").addEventListener("players", () => {
 

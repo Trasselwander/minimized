@@ -1,6 +1,5 @@
 ﻿
 #login, #register {
-    font-family: Trebuchet MS;
     font-size: 16px;
 
     h1 {
@@ -76,7 +75,7 @@
     width: 100%;
     display: inline-flex;
 
-    & #logout_btn {
+    #logout_btn {
         position: relative;
         z-index: 1;
         margin: 5px auto;
