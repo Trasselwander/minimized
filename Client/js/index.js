@@ -2,8 +2,12 @@
 document.getElementById("overview").addEventListener("toggled", () => {
     var hex = new hexstat("main");
     setTimeout(function () {
-        hex.maxskill = 40; // max of animate arguments
-        hex.animate(40, 10, 30, 15, 8, 35)
+        hex.maxskill = 30; // max of animate arguments
+        hex.animate([{ "life": 5, "speed": 10, "physicalattack": 20, "physicaldefence": 20, "magicattack": 10, "magicdefence": 15, "color": "rgba(57, 174, 221, 0.65)" },
+            { "life": 25, "speed": 10, "physicalattack": 0, "physicaldefence": 5, "magicattack": 30, "magicdefence": 15, "color": "rgba(0, 0, 0, 0.5)" },
+            { "life": 30, "speed": 30, "physicalattack": 30, "physicaldefence": 0, "magicattack": 00, "magicdefence": 0, "color": "rgba(100, 0, 100, 0.3)" },
+            { "life": 5, "speed": 30, "physicalattack": 20, "physicaldefence": 10, "magicattack": 10, "magicdefence": 30, "color": "rgba(0, 174, 0, 0.65)" }])
+
     }, 1000);
     console.log("updated");
 

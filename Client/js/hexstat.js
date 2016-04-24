@@ -8,6 +8,11 @@ function hexstat(id) {
     this.maxskill = 200; //this.level * 4 / 2;
     this.size = this.canvas.width / 2;
 
+    var test = { time: 0 };
+    var that = this;
+
+    this.data = [];
+
     this.drawOutline = function () {
         if (this.stage.getChildByName("outline") != null) return;
 
@@ -21,7 +26,6 @@ function hexstat(id) {
 
     this.drawData = function (life, speed, physattack, physdefence, magattack, magdefence, color) {
         //if (this.stage.getChildByName("data") != null) return;
-
         var points = [{ x: 0, y: -(Math.min(this.maxskill, life) / this.maxskill * this.size) },
                       { x: (Math.min(this.maxskill, speed) / this.maxskill * this.size) * Math.cos(toRadians(30)), y: -(Math.min(this.maxskill, speed) / this.maxskill * this.size) * Math.sin(toRadians(30)) },
                       { x: (Math.min(this.maxskill, physattack) / this.maxskill * this.size) * Math.cos(toRadians(30)), y: (Math.min(this.maxskill, physattack) / this.maxskill * this.size) * Math.sin(toRadians(30)) },
@@ -30,7 +34,7 @@ function hexstat(id) {
                       { x: -(Math.min(this.maxskill, magdefence) / this.maxskill * this.size) * Math.cos(toRadians(30)), y: -(Math.min(this.maxskill, magdefence) / this.maxskill * this.size) * Math.sin(toRadians(30)) },
                       { x: 0, y: -(Math.min(this.maxskill, life) / this.maxskill * this.size) }];
 
-        if (this.data) this.stage.removeChild(this.data); // I don't know if it is possible to edit moveTo cordinates.
+        if (this.data[color]) this.stage.removeChild(this.data[color]); // I don't know if it is possible to edit moveTo cordinates.
 
         data = new createjs.Shape();
         data.name = "data";
@@ -43,7 +47,7 @@ function hexstat(id) {
         data.graphics.closePath();
 
         this.stage.addChild(data);
-        this.data = data;
+        this.data[color] = data;
     }
 
     this.drawLines = function () {
@@ -76,37 +80,25 @@ function hexstat(id) {
         this.stage.update();
     }
 
-    this.animate = function (life, speed, physattack, physdefence, magattack, magdefence) {
+    this.animate = function (statsarr) {
         this.stage.clear();
         this.stage.removeAllChildren();
         this.drawLines();
         this.drawOutline();
 
-        var test = { time: 0 };
-        var that = this;
-        createjs.Tween.get(test).to({ time: 1 }, 2000, createjs.Ease.quintInOut).addEventListener("change", function () {
-            that.drawData(life * test.time, speed * test.time, physattack * test.time, physdefence * test.time, magattack * test.time, magdefence * test.time);
-            that.stage.update();
+        createjs.Tween.get(test).to({ time: 1 }, 2000, createjs.Ease.quintInOut);
+        createjs.Ticker.setFPS(60);
+        //createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED; // Causes lag, but why?
+        createjs.Ticker.addEventListener("tick", function () {
+            tick(statsarr);
         });
+    }
 
-        // Use ticker instead
-        //function init() {
-        //    stage = new createjs.Stage("demoCanvas");
+    function tick(statsarr) {
+        for (var i = 0; i < statsarr.length; i++)
+            that.drawData(statsarr[i].life * test.time, statsarr[i].speed * test.time, statsarr[i].physicalattack * test.time, statsarr[i].physicaldefence * test.time, statsarr[i].magicattack * test.time, statsarr[i].magicdefence * test.time, statsarr[i].color);
 
-        //    circle = new createjs.Shape();
-        //    circle.graphics.beginFill("red").drawCircle(0, 0, 40);
-        //    circle.y = 50;
-        //    stage.addChild(circle);
-
-        //    createjs.Ticker.on("tick", tick);
-        //    createjs.Ticker.setFPS(30);
-        //}
-
-        //function tick(event) {
-        //    circle.x = circle.x + 5;
-        //    if (circle.x > stage.canvas.width) { circle.x = 0; }
-        //    stage.update(event); // important!!
-        //}
+        that.stage.update();
     }
 }
 
