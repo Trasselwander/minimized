@@ -7,5 +7,12 @@ function getPlayer() {
         }
     });
 
+    function getEnemy() {
+        sendRequest("/players/enemy", (test, error) => {
+            if (!error) {
+                enemy = JSON.parse(test);
 
+            }
+        });
+    }
 }

@@ -15,6 +15,12 @@
     padding: 4px;
     border-right: 1px solid #ddd;
     min-width: 40px; }
+    .stats-table th.red, .stats-table td.red {
+      color: #FC1E1E; }
+    .stats-table th.blue, .stats-table td.blue {
+      color: #087BEE; }
+    .stats-table th.green, .stats-table td.green {
+      color: #51E773; }
     .stats-table th:last-child, .stats-table td:last-child {
       border-right: none; }
 

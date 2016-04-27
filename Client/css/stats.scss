@@ -3,11 +3,11 @@
     border-spacing: 0;
     max-width: 600px;
 
-    & th {
+    th {
         text-align: left;
     }
 
-    & tr {
+    tr {
         border-bottom: 1px solid #ddd;
 
         &:last-child {
@@ -19,10 +19,22 @@
         }
     }
 
-    & th, & td {
+    th, td {
         padding: 4px;
         border-right: 1px solid #ddd;
         min-width: 40px;
+
+        &.red {
+            color: #FC1E1E;
+        }
+
+        &.blue {
+            color: #087BEE;
+        }
+
+        &.green {
+            color: #51E773;
+        }
 
         &:last-child {
             border-right: none;
