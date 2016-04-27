@@ -11,13 +11,13 @@ namespace Server.Modules
     public class LeaugeModule : HelperModule
     {
         public LeaugeModule()
-            : base("api/leauges")
+            : base("api/leagues")
         {
             Get["/list"] = parameters =>
             {
                 // sendRequest("/leauges/list", function(text) { console.log(text) });
                 Services.UserService.User user = AuthorizeUser();
-                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetLeauges()));
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetLeagues()));
             };
 
             Get["/join/{id}"] = parameters =>
@@ -25,7 +25,7 @@ namespace Server.Modules
                 // sendRequest("/leauges/list", function(text) { console.log(text) });
                 Services.UserService.User user = AuthorizeUser();
                 Users.JoinLeauge(user, parameters.id);
-                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetLeauges()));
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetLeagues()));
             };
         }
     }
