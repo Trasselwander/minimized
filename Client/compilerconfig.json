@@ -14,5 +14,9 @@
   {
     "outputFile": "css/stats.css",
     "inputFile": "css/stats.scss"
+  },
+  {
+    "outputFile": "css/league.css",
+    "inputFile": "css/league.scss"
   }
 ]

@@ -19,6 +19,10 @@ window.addEventListener("load", () => {
     document.getElementById("attack_btn").onclick = () => {
         toggleScreen(screens.attack.elm);
     }
+    document.getElementById("league_btn").onclick = () => {
+        toggleScreen(screens.league.elm);
+        console.log(screens.league.elm);
+    }
 });
 
 document.getElementById("overview").addEventListener("player", () => { //player* but this code is never used.

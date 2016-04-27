@@ -36,7 +36,7 @@
         <div class="holder">
             <div class="menu">
                 <button id="attack_btn">Attackera</button>
-                <button>Tävlingar</button>
+                <button id="league_btn">Tävlingar</button>
                 <button id="logout_btn">Logga ut</button>
             </div>
 
@@ -341,6 +341,65 @@
         </div>
     </div>
 
+
+    <div id="league" class="content">
+        <div class="holder">
+
+            <div id="shadow_league" style="display:none">
+                <h3 class="league_name">Tävlingar</h3>
+                <div class="info">
+                    <div class="one-half">
+                        <canvas class="canvas_league" width="300" height="300"></canvas>
+                    </div>
+                    <div class="one-half">
+                        <table class="stats-table">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Ålder:
+                                    </td>
+                                    <td class="age">1</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Tid Kvar:
+                                    </td>
+                                    <td class="timeleft">4</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Antal Spelare:
+                                    </td>
+                                    <td class="totalplayers">1</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Högsta Level:
+                                    </td>
+                                    <td class="highestlevel">6</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Antal Fighter:
+                                    </td>
+                                    <td class="totalfights">4</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Ledare:
+                                    </td>
+                                    <td class="leader">4</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="menu">
+                            <button class="joinleague_btn">Gå med</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         screens = {
             login: {
@@ -354,8 +413,12 @@
             },
             attack: {
                 elm: document.getElementById("attack"),
+            },
+            league: {
+                elm: document.getElementById("league"),
             }
         }
+
     </script>
     <script src="lib/swal/sweetalert.min.js"></script>
     <script src="lib/tweenjs.min.js"></script>
@@ -367,6 +430,7 @@
     <script src="js/index.js"></script>
     <script src="js/players.js"></script>
     <script src="js/login.js"></script>
+    <script src="js/league.js"></script>
 
     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic" rel="stylesheet" />
 </body>
