@@ -15,6 +15,8 @@
                 newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("totalfights")[0].innerHTML = league[i].totalfights;
                 newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("leader")[0].innerHTML = league[i].leader;
 
+                newleague.style = null;
+
                 screens.league.elm.getElementsByClassName("holder")[0].appendChild(newleague);
 
                 setTimeout(function (league, i) {
