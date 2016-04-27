@@ -109,7 +109,7 @@ namespace Server.Services
                                                    UPDATE userdata SET LID=@lid WHERE users.ID = @uid;", new { uid = u.ID, lid = lid });
         }
 
-        public List<Leauge> GetLeauges()
+        public List<Leauge> GetLeagues()
            => SQLite.GetConnection().Query<Leauge>("SELECT * FROM leagues").ToList();
 
         public void CreateLeague(Leauge l)
