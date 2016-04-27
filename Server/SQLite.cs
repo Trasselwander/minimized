@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Server.Services;
+
 namespace Server
 {
     class SQLite
     {
         public static SqliteConnection GetConnection()
-           => new SqliteConnection("Data Source=minimal.db;Version=3"); 
-
+           => new SqliteConnection("Data Source=minimal.db;Version=3");
 
         public static void InitDatabase()
         {
@@ -29,15 +30,10 @@ namespace Server
                                     UID INTEGER NOT NULL,
                                     LID INTEGER,
                                     HID INTEGER,
-                                    rank INTEGER NOT NULL,
                                     bestrank INTEGER NOT NULL,
-                                    score INTEGER NOT NULL DEFAULT 0,
-                                    exp INTEGER NOT NULL DEFAULT 0,
                                     age INTEGER NOT NULL,
                                     wins INTEGER NOT NULL DEFAULT 0,
-                                    losses INTEGER NOT NULL DEFAULT 0,
-                                    level INTEGER NOT NULL DEFAULT 1,
-                                    skillpoints INTEGER DEFAULT 0)");
+                                    losses INTEGER NOT NULL DEFAULT 0)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userstats (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -47,7 +43,15 @@ namespace Server
                                     physicalattack INTEGER NOT NULL DEFAULT 1,
                                     physicaldefence INTEGER NOT NULL DEFAULT 1,
                                     magicattack INTEGER NOT NULL DEFAULT 1,
-                                    magicdefence INTEGER NOT NULL DEFAULT 1)");
+                                    magicdefence INTEGER NOT NULL DEFAULT 1,
+                                    
+                                    level INTEGER NOT NULL DEFAULT 1,
+                                    score INTEGER NOT NULL DEFAULT 0,
+                                    exp INTEGER NOT NULL DEFAULT 0,
+                                    bestrank INTEGER NOT NULL,
+                                    wins INTEGER NOT NULL DEFAULT 0,
+                                    losses INTEGER NOT NULL DEFAULT 0,
+                                    skillpoints INTEGER DEFAULT 0)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userhats (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -56,8 +60,15 @@ namespace Server
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS leagues (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                    name CHAR(50) NOT NULL,
                                     start INTEGER NOT NULL,
-                                    duration INTEGER NOT NULL)");
+                                    end INTEGER NOT NULL)");
+
+            (new UserService()).CreateLeague(new UserService.Leauge() {
+                name = "ADAM",
+                start = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds),
+                end = (long)((DateTime.UtcNow.AddHours(10) - new DateTime(1970, 1, 1)).TotalMilliseconds)
+            });
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS hats (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
