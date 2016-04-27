@@ -53,85 +53,85 @@
                     <canvas id="main" width="200" height="200"></canvas>
                 </div>
                 <div class="one-third">
-                    <table class="stats-table">
+                    <table class="stats-table" id="player_dataStats">
                         <tbody>
                             <tr>
                                 <td>
                                     Liv:
                                 </td>
-                                <td></td>
+                                <td class="char_life"></td>
                             </tr>
                             <tr>
                                 <td>
                                     Snabbhet:
                                 </td>
-                                <td></td>
+                                <td class="char_speed"></td>
                             </tr>
                             <tr>
                                 <td>
                                     Attack:
                                 </td>
-                                <td></td>
+                                <td class="char_physA"></td>
                             </tr>
                             <tr>
                                 <td>
                                     Försvar:
                                 </td>
-                                <td></td>
+                                <td class="char_physD"></td>
                             </tr>
                             <tr>
                                 <td>
                                     Magi attack:
                                 </td>
-                                <td></td>
+                                <td class="char_magA"></td>
                             </tr>
                             <tr>
                                 <td>
                                     Magi försvar:
                                 </td>
-                                <td></td>
+                                <td class="char_magD"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="one-third">
-                    <table class="stats-table">
+                    <table class="stats-table" id="player_userStats">
                         <tbody>
                             <tr>
                                 <td>
                                     LV:
                                 </td>
-                                <td></td>
+                                <td id="char_level"></td>
                             </tr>
                             <tr>
                                 <td>
                                     EXP:
                                 </td>
-                                <td></td>
+                                <td id="char_exp"></td>
                             </tr>
                             <tr>
                                 <td>
                                     Rank:
                                 </td>
-                                <td></td>
+                                <td id="char_rank"></td>
                             </tr>
                             <tr>
                                 <td>
                                     Bästa rank:
                                 </td>
-                                <td></td>
+                                <td id="char_bestRank"></td>
                             </tr>
                             <tr>
                                 <td>
                                     Vunnit:
                                 </td>
-                                <td></td>
+                                <td id="char_wins"></td>
                             </tr>
                             <tr>
                                 <td>
                                     Förlorat:
                                 </td>
-                                <td></td>
+                                <td id="char_losses"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -260,14 +260,14 @@
                     <canvas id="canvas_attack" width="300" height="300"></canvas>
                 </div>
                 <div class="one-half">
-                    <table class="stats-table">
+                    <table class="stats-table" id="attack_diff_table">
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>
+                                <th id="player_attack_name">
                                     Adam
                                 </th>
-                                <th>
+                                <th id="enemy_attack_name">
                                     Adam2
                                 </th>
                                 <th></th>
@@ -278,55 +278,55 @@
                                 <td>
                                     Liv:
                                 </td>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>-1</td>
+                                <td id="char_life">1</td>
+                                <td id="enemy_life">2</td>
+                                <td id="life_Diff">-1</td>
                             </tr>
                             <tr>
                                 <td>
                                     Snabbhet:
                                 </td>
-                                <td>4</td>
-                                <td>2</td>
-                                <td>+2</td>
+                                <td id="char_speed">4</td>
+                                <td id="enemy_speed">2</td>
+                                <td id="speed_Diff">+2</td>
                             </tr>
                             <tr>
                                 <td>
                                     Attack:
                                 </td>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>0</td>
+                                <td id="char_physA">1</td>
+                                <td id="enemy_physA">1</td>
+                                <td id="physA_Diff">0</td>
                             </tr>
                             <tr>
                                 <td>
                                     Försvar:
                                 </td>
-                                <td>6</td>
-                                <td>5</td>
-                                <td style="color:rgb(16, 176, 16)">+1</td>
+                                <td id="char_physD">6</td>
+                                <td id="enemy_physD">5</td>
+                                <td id="physD_Diff" style="color:rgb(16, 176, 16)">+1</td>
                             </tr>
                             <tr>
                                 <td>
                                     Magi attack:
                                 </td>
-                                <td>4</td>
-                                <td>6</td>
-                                <td style="color:red">-2</td>
+                                <td id="char_magA">4</td>
+                                <td id="enemy_magA">6</td>
+                                <td id="magA_Diff" style="color:red">-2</td>
                             </tr>
                             <tr>
                                 <td>
                                     Magi försvar:
                                 </td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
+                                <td id="char_magD">0</td>
+                                <td id="enemy_magD">0</td>
+                                <td id="magD_Diff">0</td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td></td>
                                 <td>tot:</td>
-                                <td style="color:rgb(15, 125, 219)">0</td>
+                                <td id="total_Diff" style="color:rgb(15, 125, 219)">0</td>
                             </tr>
                         </tbody>
                     </table>

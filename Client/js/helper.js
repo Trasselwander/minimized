@@ -82,6 +82,7 @@ window.addEventListener("load", () => {
     if (!user.name || !user.password) toggleScreen(screens.login.elm);
     else sendRequest("/login/", (text, error) => {
         if (!error) {
+            getPlayer();
             toggleScreen(screens.overview.elm);
         }
         else {

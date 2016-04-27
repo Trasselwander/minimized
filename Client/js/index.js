@@ -21,41 +21,38 @@ window.addEventListener("load", () => {
     }
 });
 
-document.getElementById("overview").addEventListener("players", () => {
+document.getElementById("overview").addEventListener("player", () => { //player* but this code is never used.
 
     var chars = document.getElementsByClassName("char_name");
-    var me = players.indexOf(players.filter(p=> p.name == user.name)[0]);
+    //var me = player.indexOf(players.filter(p=> p.name == user.name)[0]);  //this is never used since we never draw out the closest characters. and we dont even get a list of more than one character
 
 
-    chars[3].innerHTML = "me";
+    //chars[3].innerHTML = "me";
 
-    for (var i = 0; i < me; i++) {
-        chars[i + 3 - me].innerHTML = players[i].name;
+    //for (var i = 0; i < me; i++) {
+    //    chars[i + 3 - me].innerHTML = players[i].name;
 
-    }
+    //}
 
-    for (var i = me + 1; i < players.length; i++) {
-        chars[i + 3 - me].innerHTML = players[i].name;
-    }
+    //for (var i = me + 1; i < players.length; i++) {
+    //    chars[i + 3 - me].innerHTML = players[i].name;
+    //}
+
+    document.getElementById("player_dataStats").getElementsByTagName("td")[1].innerHTML = player.userStats.life;
+    document.getElementById("player_dataStats").getElementsByTagName("td")[3].innerHTML = player.userStats.speed;
+    document.getElementById("player_dataStats").getElementsByTagName("td")[5].innerHTML = player.userStats.physicalattack;
+    document.getElementById("player_dataStats").getElementsByTagName("td")[7].innerHTML = player.userStats.physicaldefence;
+    document.getElementById("player_dataStats").getElementsByTagName("td")[9].innerHTML = player.userStats.magicattack;
+    document.getElementById("player_dataStats").getElementsByTagName("td")[11].innerHTML = player.userStats.magicdefence;
+
+    document.getElementById("player_userStats").getElementsByTagName("td")[1].innerHTML = player.userData.level;
+    document.getElementById("player_userStats").getElementsByTagName("td")[3].innerHTML = player.userData.exp;
+    document.getElementById("player_userStats").getElementsByTagName("td")[5].innerHTML = player.userData.rank;
+    document.getElementById("player_userStats").getElementsByTagName("td")[7].innerHTML = player.userData.bestrank;
+    document.getElementById("player_userStats").getElementsByTagName("td")[9].innerHTML = player.userData.wins;
+    document.getElementById("player_userStats").getElementsByTagName("td")[11].innerHTML = player.userData.losses;
 
 
-    // Visa oss själva
+    ////stats.getElementById("char_age").innerHTML = (new Date()).getTime() - player.userData.age;
 
-    document.getElementById("char_level").innerHTML = players[me].userData.level;
-    document.getElementById("char_exp").innerHTML = players[me].userData.exp;
-    document.getElementById("char_bestrank").innerHTML = players[me].userData.bestrank;
-    document.getElementById("char_rank").innerHTML = players[me].userData.bestrank;
-    document.getElementById("char_hat").innerHTML = "not implemented";
-    document.getElementById("char_age").innerHTML = (new Date()).getTime() - players[me].userData.age;
-    document.getElementById("char_wins").innerHTML = players[me].userData.wins;
-    document.getElementById("char_losses").innerHTML = players[me].userData.losses;
-
-
-    document.getElementById("char_life").innerHTML = players[me].userStats.life;
-    document.getElementById("char_exp").innerHTML = players[me].userData.exp;
-    document.getElementById("char_bestrank").innerHTML = players[me].userData.bestrank;
-    document.getElementById("char_hat").innerHTML = "not implemented";
-    document.getElementById("char_age").innerHTML = (new Date()).getTime() - players[me].userData.age;
-    document.getElementById("char_wins").innerHTML = players[me].userData.wins;
-    document.getElementById("char_losses").innerHTML = players[me].userData.losses;
 });

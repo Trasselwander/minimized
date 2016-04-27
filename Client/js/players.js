@@ -1,9 +1,11 @@
 ﻿
-function getPlayers() {
-    sendRequest("/players/list", (test, error) => {
+function getPlayer() {
+    sendRequest("/players/player", (test, error) => {
         if (!error) {
-            players = JSON.parse(test).reverse();
-            screens.overview.elm.dispatchEvent(new Event("players"));
+            player = JSON.parse(test);
+            screens.overview.elm.dispatchEvent(new Event("player"));
         }
     });
+
+
 }
