@@ -25,6 +25,17 @@
                     league.color = "rgba(57, 174, 221, 0.65)";
                     hex.animate([league]);
                 }, 1000, league[i], i);
+
+                newleague.getElementsByClassName("joinleague_btn")[0].dataset.lid = league[i].ID;
+
+
+                newleague.getElementsByClassName("joinleague_btn")[0].onclick = function () {
+
+                    console.log(this);
+
+                    sendRequest("/leagues/join/" + this.dataset.lid);
+                }
+
             }
         }
     });
