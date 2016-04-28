@@ -58,7 +58,7 @@
                 newleague.getElementsByClassName("joinleague_btn")[0].dataset.lid = league[i].ID;
                 newleague.getElementsByClassName("joinleague_btn")[0].onclick = function () {
                     sendRequest("/leagues/join/" + this.dataset.lid);
-                    getPlayer();
+                    toggleScreen(screens.overview.elm);
                 }
                 if (player.league) {
                     if (league[i].ID == player.league.ID) {
@@ -67,7 +67,7 @@
                         newleague.getElementsByClassName("joinleague_btn")[0].classList.add("orange");
                         newleague.getElementsByClassName("joinleague_btn")[0].onclick = function () {
                             sendRequest("/leagues/leave/" + this.dataset.lid);
-                            getPlayer();
+                            toggleScreen(screens.overview.elm);
                         }
                     }
 
