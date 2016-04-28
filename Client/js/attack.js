@@ -65,4 +65,9 @@ window.addEventListener("load", () => {
     document.getElementById("cancel_btn").onclick = () => {
         toggleScreen(screens.overview.elm);
     }
+    document.getElementById("attack_request_btn").onclick = () => {
+        sendRequest("/players/enemy", (test, error) => {
+            //send us to the "fight screen"
+        });
+    }
 });

@@ -23,21 +23,18 @@ namespace Server
                                     hash CHAR(255) NOT NULL,
                                     salt CHAR(255) NOT NULL,
                                     lastloggedin INTEGER NOT NULL,
-                                    email CHAR(50))");
-
-            GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userdata (
-                                    ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-                                    UID INTEGER NOT NULL,
+                                    email CHAR(50),
                                     LID INTEGER,
                                     HID INTEGER,
                                     bestrank INTEGER NOT NULL,
                                     age INTEGER NOT NULL,
-                                    wins INTEGER NOT NULL DEFAULT 0,
-                                    losses INTEGER NOT NULL DEFAULT 0)");
+                                    totalwins INTEGER NOT NULL DEFAULT 0,
+                                    totallosses INTEGER NOT NULL DEFAULT 0)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userstats (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                                     UID INTEGER NOT NULL DEFAULT 1,
+                                    LID INTEGER,
                                     life INTEGER NOT NULL DEFAULT 1,
                                     speed INTEGER NOT NULL DEFAULT 1,
                                     physicalattack INTEGER NOT NULL DEFAULT 1,
