@@ -75,7 +75,7 @@ document.getElementById("overview").addEventListener("player", () => { //player*
 
 
 
-    document.getElementById("player_dataStats").getElementsByClassName("char_life")[0].innerHTML = player.userStats.life;
+    document.getElementById("player_dataStats").getElementsByClassName("char_life")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.life;
     document.getElementById("player_dataStats").getElementsByClassName("char_speed")[0].innerHTML = player.userStats.speed;
     document.getElementById("player_dataStats").getElementsByClassName("char_physA")[0].innerHTML = player.userStats.physicalattack;
     document.getElementById("player_dataStats").getElementsByClassName("char_physD")[0].innerHTML = player.userStats.physicaldefence;
