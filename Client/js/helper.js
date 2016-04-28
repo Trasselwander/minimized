@@ -120,3 +120,22 @@ window.addEventListener("load", () => {
 
 
 });
+
+function getNiceTime(Time) {
+    if (Math.floor(Time / 1000) > 0) {
+        var endTime = Math.floor(Time / 1000) + " sekunder";
+        if (Math.floor(Time / (1000 * 60)) > 0) {
+            var endTime = Math.floor(Time / (1000 * 60)) + " minuter";
+            if (Math.floor(Time / (1000 * 60 * 60)) > 0) {
+                var endTime = Math.floor(Time / (1000 * 60 * 60)) + " timmar";
+                if (Math.floor(Time / (1000 * 60 * 60 * 24)) > 0) {
+                    var endTime = Math.floor(Time / (1000 * 60 * 60 * 24)) + " dagar";
+                }
+            }
+        }
+    }
+    else {
+        var endTime = "Slutad";
+    }
+    return endTime;
+}

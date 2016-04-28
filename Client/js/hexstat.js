@@ -1,6 +1,4 @@
-﻿
-
-function hexstat(id) {
+﻿function hexstat(id) {
     this.canvas = document.getElementById(id);
     if (this.canvas == null) return;
     this.stage = new createjs.Stage(id);

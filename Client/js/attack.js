@@ -1,6 +1,12 @@
-﻿
+﻿var attack_hexstat;
+
 document.getElementById("attack").addEventListener("toggled", () => {
-    var hex = new hexstat("canvas_attack");
+    attack_hexstat.stage.removeAllChildren();
+    attack_hexstat.stage.clear();
+    attack_hexstat.drawLines();
+    attack_hexstat.drawOutline();
+
+    var hex = attack_hexstat
     setTimeout(function () {
         hex.maxskill = 40; // max of animate arguments
         hex.animate([{ "life": 5, "speed": 10, "physicalattack": 20, "physicaldefence": 20, "magicattack": 10, "magicdefence": 15, "color": "rgba(38, 94, 209, 0.5)" },
@@ -9,7 +15,7 @@ document.getElementById("attack").addEventListener("toggled", () => {
     console.log("updated");
 
     getPlayer();
-    getEnemy();
+    //getEnemy();
 });
 screens.attack.elm.addEventListener("enemy", () => {
 
@@ -22,9 +28,11 @@ screens.attack.elm.addEventListener("enemy", () => {
 
 
 });
-
+document.getElementById("attack").addEventListener("detoggled", () => {
+    attack_hexstat.drawOutline;
+});
 document.getElementById("overview").addEventListener("player", () => {
-    var hex = new hexstat("canvas_attack");
+    var hex = attack_hexstat
     setTimeout(function () {
         hex.maxskill = 40; //player.userData.level * 4; //ta den högsta leveln av båda karaktärerna.
         hex.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(38, 94, 209, 0.5)" },
@@ -77,5 +85,6 @@ window.addEventListener("load", () => {
     document.getElementById("cancel_btn").onclick = () => {
         toggleScreen(screens.overview.elm);
     }
-
+    attack_hexstat = new hexstat("canvas_attack");
+    attack_hexstat.drawOutline;
 });

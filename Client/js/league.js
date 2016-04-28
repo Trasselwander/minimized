@@ -21,50 +21,11 @@
 
                 var timenow = new Date().getTime(); // borde göra en funktion för detta
                 var remaining =  timenow - league[i].start;
-                if (Math.floor(remaining / 1000) > 0) {
-                    var endTime = Math.floor(remaining / 1000) + " sekunder";
-
-                    if (Math.floor(remaining / (1000 * 60)) > 0) {
-                        var endTime = Math.floor(remaining / (1000 * 60)) + " minuter";
-
-                        if (Math.floor(remaining / (1000 * 60 * 60)) > 0) {
-                            var endTime = Math.floor(remaining / (1000 * 60 * 60)) + " timmar";
-
-                            if (Math.floor(remaining / (1000 * 60 * 60 * 24)) > 0) {
-                                var endTime = Math.floor(remaining / (1000 * 60 * 60 * 24)) + " dagar";
-                            }
-                        }
-                    }
-                }
-                else {
-                    var endTime = "Slutad";
-                }
-
-
-                newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("age")[0].innerHTML = endTime;
-
-                var timenow = new Date().getTime(); // borde göra en funktion för detta
+                newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("age")[0].innerHTML = getNiceTime(remaining);
                 var remaining = league[i].end - timenow;
-                if (Math.floor(remaining / 1000) > 0) {
-                    var endTime = Math.floor(remaining / 1000) + " sekunder";
 
-                    if (Math.floor(remaining / (1000 * 60)) > 0) {
-                        var endTime = Math.floor(remaining / (1000 * 60)) + " minuter";
 
-                        if (Math.floor(remaining / (1000 * 60 * 60)) > 0) {
-                            var endTime = Math.floor(remaining / (1000 * 60 * 60)) + " timmar";
-
-                            if (Math.floor(remaining / (1000 * 60 * 60 * 24)) > 0) {
-                                var endTime = Math.floor(remaining / (1000 * 60 * 60 * 24)) + " dagar";
-                            }
-                        }
-                    }
-                }
-                else {
-                    var endTime = "Slutad";
-                }
-
-                newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("timeleft")[0].innerHTML = endTime;
+                newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("timeleft")[0].innerHTML = getNiceTime(remaining);
                 newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("totalplayers")[0].innerHTML = league[i].totalplayers;
                 newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("highestlevel")[0].innerHTML = league[i].highestlevel;
                 newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("totalfights")[0].innerHTML = league[i].totalfights;
