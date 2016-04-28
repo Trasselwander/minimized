@@ -61,7 +61,7 @@ namespace Server
                                     start INTEGER NOT NULL,
                                     end INTEGER NOT NULL)");
 
-            (new UserService()).CreateLeague(new UserService.Leauge() {
+            (new UserService()).CreateLeague(new UserService.League() {
                 name = "ADAM",
                 start = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds),
                 end = (long)((DateTime.UtcNow.AddHours(10) - new DateTime(1970, 1, 1)).TotalMilliseconds)

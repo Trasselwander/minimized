@@ -24,7 +24,7 @@ namespace Server.Modules
             {
                 // sendRequest("/leauges/list", function(text) { console.log(text) });
                 Services.UserService.User user = AuthorizeUser();
-                Users.JoinLeauge(user, parameters.id);
+                Users.JoinLeague(user, parameters.id);
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetLeagues()));
             };
         }

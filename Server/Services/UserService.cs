@@ -19,13 +19,21 @@ namespace Server.Services
         public UserStats GetUserStats(int uid)
             => SQLite.GetConnection().Query<UserStats>("SELECT * FROM userstats WHERE UID=@uid", new { uid = uid }).FirstOrDefault();
 
+        public League GetUserLeague(int lid)
+            => SQLite.GetConnection().Query<League>("SELECT * FROM leagues WHERE ID=@lid", new { lid = lid }).FirstOrDefault();
+
         public UserStats GetUserStats(string name)
             => SQLite.GetConnection().Query<UserStats>("SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND users.name=@name", new { name = name }).FirstOrDefault();
 
         public void GetUserStats(User user)
             => user.userStats = GetUserStats(user.ID);
 
-        public void CreateLeague(Leauge l)
+
+        public void GetUserLeague(User user)
+            => user.league = user.LID != null ? GetUserLeague((int)user.LID) : null;
+
+
+        public void CreateLeague(League l)
             => SQLite.GetConnection().Query("INSERT INTO leagues (name, start, end) VALUES (@name, @start, @end)", new { l.name, l.start, l.end });
 
 
@@ -71,7 +79,7 @@ namespace Server.Services
         //    return SQLite.GetConnection().Query<User>("SELECT * FROM users INNER JOIN userdata ON userdata.LID=@lid ORDER BY userdata.score LIMIT 1 OFFSET @rank", new { lid = u.userData.LID, rank = random_rank }).FirstOrDefault();
         //}
 
-        public void JoinLeauge(User u, int lid)
+        public void JoinLeague(User u, int lid)
         {
             // INSERT NEW USERSTATS
             // CHANGE USERDATA LID to CURRENT LID
@@ -82,15 +90,15 @@ namespace Server.Services
                                                    UPDATE users SET LID=@lid WHERE users.ID = @uid;", new { uid = u.ID, lid = lid });
         }
 
-        public List<Leauge> GetLeagues()
+        public List<League> GetLeagues()
         {
-            List<Leauge> leauge = SQLite.GetConnection().Query<Leauge>("SELECT * FROM leagues").ToList();
+            List<League> leauge = SQLite.GetConnection().Query<League>("SELECT * FROM leagues").ToList();
 
             foreach (var l in leauge)
             {
-                var d = SQLite.GetConnection().Query<Leauge>(@"SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND users.LID=@lid", new { lid = l.ID }).FirstOrDefault();
+                var d = SQLite.GetConnection().Query<League>(@"SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND users.LID=@lid", new { lid = l.ID }).FirstOrDefault();
 
-                var data = SQLite.GetConnection().Query<Leauge>(@"SELECT 
+                var data = SQLite.GetConnection().Query<League>(@"SELECT 
                                                                     SUM(userstats.life), 
                                                                     SUM(userstats.speed),
                                                                     SUM(userstats.physicalattack), 
@@ -110,7 +118,7 @@ namespace Server.Services
             return leauge;
         }
 
-        public class Leauge
+        public class League
         {
             public int ID { get; set; }
             public string name { get; set; }
@@ -136,7 +144,7 @@ namespace Server.Services
         public class User
         {
             public UserStats userStats { get; set; }
-            [JsonIgnore]
+            public League league { get; set; }
             public long lastloggedin { get; set; }
             public int ID { get; set; }
             public string name { get; set; }

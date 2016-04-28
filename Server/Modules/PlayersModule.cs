@@ -25,6 +25,7 @@ namespace Server.Modules
             {
                 Services.UserService.User user = AuthorizeUser();
                 Users.GetUserStats(user);
+                Users.GetUserLeague(user);
 
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(user));
             };
