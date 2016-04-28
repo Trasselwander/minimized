@@ -30,15 +30,20 @@ document.getElementById("overview").addEventListener("player", () => { //player*
 
     var timenow = new Date().getTime();
     var diff = timenow - player.age;
-
     var days = Math.floor(diff / (1000 * 60 * 60 * 24));
     diff -= days * (1000 * 60 * 60 * 24);
-
     var hours = Math.floor(diff / (1000 * 60 * 60));
     diff -= hours * (1000 * 60 * 60);
-
     var mins = Math.floor(diff / (1000 * 60));
     diff -= mins * (1000 * 60);
+
+    var lastloggedin = timenow - player.lastloggedin;
+    var llidays = Math.floor(lastloggedin / (1000 * 60 * 60 * 24));
+    lastloggedin -= llidays * (1000 * 60 * 60 * 24);
+    var llihours = Math.floor(lastloggedin / (1000 * 60 * 60));
+    lastloggedin -= llihours * (1000 * 60 * 60);
+    var llimins = Math.floor(lastloggedin / (1000 * 60));
+    lastloggedin -= llimins * (1000 * 60);
 
     for (var i = 0; i < document.getElementsByClassName("info_name").length; i++) {
         document.getElementsByClassName("info_name")[i].innerHTML = player.name;
@@ -49,6 +54,20 @@ document.getElementById("overview").addEventListener("player", () => { //player*
     document.getElementById("info_age_days").innerHTML = days + " dagar";
     document.getElementById("info_age_hours").innerHTML = hours + " timmar";
     document.getElementById("info_age_minutes").innerHTML = mins + " minuter";
+
+    if (llimins > 0) {
+        document.getElementById("info_currentsession").innerHTML = llimins + " minuters";
+        if (llihours > 0) {
+            document.getElementById("info_currentsession").innerHTML = llihours + " timmars";
+            if (llidays > 0) {
+                document.getElementById("info_currentsession").innerHTML = llidays + " dagars";
+            }
+        }
+    }
+    else {        
+        document.getElementById("info_currentsession_holder").style.display = "none";
+        document.getElementById("info_currentsession_addon").style.display = "inline";
+    }
     //document.getElementById("info_rank").innerHTML = player.bestrank; //fix rank later
     //document.getElementById("info_currentsession").innerHTML = player.bestrank; //fix time later
 
