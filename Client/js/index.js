@@ -1,35 +1,34 @@
-﻿
+﻿var main_hex;
+
 document.getElementById("overview").addEventListener("toggled", () => {
     getPlayer();
-    var hex = new hexstat("main");
-    setTimeout(function () {
-        hex.maxskill = player.level * 4; // max of animate arguments
-        hex.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(57, 174, 221, 0.65)" }//,
-        ]) //{ "life": 25, "speed": 10, "physicalattack": 0, "physicaldefence": 5, "magicattack": 30, "magicdefence": 15, "color": "rgba(0, 0, 0, 0.5)" },
-        //{ "life": 30, "speed": 30, "physicalattack": 30, "physicaldefence": 0, "magicattack": 00, "magicdefence": 0, "color": "rgba(100, 0, 100, 0.3)" },
-        //{ "life": 5, "speed": 30, "physicalattack": 20, "physicaldefence": 10, "magicattack": 10, "magicdefence": 30, "color": "rgba(0, 174, 0, 0.65)" }
-
-    }, 1000);
-    console.log("updated");
-
-    //getPlayers();
+    screens.overview.visible = true;
 });
 
+document.getElementById("overview").addEventListener("detoggled", () => {
+    screens.overview.visible = false;
+    main_hex.arr = [];
+});
 
 window.addEventListener("load", () => {
     document.getElementById("attack_btn").onclick = () => {
         toggleScreen(screens.attack.elm);
-        getPlayer();
-
     }
     document.getElementById("league_btn").onclick = () => {
         toggleScreen(screens.league.elm);
         getPlayer();
     }
-
+    main_hex = new hexstat("main");
+    main_hex.drawLines();
+    main_hex.drawOutline();
 });
 
 document.getElementById("overview").addEventListener("player", () => { //player* but this code is never used.
+    if (!screens.overview.visible)
+        return;
+
+    main_hex.maxskill = player.userStats.level * 4; // max of animate arguments
+    main_hex.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(57, 174, 221, 0.65)" }]) //{ "life": 25, "speed": 10, "physicalattack": 0, "physicaldefence": 5, "magicattack": 30, "magicdefence": 15, "color": "rgba(0, 0, 0, 0.5)" },
 
     var timenow = new Date().getTime();
     var diff = timenow - player.age;

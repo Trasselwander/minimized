@@ -1,43 +1,32 @@
 ﻿var attack_hexstat;
 
 document.getElementById("attack").addEventListener("toggled", () => {
-    attack_hexstat.stage.removeAllChildren();
-    attack_hexstat.stage.clear();
-    attack_hexstat.drawLines();
-    attack_hexstat.drawOutline();
-
-    var hex = attack_hexstat
-    setTimeout(function () {
-        hex.maxskill = 40; // max of animate arguments
-        hex.animate([{ "life": 5, "speed": 10, "physicalattack": 20, "physicaldefence": 20, "magicattack": 10, "magicdefence": 15, "color": "rgba(38, 94, 209, 0.5)" },
-            { "life": 5, "speed": 30, "physicalattack": 20, "physicaldefence": 10, "magicattack": 10, "magicdefence": 30, "color": "rgba(18, 149, 33, 0.5)" }])
-    }, 1000);
-    console.log("updated");
+    attack_hexstat.arr = [];
+    screens.attack.visible = true;
 
     getPlayer();
     //getEnemy();
 });
+
 screens.attack.elm.addEventListener("enemy", () => {
 
 
 
-
-
-
-
-
-
 });
+
 document.getElementById("attack").addEventListener("detoggled", () => {
-    attack_hexstat.drawOutline;
+    attack_hexstat.arr = [];
+    screens.attack.visible = false;
 });
+
 document.getElementById("overview").addEventListener("player", () => {
-    var hex = attack_hexstat
-    setTimeout(function () {
-        hex.maxskill = 40; //player.userData.level * 4; //ta den högsta leveln av båda karaktärerna.
-        hex.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(38, 94, 209, 0.5)" },
-            { "life": 5, "speed": 30, "physicalattack": 20, "physicaldefence": 10, "magicattack": 10, "magicdefence": 30, "color": "rgba(18, 149, 33, 0.5)" }])
-    }, 1000);
+    if (!screens.attack.visible)
+        return;
+
+    attack_hexstat.maxskill = 40; //player.userData.level * 4; //ta den högsta leveln av båda karaktärerna.
+    attack_hexstat.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(38, 94, 209, 0.5)" },
+        { "life": 5, "speed": 30, "physicalattack": 20, "physicaldefence": 10, "magicattack": 10, "magicdefence": 30, "color": "rgba(18, 149, 33, 0.5)" }])
+
     document.getElementById("attack_diff_table").getElementsByTagName("th")[1].innerHTML = player.name;
     document.getElementById("attack_diff_table").getElementsByTagName("th")[2].innerHTML = "adam"; //enemy name
 
@@ -74,10 +63,6 @@ document.getElementById("overview").addEventListener("player", () => {
 
     document.getElementById("attack_diff_table").getElementsByClassName("total_diff")[0].innerHTML = player.userStats.life + player.userStats.speed + player.userStats.physicalattack + player.userStats.physicaldefence + player.userStats.magicattack + player.userStats.magicdefence - 10 - 10 - 7 - 2 - 1 - 1; // enemy stats
     document.getElementById("attack_diff_table").getElementsByClassName("total_diff")[0].classList.add((parseInt(document.getElementById("attack_diff_table").getElementsByClassName("total_diff")[0].innerHTML) == 0) ? "blue" : ((parseInt(document.getElementById("attack_diff_table").getElementsByClassName("total_diff")[0].innerHTML) > 0) ? "green" : "red"));
-
-
-
-
 });
 
 
@@ -86,5 +71,6 @@ window.addEventListener("load", () => {
         toggleScreen(screens.overview.elm);
     }
     attack_hexstat = new hexstat("canvas_attack");
-    attack_hexstat.drawOutline;
+    attack_hexstat.drawLines();
+    attack_hexstat.drawOutline();
 });

@@ -6,10 +6,15 @@
     this.maxskill = 200; //this.level * 4 / 2;
     this.size = this.canvas.width / 2;
 
-    var test = { time: 0 };
+    this.test = { time: 0, t:0 };
     var that = this;
+    this.arr = [];
 
     this.data = [];
+
+    this.datalist = [];
+
+    this.tickref;
 
     this.drawOutline = function () {
         if (this.stage.getChildByName("outline") != null) return;
@@ -32,9 +37,7 @@
                       { x: -(Math.min(this.maxskill, magdefence) / this.maxskill * this.size) * Math.cos(toRadians(30)), y: -(Math.min(this.maxskill, magdefence) / this.maxskill * this.size) * Math.sin(toRadians(30)) },
                       { x: 0, y: -(Math.min(this.maxskill, life) / this.maxskill * this.size) }];
 
-        if (this.data[color]) this.stage.removeChild(this.data[color]); // I don't know if it is possible to edit moveTo cordinates.
-
-        data = new createjs.Shape();
+        var data = new createjs.Shape();
         data.name = "data";
         data.x = this.canvas.width / 2;
         data.y = this.canvas.height / 2;
@@ -45,7 +48,7 @@
         data.graphics.closePath();
 
         this.stage.addChild(data);
-        this.data[color] = data;
+        this.datalist.push(data);
     }
 
     this.drawLines = function () {
@@ -70,36 +73,44 @@
         }
     }
 
-    this.draw = function (life, speed, physattack, physdefence, magattack, magdefence) {
-        this.drawLines();
-        this.drawOutline();
-        this.drawData(life, speed, physattack, physdefence, magattack, magdefence);
-
-        this.stage.update();
+    this.hardReset = function () {
+        this.stage.clear();
+        this.stage.removeAllChildren();
+        this.arr = [];
     }
 
     this.animate = function (statsarr) {
-        this.stage.clear();
-        this.stage.removeAllChildren();
+        this.arr = statsarr;
         this.drawLines();
         this.drawOutline();
-
-        createjs.Tween.get(test).to({ time: 1 }, 2000, createjs.Ease.quintInOut);
-        createjs.Ticker.setFPS(60);
-        //createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED; // Causes lag, but why?
-        createjs.Ticker.addEventListener("tick", function () {
-            tick(statsarr);
-        });
+        this.test.t = 0;
     }
 
-    function tick(statsarr) {
+    createjs.Ticker.setFPS(60);
+    //createjs.Ticker.timingMode = createjs.Ticker.RAF_SYNCHED; // Causes lag, but why?
+    createjs.Ticker.addEventListener("tick", tick);
+
+
+    this.removeData = function () {
+        this.datalist.forEach(function (elm) {
+            that.stage.removeChild(elm);
+        });
+        this.datalist = [];
+    }
+
+    function tick() {
+        that.test.t = Math.min(1 / 120 + that.test.t, 1);
+        that.test.time = createjs.Ease.quintInOut(that.test.t);
+
+        that.removeData();
+
+        statsarr = that.arr;
         for (var i = 0; i < statsarr.length; i++)
-            that.drawData(statsarr[i].life * test.time, statsarr[i].speed * test.time, statsarr[i].physicalattack * test.time, statsarr[i].physicaldefence * test.time, statsarr[i].magicattack * test.time, statsarr[i].magicdefence * test.time, statsarr[i].color);
+            that.drawData(statsarr[i].life * that.test.time, statsarr[i].speed * that.test.time, statsarr[i].physicalattack * that.test.time, statsarr[i].physicaldefence * that.test.time, statsarr[i].magicattack * that.test.time, statsarr[i].magicdefence * that.test.time, statsarr[i].color);
 
         that.stage.update();
     }
 }
-
 
 function toRadians(angle) {
     return angle * (Math.PI / 180);
