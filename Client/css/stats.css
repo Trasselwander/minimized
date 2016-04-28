@@ -2,6 +2,13 @@
   border-collapse: collapse;
   border-spacing: 0;
   max-width: 600px; }
+  .stats-table#player_dataStats, .stats-table#player_skill_points {
+    display: inline-block;
+    vertical-align: middle; }
+  .stats-table#player_skill_points {
+    font-weight: 800;
+    color: red;
+    min-width: 12px; }
   .stats-table th {
     text-align: left; }
   .stats-table tr {
