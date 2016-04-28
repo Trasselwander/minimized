@@ -36,21 +36,6 @@ namespace Server.Services
             user.userStats = GetUserStats(user.ID);
         }
 
-
-        public List<User> GetUsersFromRank(int rank)
-        {
-            List<User> uses = new List<User>();
-            SQLite.GetConnection().Query<User, UserData, UserStats, DBNull>("SELECT * FROM users INNER JOIN userdata ON userdata.UID=users.ID AND abs(@rank - userdata.rank) <= 3 INNER JOIN userstats ON userstats.UID=users.ID", (users, userdata, userstats) =>
-               {
-                   users.userData = userdata;
-                   users.userStats = userstats;
-                   uses.Add(users);
-
-                   return null;
-               }, new { rank = rank }).FirstOrDefault();
-            return uses;
-        }
-
         public User CreateUser(string name, string hash, string email)
         {
             User u = new User() { name = name, hash = hash, email = email };
@@ -71,7 +56,8 @@ namespace Server.Services
 
         //public int GetUserRank(User u)
         //{
-        //    int worst_rank = SQLite.GetConnection().Query<int>("SELECT COUNT(*) FROM users INNER JOIN userdata ON userdata.LID=@lid ORDER BY userdata.score ", new { lid = u.userData.LID }).FirstOrDefault();
+        //    int worst_rank = SQLite.GetConnection().Query<int>("
+        //        SELECT COUNT(*) FROM users INNER JOIN userdata ON userdata.LID=@lid ORDER BY userdata.score ", new { lid = u.userData.LID }).FirstOrDefault();
         //}
 
 
@@ -105,12 +91,38 @@ namespace Server.Services
             SQLite.GetConnection().QueryMultiple(@"DELETE FROM userstats WHERE userstats.uid = @uid;
                                                    INSERT INTO userstats (UID, bestrank)
                                                    SELECT @uid AS UID,
-	                                                   (SELECT COUNT(*) FROM users WHERE users.lid = @lid) AS bestrank;
-                                                   UPDATE userdata SET LID=@lid WHERE users.ID = @uid;", new { uid = u.ID, lid = lid });
+	                                                   (SELECT COUNT(*) FROM userdata WHERE userdata.lid = @lid) AS bestrank;
+                                                   UPDATE userdata SET LID=@lid WHERE userdata.UID = @uid;", new { uid = u.ID, lid = lid });
         }
 
         public List<Leauge> GetLeagues()
-           => SQLite.GetConnection().Query<Leauge>("SELECT * FROM leagues").ToList();
+        {
+            List<Leauge> leauge = SQLite.GetConnection().Query<Leauge>("SELECT * FROM leagues").ToList();
+
+            foreach (var l in leauge)
+            {
+                var d = SQLite.GetConnection().Query<Leauge>(@"SELECT * FROM userstats INNER JOIN userdata ON userstats.UID=userdata.UID AND userdata.LID=@lid", new { lid = l.ID }).FirstOrDefault();
+
+                var data = SQLite.GetConnection().Query<Leauge>(@"SELECT 
+                                                                    SUM(userstats.life), 
+                                                                    SUM(userstats.speed),
+                                                                    SUM(userstats.physicalattack), 
+                                                                    SUM(userstats.physicaldefence), 
+                                                                    SUM(userstats.magicattack), 
+                                                                    SUM(userstats.magicdefence) 
+                                                                 FROM userstats INNER JOIN userdata ON userstats.UID=userdata.UID AND userdata.LID=@lid", new { lid = l.ID }).FirstOrDefault();
+
+                l.life = data.life;
+                l.speed = data.speed;
+                l.physicalattack = data.physicalattack;
+                l.physicaldefence = data.physicaldefence;
+                l.magicattack = data.magicattack;
+                l.magicdefence = data.magicdefence;
+            }
+
+            return leauge;
+        }
+
 
         public void CreateLeague(Leauge l)
             => SQLite.GetConnection().Query("INSERT INTO leagues (name, start, end) VALUES (@name, @start, @end)", new { l.name, l.start, l.end });
@@ -184,6 +196,9 @@ namespace Server.Services
             public int level { get; set; }
             public int score { get; set; }
             public int exp { get; set; }
+
+            // Dynamic
+            public int rank { get; set; }
         }
     }
 }
