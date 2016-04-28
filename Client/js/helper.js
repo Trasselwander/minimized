@@ -89,4 +89,13 @@ window.addEventListener("load", () => {
             toggleScreen(screens.login.elm);
         }
     });
+
+    var backbtns = document.getElementsByClassName("back_btn")
+    for (var i = 0; i < backbtns.length; i++) {
+        backbtns[i].onclick = () => {
+            toggleScreen(screens.overview.elm);
+        }
+    }
+
+
 });

@@ -18,8 +18,8 @@ document.getElementById("overview").addEventListener("player", () => {
         hex.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(38, 94, 209, 0.5)" },
             { "life": 5, "speed": 30, "physicalattack": 20, "physicaldefence": 10, "magicattack": 10, "magicdefence": 30, "color": "rgba(18, 149, 33, 0.5)" }])
     }, 1000);
-    document.getElementById("attack_diff_table").getElementsByTagName("td")[1].innerHTML = player.name;
-    document.getElementById("attack_diff_table").getElementsByTagName("td")[2].innerHTML = "adam"; //enemy name
+    document.getElementById("attack_diff_table").getElementsByTagName("th")[1].innerHTML = player.name;
+    document.getElementById("attack_diff_table").getElementsByTagName("th")[2].innerHTML = "adam"; //enemy name
 
 
     document.getElementById("attack_diff_table").getElementsByClassName("char_life")[0].innerHTML = player.userStats.life;

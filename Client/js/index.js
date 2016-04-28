@@ -21,26 +21,37 @@ window.addEventListener("load", () => {
     }
     document.getElementById("league_btn").onclick = () => {
         toggleScreen(screens.league.elm);
-        console.log(screens.league.elm);
     }
+
 });
 
 document.getElementById("overview").addEventListener("player", () => { //player* but this code is never used.
 
-    var chars = document.getElementsByClassName("char_name");
-    //var me = player.indexOf(players.filter(p=> p.name == user.name)[0]);  //this is never used since we never draw out the closest characters. and we dont even get a list of more than one character
+    var timenow = new Date().getTime();
+    var diff = timenow - player.userData.age;
 
+    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    diff -= days * (1000 * 60 * 60 * 24);
 
-    //chars[3].innerHTML = "me";
+    var hours = Math.floor(diff / (1000 * 60 * 60));
+    diff -= hours * (1000 * 60 * 60);
 
-    //for (var i = 0; i < me; i++) {
-    //    chars[i + 3 - me].innerHTML = players[i].name;
+    var mins = Math.floor(diff / (1000 * 60));
+    diff -= mins * (1000 * 60);
 
-    //}
+    for (var i = 0; i < document.getElementsByClassName("info_name").length; i++) {
+        document.getElementsByClassName("info_name")[i].innerHTML = player.name;
+    }
+    if (days <= 0) document.getElementById("info_age_days_holder").style.display = "none";
+    if (hours <= 0) document.getElementById("info_age_hours_holder").style.display = "none";
 
-    //for (var i = me + 1; i < players.length; i++) {
-    //    chars[i + 3 - me].innerHTML = players[i].name;
-    //}
+    document.getElementById("info_age_days").innerHTML = days + " dagar";
+    document.getElementById("info_age_hours").innerHTML = hours + " timmar";
+    document.getElementById("info_age_minutes").innerHTML = mins + " minuter";
+    //document.getElementById("info_rank").innerHTML = player.bestrank; //fix rank later
+    //document.getElementById("info_currentsession").innerHTML = player.bestrank; //fix time later
+
+    
 
     document.getElementById("player_dataStats").getElementsByClassName("char_life")[0].innerHTML = player.userStats.life;
     document.getElementById("player_dataStats").getElementsByClassName("char_speed")[0].innerHTML = player.userStats.speed;
@@ -49,12 +60,12 @@ document.getElementById("overview").addEventListener("player", () => { //player*
     document.getElementById("player_dataStats").getElementsByClassName("char_magA")[0].innerHTML = player.userStats.magicattack;
     document.getElementById("player_dataStats").getElementsByClassName("char_magD")[0].innerHTML = player.userStats.magicdefence;
 
-    document.getElementById("player_userStats").getElementsByClassName("char_level")[0].innerHTML = player.userData.level;
-    document.getElementById("player_userStats").getElementsByClassName("char_exp")[0].innerHTML = player.userData.exp;
-    document.getElementById("player_userStats").getElementsByClassName("char_rank")[0].innerHTML = player.userData.rank;
-    document.getElementById("player_userStats").getElementsByClassName("char_bestRank")[0].innerHTML = player.userData.bestrank;
-    document.getElementById("player_userStats").getElementsByClassName("char_wins")[0].innerHTML = player.userData.wins;
-    document.getElementById("player_userStats").getElementsByClassName("char_losses")[0].innerHTML = player.userData.losses;
+    document.getElementById("player_userStats").getElementsByClassName("char_level")[0].innerHTML = player.userStats.level;
+    document.getElementById("player_userStats").getElementsByClassName("char_exp")[0].innerHTML = player.userStats.exp;
+    document.getElementById("player_userStats").getElementsByClassName("char_rank")[0].innerHTML = player.userStats.rank;
+    document.getElementById("player_userStats").getElementsByClassName("char_bestRank")[0].innerHTML = player.userStats.bestrank;
+    document.getElementById("player_userStats").getElementsByClassName("char_wins")[0].innerHTML = player.userStats.wins;
+    document.getElementById("player_userStats").getElementsByClassName("char_losses")[0].innerHTML = player.userStats.losses;
 
 
     ////stats.getElementById("char_age").innerHTML = (new Date()).getTime() - player.userData.age;
