@@ -89,7 +89,10 @@ namespace Server.Services
 	                                                   (SELECT COUNT(*) FROM users WHERE users.lid = @lid) AS bestrank;
                                                    UPDATE users SET LID=@lid WHERE users.ID = @uid;", new { uid = u.ID, lid = lid });
         }
-
+        public void LeaveLeague(User u, int lid) //jag tror inte att detta funkar till 100% //JK funkar ayy lamo
+        {
+            SQLite.GetConnection().QueryMultiple(@"UPDATE users SET LID=null WHERE users.ID = @uid;", new { uid = u.ID, lid = lid });
+        }
         public List<League> GetLeagues()
         {
             List<League> leauge = SQLite.GetConnection().Query<League>("SELECT * FROM leagues").ToList();

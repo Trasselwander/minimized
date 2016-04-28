@@ -6,14 +6,13 @@ function getPlayer() {
             screens.overview.elm.dispatchEvent(new Event("player"));
         }
     });
+}
+function getEnemy() {
+    sendRequest("/players/enemy", (test, error) => {
+        if (!error) {
+            enemy = JSON.parse(test);
+            screens.attack.elm.dispatchEvent(new Event("enemy"));
 
-    function getEnemy() {
-        sendRequest("/players/enemy", (test, error) => {
-            if (!error) {
-                enemy = JSON.parse(test);
-                screens.attack.elm.dispatchEvent(new Event("enemy"));
-
-            }
-        });
-    }
+        }
+    });
 }

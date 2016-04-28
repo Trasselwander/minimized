@@ -27,6 +27,13 @@ namespace Server.Modules
                 Users.JoinLeague(user, parameters.id);
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetLeagues()));
             };
+            Get["/leave/{id}"] = parameters =>
+            {
+                Services.UserService.User user = AuthorizeUser();
+                Users.LeaveLeague(user, parameters.id);
+
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetLeagues()));
+            };
         }
     }
 }

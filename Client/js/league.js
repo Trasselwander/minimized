@@ -26,16 +26,23 @@
                     hex.animate([league]);
                 }, 1000, league[i], i);
 
+
+
                 newleague.getElementsByClassName("joinleague_btn")[0].dataset.lid = league[i].ID;
-
-
                 newleague.getElementsByClassName("joinleague_btn")[0].onclick = function () {
-
-                    console.log(this);
-
                     sendRequest("/leagues/join/" + this.dataset.lid);
                 }
+                if (player.league) {
+                    if (league[i].ID == player.league.ID) {
+                        newleague.getElementsByClassName("joinleague_btn")[0].innerHTML = "GÅ UR";
+                        newleague.getElementsByClassName("joinleague_btn")[0].classList.remove("green");
+                        newleague.getElementsByClassName("joinleague_btn")[0].classList.add("orange");
+                        newleague.getElementsByClassName("joinleague_btn")[0].onclick = function () {
+                            sendRequest("/leagues/leave/" + this.dataset.lid);
+                        }
+                    }
 
+                }
             }
         }
     });
