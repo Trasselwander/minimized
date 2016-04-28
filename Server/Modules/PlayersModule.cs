@@ -24,7 +24,7 @@ namespace Server.Modules
             Get["/player"] = parameters =>
             {
                 Services.UserService.User user = AuthorizeUser();
-                Users.GetUserDataAndStats(user);
+                Users.GetUserStats(user);
 
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(user));
             };
