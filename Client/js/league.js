@@ -1,6 +1,16 @@
 ﻿screens.league.elm.addEventListener("toggled", () => {
     sendRequest("/leagues/list", (test, error) => {
         if (!error) {
+
+            for (var i = 1; i < document.getElementsByClassName("league_name").length; i++) { // removes old league divs
+                if (document.getElementsByClassName("league_name").innerHTML != "Tävlingar") {
+                    var firstParent = document.getElementsByClassName("league_name")[i].parentElement;
+                    firstParent.parentElement.removeChild(firstParent);
+                    i--;
+                }
+            }
+
+
             league = JSON.parse(test);
             for (var i = 0; i < league.length; i++) {
                 var clone = document.getElementById("shadow_league");
@@ -8,12 +18,68 @@
                 newleague.getElementsByClassName("league_name")[0].innerHTML = league[i].name;
                 newleague.getElementsByClassName("canvas_league")[0].id = "league_canvas_" + i;
 
-                newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("age")[0].innerHTML = (new Date()).getTime() - league[i].start;
-                newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("timeleft")[0].innerHTML = (league[i].end - (new Date()).getTime()) > 0 ? league[i].end - (new Date()).getTime() : "Slutad";
+
+                var timenow = new Date().getTime(); // borde göra en funktion för detta
+                var remaining =  timenow - league[i].start;
+                if (Math.floor(remaining / 1000) > 0) {
+                    var endTime = Math.floor(remaining / 1000) + " sekunder";
+
+                    if (Math.floor(remaining / (1000 * 60)) > 0) {
+                        var endTime = Math.floor(remaining / (1000 * 60)) + " minuter";
+
+                        if (Math.floor(remaining / (1000 * 60 * 60)) > 0) {
+                            var endTime = Math.floor(remaining / (1000 * 60 * 60)) + " timmar";
+
+                            if (Math.floor(remaining / (1000 * 60 * 60 * 24)) > 0) {
+                                var endTime = Math.floor(remaining / (1000 * 60 * 60 * 24)) + " dagar";
+                            }
+                        }
+                    }
+                }
+                else {
+                    var endTime = "Slutad";
+                }
+
+
+                newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("age")[0].innerHTML = endTime;
+
+                var timenow = new Date().getTime(); // borde göra en funktion för detta
+                var remaining = league[i].end - timenow;
+                if (Math.floor(remaining / 1000) > 0) {
+                    var endTime = Math.floor(remaining / 1000) + " sekunder";
+
+                    if (Math.floor(remaining / (1000 * 60)) > 0) {
+                        var endTime = Math.floor(remaining / (1000 * 60)) + " minuter";
+
+                        if (Math.floor(remaining / (1000 * 60 * 60)) > 0) {
+                            var endTime = Math.floor(remaining / (1000 * 60 * 60)) + " timmar";
+
+                            if (Math.floor(remaining / (1000 * 60 * 60 * 24)) > 0) {
+                                var endTime = Math.floor(remaining / (1000 * 60 * 60 * 24)) + " dagar";
+                            }
+                        }
+                    }
+                }
+                else {
+                    var endTime = "Slutad";
+                }
+
+                newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("timeleft")[0].innerHTML = endTime;
                 newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("totalplayers")[0].innerHTML = league[i].totalplayers;
                 newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("highestlevel")[0].innerHTML = league[i].highestlevel;
                 newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("totalfights")[0].innerHTML = league[i].totalfights;
                 newleague.getElementsByClassName("stats-table")[0].getElementsByClassName("leader")[0].innerHTML = league[i].leader;
+
+                //var timenow = new Date().getTime();
+                //var diff = timenow - player.age;
+                //var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                //diff -= days * (1000 * 60 * 60 * 24);
+                //var hours = Math.floor(diff / (1000 * 60 * 60));
+                //diff -= hours * (1000 * 60 * 60);
+                //var mins = Math.floor(diff / (1000 * 60));
+                //diff -= mins * (1000 * 60);
+
+
 
                 newleague.style = null;
 
@@ -31,6 +97,7 @@
                 newleague.getElementsByClassName("joinleague_btn")[0].dataset.lid = league[i].ID;
                 newleague.getElementsByClassName("joinleague_btn")[0].onclick = function () {
                     sendRequest("/leagues/join/" + this.dataset.lid);
+                    getPlayer();
                 }
                 if (player.league) {
                     if (league[i].ID == player.league.ID) {
@@ -39,6 +106,7 @@
                         newleague.getElementsByClassName("joinleague_btn")[0].classList.add("orange");
                         newleague.getElementsByClassName("joinleague_btn")[0].onclick = function () {
                             sendRequest("/leagues/leave/" + this.dataset.lid);
+                            getPlayer();
                         }
                     }
 

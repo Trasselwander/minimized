@@ -1,5 +1,6 @@
 ﻿
 document.getElementById("overview").addEventListener("toggled", () => {
+    getPlayer();
     var hex = new hexstat("main");
     setTimeout(function () {
         hex.maxskill = player.level * 4; // max of animate arguments
@@ -18,10 +19,12 @@ document.getElementById("overview").addEventListener("toggled", () => {
 window.addEventListener("load", () => {
     document.getElementById("attack_btn").onclick = () => {
         toggleScreen(screens.attack.elm);
+        getPlayer();
 
     }
     document.getElementById("league_btn").onclick = () => {
         toggleScreen(screens.league.elm);
+        getPlayer();
     }
 
 });

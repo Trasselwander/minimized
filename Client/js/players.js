@@ -4,6 +4,7 @@ function getPlayer() {
         if (!error) {
             player = JSON.parse(test);
             screens.overview.elm.dispatchEvent(new Event("player"));
+            console.log(player);
         }
     });
 }
