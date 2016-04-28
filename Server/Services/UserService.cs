@@ -54,35 +54,35 @@ namespace Server.Services
             return u;
         }
 
-        //public int GetUserRank(User u)
-        //{
-        //    int worst_rank = SQLite.GetConnection().Query<int>("
-        //        SELECT COUNT(*) FROM users INNER JOIN userdata ON userdata.LID=@lid ORDER BY userdata.score ", new { lid = u.userData.LID }).FirstOrDefault();
-        //}
+        public int GetUserRank2(User u)
+            => SQLite.GetConnection().Query<int>("SELECT COUNT(*) FROM userdata INNER JOIN userstats ON userstats.score >  WHERE userdata.LID = @lid ", new { lid = u.userData.LID }).FirstOrDefault();
 
+        public int GetUserRank(User u)
+            => SQLite.GetConnection().Query<int>(@"SELECT COUNT(*) as s FROM userdata WHERE userdata.LID = @lid
+                                                      SELECT * FROM s WHERE s.UID = @uid", new { lid = u.userData.LID, uid = u.ID }).FirstOrDefault();
 
-        //public User GetOpponent(User u)
-        //{
-        //    if (u.userStats == null)
-        //        u.userStats = GetUserStats(u.ID);
+        public User GetOpponent(User u)
+        {
+            if (u.userStats == null)
+                u.userStats = GetUserStats(u.ID);
 
-        //    int worst_rank = SQLite.GetConnection().Query<int>("SELECT COUNT(*) FROM users INNER JOIN userdata ON userdata.LID=@lid", new { lid = u.userData.LID }).FirstOrDefault();
+            int worst_rank = SQLite.GetConnection().Query<int>("SELECT COUNT(*) FROM users INNER JOIN userdata ON userdata.LID=@lid", new { lid = u.userData.LID }).FirstOrDefault();
 
-        //    Random rand = new Random(); //reuse this if you are generating many
-        //    int random_rank = u.userStats.rank;
+            Random rand = new Random(); // reuse this if you are generating many
+            int random_rank = u.userStats.rank;
 
-        //    while (random_rank == u.userStats.rank) // There may be errors inside of this loop.
-        //    {
-        //        if (u.userStats.rank >= 5)
-        //            random_rank = rand.Next(1, 10);
-        //        else if (u.userStats.rank + 5 > worst_rank)
-        //            random_rank = rand.Next(worst_rank - 10, worst_rank);
-        //        else 
-        //            random_rank = rand.Next(u.userStats.rank - 5, u.userStats.rank + 5);
-        //    }
+            while (random_rank == u.userStats.rank) // There may be errors inside of this loop.
+            {
+                if (u.userStats.rank >= 5)
+                    random_rank = rand.Next(1, 10);
+                else if (u.userStats.rank + 5 > worst_rank)
+                    random_rank = rand.Next(worst_rank - 10, worst_rank);
+                else
+                    random_rank = rand.Next(u.userStats.rank - 5, u.userStats.rank + 5);
+            }
 
-        //    return SQLite.GetConnection().Query<User>("SELECT * FROM users INNER JOIN userdata ON userdata.LID=@lid ORDER BY userdata.score LIMIT 1 OFFSET @rank", new { lid = u.userData.LID, rank = random_rank }).FirstOrDefault();
-        //}
+            return SQLite.GetConnection().Query<User>("SELECT * FROM users INNER JOIN userdata ON userdata.LID=@lid ORDER BY userdata.score LIMIT 1 OFFSET @rank", new { lid = u.userData.LID, rank = random_rank }).FirstOrDefault();
+        }
 
         public void JoinLeauge(User u, int lid)
         {
