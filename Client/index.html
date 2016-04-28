@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="lib/fa/css/font-awesome.min.css" />
     <link rel="stylesheet" href="lib/swal/sweetalert.css" />
 
+    <link rel="stylesheet" href="css/buttons.css" />
     <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" type="text/css" href="css/overview.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -17,7 +18,7 @@
             <h1>Login</h1>
             <input type="text" id="login_name" placeholder="Username" class="inline" />
             <input type="password" id="login_password" placeholder="Password" class="inline" />
-            <input type="button" value="Login" id="login_btn" class="inline" />
+            <input type="button" value="LOGIN" id="login_btn" class="inline" />
             <span id="reg">Register</span>
         </div>
     </div>
@@ -35,9 +36,9 @@
     <div id="overview" class="content">
         <div class="holder">
             <div class="menu">
-                <button id="attack_btn">Attackera</button>
-                <button id="league_btn">Tävlingar</button>
-                <button id="logout_btn">Logga ut</button>
+                <button id="attack_btn" class="material-btn red">ATTACKERA</button>
+                <button id="league_btn" class="material-btn orange">TÄVLINGAR</button>
+                <button id="logout_btn" class="material-btn black">LOGGA UT</button>
             </div>
 
 
@@ -334,9 +335,9 @@
             </div>
 
             <div class="menu">
-                <button id="attack_request_btn">Attackera</button>
-                <button>Nästa match</button>
-                <button id="cancel_btn">Avbryt</button>
+                <button id="attack_request_btn" class="material-btn red">ATTACKERA</button>
+                <button class="material-btn orange">NÄSTA MATCH</button>
+                <button id="cancel_btn" class="material-btn black">AVBRYT</button>
             </div>
         </div>
     </div>
@@ -345,7 +346,7 @@
     <div id="league" class="content">
         <div class="holder">
             <div class="menu">
-                <button class="back_btn">Tillbaka</button>
+                <button class="back_btn  material-btn black">TILLBAKA</button>
             </div>
             <div id="shadow_league" style="display:none">
                 <h3 class="league_name">Tävlingar</h3>
@@ -395,7 +396,7 @@
                             </tbody>
                         </table>
                         <div class="menu" style="margin-bottom: 0; margin-top: 10px;">
-                            <button class="joinleague_btn">Gå med</button>
+                            <button class="joinleague_btn material-btn green">GÅ MED</button>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 ﻿
-#overview, #attack, #league{
+#overview, #attack, #league {
 
     .holder {
         margin: 50px auto;
@@ -13,6 +13,10 @@
 
             button {
                 padding: 4px;
+
+                &.material-btn {
+                    padding: 10px 20px;
+                }
             }
         }
 

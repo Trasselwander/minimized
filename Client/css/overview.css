@@ -8,6 +8,8 @@
     margin-bottom: 35px; }
     #overview .holder .menu button, #attack .holder .menu button, #league .holder .menu button {
       padding: 4px; }
+      #overview .holder .menu button.material-btn, #attack .holder .menu button.material-btn, #league .holder .menu button.material-btn {
+        padding: 10px 20px; }
   #overview .holder .info, #attack .holder .info, #league .holder .info {
     margin: 20px;
     background-color: rgba(0, 0, 0, 0.02);

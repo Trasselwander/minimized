@@ -22,13 +22,13 @@ $white: #fff;
     padding: 10px 20px;
     //border-radius: 4px;
     border: 1px solid rgba($blue, $medium);
-    font: 500 18px Roboto;
+    //font: 500 18px Roboto;
     background: transparent;
     position: relative;
     overflow: hidden;
     cursor: pointer;
     outline: none;
-    transition: all .5s ease;
+    transition: all .5s ease, visibility 1ms;
 
 
     &.green {
@@ -80,7 +80,7 @@ $white: #fff;
         position: absolute;
         background: $blue;
         z-index: -1;
-        transition: all .5s ease;
+        transition: all .5s ease, visibility 1ms;
     }
 
     &.green .circle {

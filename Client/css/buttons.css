@@ -4,13 +4,12 @@
   margin: 20px;
   padding: 10px 20px;
   border: 1px solid rgba(33, 150, 243, 0.4);
-  font: 500 18px Roboto;
   background: transparent;
   position: relative;
   overflow: hidden;
   cursor: pointer;
   outline: none;
-  transition: all .5s ease; }
+  transition: all .5s ease, visibility 1ms; }
   .material-btn.green {
     color: #4caf50;
     border: 1px solid rgba(76, 175, 80, 0.4); }
@@ -41,7 +40,7 @@
     position: absolute;
     background: #2196f3;
     z-index: -1;
-    transition: all .5s ease; }
+    transition: all .5s ease, visibility 1ms; }
   .material-btn.green .circle {
     background: #4caf50; }
   .material-btn.orange .circle {
