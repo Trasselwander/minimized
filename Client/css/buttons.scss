@@ -1,0 +1,101 @@
+﻿$light: 0.2;
+$medium: $light * 2;
+
+$blue: #2196f3;
+$lightblue: rgba($blue, $light);
+$green: #4caf50;
+$lightgreen: rgba($green, $light);
+$orange: #ff9800;
+$lightorange: rgba($orange, $light);
+$red: #f44336;
+$lightred: rgba($red, $light);
+$black: rgba(0,0,0,0.5);
+$lightblack: rgba($black, $light);
+$white: #fff;
+
+//rgba(base color, .7);
+
+.material-btn {
+    border: 0;
+    color: $blue;
+    margin: 20px;
+    padding: 10px 20px;
+    //border-radius: 4px;
+    border: 1px solid rgba($blue, $medium);
+    font: 500 18px Roboto;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    outline: none;
+    transition: all .5s ease;
+
+
+    &.green {
+        color: $green;
+        border: 1px solid rgba($green, $medium);
+    }
+
+    &.orange {
+        color: $orange;
+        border: 1px solid rgba($orange, $medium);
+    }
+
+    &.red {
+        color: $red;
+        border: 1px solid rgba($red, $medium);
+    }
+
+
+    &.black {
+        color: $black;
+        border: 1px solid rgba($black, $medium);
+    }
+
+    &:hover {
+        color: #fff;
+        background: $lightblue;
+    }
+
+    &.green:hover {
+        background: $lightgreen;
+    }
+
+    &.orange:hover {
+        background: $lightorange;
+    }
+
+    &.red:hover {
+        background: $lightred;
+    }
+
+    &.black:hover {
+        background: $lightblack;
+    }
+
+    .circle {
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        position: absolute;
+        background: $blue;
+        z-index: -1;
+        transition: all .5s ease;
+    }
+
+    &.green .circle {
+        background: $green;
+    }
+
+    &.orange .circle {
+        background: $orange;
+    }
+
+    &.red .circle {
+        background: $red;
+    }
+
+    &.black .circle {
+        background: $black;
+    }
+}

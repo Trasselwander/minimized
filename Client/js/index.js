@@ -2,7 +2,7 @@
 document.getElementById("overview").addEventListener("toggled", () => {
     var hex = new hexstat("main");
     setTimeout(function () {
-        hex.maxskill = player.userData.level * 4; // max of animate arguments
+        hex.maxskill = player.level * 4; // max of animate arguments
         hex.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(57, 174, 221, 0.65)" }//,
         ]) //{ "life": 25, "speed": 10, "physicalattack": 0, "physicaldefence": 5, "magicattack": 30, "magicdefence": 15, "color": "rgba(0, 0, 0, 0.5)" },
         //{ "life": 30, "speed": 30, "physicalattack": 30, "physicaldefence": 0, "magicattack": 00, "magicdefence": 0, "color": "rgba(100, 0, 100, 0.3)" },
@@ -18,6 +18,7 @@ document.getElementById("overview").addEventListener("toggled", () => {
 window.addEventListener("load", () => {
     document.getElementById("attack_btn").onclick = () => {
         toggleScreen(screens.attack.elm);
+
     }
     document.getElementById("league_btn").onclick = () => {
         toggleScreen(screens.league.elm);
@@ -28,7 +29,7 @@ window.addEventListener("load", () => {
 document.getElementById("overview").addEventListener("player", () => { //player* but this code is never used.
 
     var timenow = new Date().getTime();
-    var diff = timenow - player.userData.age;
+    var diff = timenow - player.age;
 
     var days = Math.floor(diff / (1000 * 60 * 60 * 24));
     diff -= days * (1000 * 60 * 60 * 24);
@@ -51,7 +52,7 @@ document.getElementById("overview").addEventListener("player", () => { //player*
     //document.getElementById("info_rank").innerHTML = player.bestrank; //fix rank later
     //document.getElementById("info_currentsession").innerHTML = player.bestrank; //fix time later
 
-    
+
 
     document.getElementById("player_dataStats").getElementsByClassName("char_life")[0].innerHTML = player.userStats.life;
     document.getElementById("player_dataStats").getElementsByClassName("char_speed")[0].innerHTML = player.userStats.speed;

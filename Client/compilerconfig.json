@@ -18,5 +18,9 @@
   {
     "outputFile": "css/league.css",
     "inputFile": "css/league.scss"
+  },
+  {
+    "outputFile": "css/buttons.css",
+    "inputFile": "css/buttons.scss"
   }
 ]

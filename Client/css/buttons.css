@@ -1,0 +1,53 @@
+﻿.material-btn {
+  border: 0;
+  color: #2196f3;
+  margin: 20px;
+  padding: 10px 20px;
+  border: 1px solid rgba(33, 150, 243, 0.4);
+  font: 500 18px Roboto;
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+  transition: all .5s ease; }
+  .material-btn.green {
+    color: #4caf50;
+    border: 1px solid rgba(76, 175, 80, 0.4); }
+  .material-btn.orange {
+    color: #ff9800;
+    border: 1px solid rgba(255, 152, 0, 0.4); }
+  .material-btn.red {
+    color: #f44336;
+    border: 1px solid rgba(244, 67, 54, 0.4); }
+  .material-btn.black {
+    color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.4); }
+  .material-btn:hover {
+    color: #fff;
+    background: rgba(33, 150, 243, 0.2); }
+  .material-btn.green:hover {
+    background: rgba(76, 175, 80, 0.2); }
+  .material-btn.orange:hover {
+    background: rgba(255, 152, 0, 0.2); }
+  .material-btn.red:hover {
+    background: rgba(244, 67, 54, 0.2); }
+  .material-btn.black:hover {
+    background: rgba(0, 0, 0, 0.2); }
+  .material-btn .circle {
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    position: absolute;
+    background: #2196f3;
+    z-index: -1;
+    transition: all .5s ease; }
+  .material-btn.green .circle {
+    background: #4caf50; }
+  .material-btn.orange .circle {
+    background: #ff9800; }
+  .material-btn.red .circle {
+    background: #f44336; }
+  .material-btn.black .circle {
+    background: rgba(0, 0, 0, 0.5); }
+

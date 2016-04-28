@@ -9,8 +9,20 @@ document.getElementById("attack").addEventListener("toggled", () => {
     console.log("updated");
 
     getPlayer();
-    //getEnemy();
+    getEnemy();
 });
+screens.attack.elm.addEventListener("enemy", () => {
+
+
+
+
+
+
+
+
+
+});
+
 document.getElementById("overview").addEventListener("player", () => {
     var hex = new hexstat("canvas_attack");
     setTimeout(function () {
@@ -65,9 +77,5 @@ window.addEventListener("load", () => {
     document.getElementById("cancel_btn").onclick = () => {
         toggleScreen(screens.overview.elm);
     }
-    document.getElementById("attack_request_btn").onclick = () => {
-        sendRequest("/players/enemy", (test, error) => {
-            //send us to the "fight screen"
-        });
-    }
+
 });

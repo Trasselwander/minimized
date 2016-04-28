@@ -11,6 +11,7 @@ function getPlayer() {
         sendRequest("/players/enemy", (test, error) => {
             if (!error) {
                 enemy = JSON.parse(test);
+                screens.attack.elm.dispatchEvent(new Event("enemy"));
 
             }
         });
