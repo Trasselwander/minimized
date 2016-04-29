@@ -12,12 +12,15 @@
   .stats-table th {
     text-align: left; }
   .stats-table i {
-    padding-left: 10px; }
+    padding-left: 10px;
+    display: none; }
   .stats-table .char_sp_up {
     cursor: pointer;
     transition: background-color .5s ease-in-out; }
     .stats-table .char_sp_up:hover {
       background-color: rgba(81, 231, 115, 0.26); }
+    .stats-table .char_sp_up i {
+      display: initial; }
   .stats-table tr {
     border-bottom: 1px solid #ddd; }
     .stats-table tr:last-child {

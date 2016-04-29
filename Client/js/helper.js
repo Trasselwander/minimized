@@ -24,6 +24,26 @@ user = {
     }
 }
 
+window.addEventListener("load", () => {
+    if (!user.name || !user.password) toggleScreen(screens.login.elm);
+    else sendRequest("/login/", (text, error) => {
+        if (!error) {
+            toggleScreen(screens.overview.elm);
+        }
+        else {
+            toggleScreen(screens.login.elm);
+            return true;
+        }
+    });
+
+    var backbtns = document.getElementsByClassName("back_btn")
+    for (var i = 0; i < backbtns.length; i++) {
+        backbtns[i].onclick = () => {
+            toggleScreen(screens.overview.elm);
+        }
+    }
+});
+
 function sendRequest(action, callback) { // implement send data.
     if (!user.name || !user.password || user.password.length < 4) {
         swal("Error", "Bad username or password", "error");
@@ -78,64 +98,32 @@ function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-window.addEventListener("load", () => {
-    if (!user.name || !user.password) toggleScreen(screens.login.elm);
-    else sendRequest("/login/", (text, error) => {
-        if (!error) {
-            getPlayer();
-            toggleScreen(screens.overview.elm);
-        }
-        else {
-            toggleScreen(screens.login.elm);
-        }
-    });
-
-    var backbtns = document.getElementsByClassName("back_btn")
-    for (var i = 0; i < backbtns.length; i++) {
-        backbtns[i].onclick = () => {
-            toggleScreen(screens.overview.elm);
-        }
-    }
-
-
-    [].forEach.call(document.querySelectorAll('.material-btn'), function (b) {
-        b.onmouseenter = function (e) {
-            var c = document.createElement('div'),
-                size = Math.sqrt(Math.pow(b.offsetWidth, 2) + Math.pow(b.offsetHeight, 2));
-            b.appendChild(c);
-            c.className = 'circle';
-            c.style.top = e.offsetY + 'px';
-            c.style.left = e.offsetX + 'px';
-            c.style.top = b.offsetHeight / 2 - size / 2 + 'px';
-            c.style.left = b.offsetWidth / 2 - size / 2 + 'px';
-            c.style.width = c.style.height = size + 'px';
-            b.onmouseleave = (function (c) {
-                return function () {
-                    c.style.opacity = 0;
-                    setTimeout(function () { b.removeChild(c) }, 500);
-                }
-            })(c);
-        };
-    });
-
-
-});
-
-function getNiceTime(Time) {
+function getNiceTime(Time) { // argument namn ska aldrig ha stora bokstäver
+    var endTime = "Slutad";
     if (Math.floor(Time / 1000) > 0) {
-        var endTime = Math.floor(Time / 1000) + " sekunder";
+        endTime = Math.floor(Time / 1000) + " sekunder";
         if (Math.floor(Time / (1000 * 60)) > 0) {
-            var endTime = Math.floor(Time / (1000 * 60)) + " minuter";
+            endTime = Math.floor(Time / (1000 * 60)) + " minuter";
             if (Math.floor(Time / (1000 * 60 * 60)) > 0) {
-                var endTime = Math.floor(Time / (1000 * 60 * 60)) + " timmar";
+                endTime = Math.floor(Time / (1000 * 60 * 60)) + " timmar";
                 if (Math.floor(Time / (1000 * 60 * 60 * 24)) > 0) {
-                    var endTime = Math.floor(Time / (1000 * 60 * 60 * 24)) + " dagar";
+                    endTime = Math.floor(Time / (1000 * 60 * 60 * 24)) + " dagar";
                 }
             }
         }
     }
-    else {
-        var endTime = "Slutad";
-    }
+
     return endTime;
+}
+
+function getDaysHoursMins(time) {
+
+    var days = Math.floor(time / (1000 * 60 * 60 * 24));
+    time -= days * (1000 * 60 * 60 * 24);
+    var hours = Math.floor(time / (1000 * 60 * 60));
+    time -= hours * (1000 * 60 * 60);
+    var mins = Math.floor(time / (1000 * 60));
+    time -= mins * (1000 * 60);
+
+    return { days: days, hours: hours, mins: mins };
 }

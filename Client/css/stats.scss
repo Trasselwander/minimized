@@ -20,6 +20,7 @@
 
     i {
         padding-left: 10px;
+        display: none;
     }
 
     .char_sp_up {
@@ -28,6 +29,10 @@
 
         &:hover {
             background-color: rgba(81, 231, 115, 0.26);
+        }
+
+        i {
+            display: initial;
         }
     }
 

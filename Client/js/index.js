@@ -28,55 +28,36 @@ document.getElementById("overview").addEventListener("player", () => { //player*
         return;
 
     main_hex.maxskill = player.userStats.level * 4; // max of animate arguments
-    main_hex.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(57, 174, 221, 0.65)" }]) //{ "life": 25, "speed": 10, "physicalattack": 0, "physicaldefence": 5, "magicattack": 30, "magicdefence": 15, "color": "rgba(0, 0, 0, 0.5)" },
+    player.userStats.color = "rgba(57, 174, 221, 0.65)";
+    main_hex.animate([player.userStats]) //{ "life": 25, "speed": 10, "physicalattack": 0, "physicaldefence": 5, "magicattack": 30, "magicdefence": 15, "color": "rgba(0, 0, 0, 0.5)" },
 
     var timenow = new Date().getTime();
-    var diff = timenow - player.age;
-    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    diff -= days * (1000 * 60 * 60 * 24);
-    var hours = Math.floor(diff / (1000 * 60 * 60));
-    diff -= hours * (1000 * 60 * 60);
-    var mins = Math.floor(diff / (1000 * 60));
-    diff -= mins * (1000 * 60);
-
-    var lastloggedin = timenow - player.lastloggedin;
-    var llidays = Math.floor(lastloggedin / (1000 * 60 * 60 * 24));
-    lastloggedin -= llidays * (1000 * 60 * 60 * 24);
-    var llihours = Math.floor(lastloggedin / (1000 * 60 * 60));
-    lastloggedin -= llihours * (1000 * 60 * 60);
-    var llimins = Math.floor(lastloggedin / (1000 * 60));
-    lastloggedin -= llimins * (1000 * 60);
+    var agedhm = getDaysHoursMins(timenow - player.age)
+    var lldhm = getDaysHoursMins(timenow - player.lastloggedin)
 
     for (var i = 0; i < document.getElementsByClassName("info_name").length; i++) {
         document.getElementsByClassName("info_name")[i].innerHTML = player.name;
     }
-    if (days <= 0) document.getElementById("info_age_days_holder").style.display = "none";
-    if (hours <= 0) document.getElementById("info_age_hours_holder").style.display = "none";
+    if (agedhm.days <= 0) document.getElementById("info_age_days_holder").style.display = "none";
+    if (agedhm.hours <= 0) document.getElementById("info_age_hours_holder").style.display = "none";
 
-    document.getElementById("info_age_days").innerHTML = days + " dagar";
-    document.getElementById("info_age_hours").innerHTML = hours + " timmar";
-    document.getElementById("info_age_minutes").innerHTML = mins + " minuter";
+    document.getElementById("info_age_days").innerHTML = agedhm.days + " dagar";
+    document.getElementById("info_age_hours").innerHTML = agedhm.hours + " timmar";
+    document.getElementById("info_age_minutes").innerHTML = agedhm.mins + " minuter";
 
-    if (llimins > 0) {
-        document.getElementById("info_currentsession").innerHTML = llimins + " minuters";
-        if (llihours > 0) {
-            document.getElementById("info_currentsession").innerHTML = llihours + " timmars";
-            if (llidays > 0) {
-                document.getElementById("info_currentsession").innerHTML = llidays + " dagars";
-            }
-        }
-    }
-    else {
+    if (lldhm.llimins == 0 && lldhm.llihours == 0 && lldhm.llimins == 0) {
         document.getElementById("info_currentsession_holder").style.display = "none";
         document.getElementById("info_currentsession_addon").style.display = "inline";
+    } else {
+        var info_currses = document.getElementById("info_currentsession");
+        if (lldhm.llimins != 0) info_currses.innerHTML = lldhm.llimins + " minuters";
+        if (lldhm.llihours != 0) info_currses.innerHTML = lldhm.llihours + " timmars";
+        if (lldhm.llidays != 0) info_currses.innerHTML = lldhm.llidays + " dagars";
     }
     //document.getElementById("info_rank").innerHTML = player.bestrank; //fix rank later
     //document.getElementById("info_currentsession").innerHTML = player.bestrank; //fix time later
 
     var pstats = document.getElementById("player_dataStats");
-
-
-
 
     pstats.getElementsByClassName("char_life")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.life;
     pstats.getElementsByClassName("char_speed")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.speed;
@@ -85,27 +66,14 @@ document.getElementById("overview").addEventListener("player", () => { //player*
     pstats.getElementsByClassName("char_magA")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.magicattack;
     pstats.getElementsByClassName("char_magD")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.magicdefence;
 
+    var sp_arr = ["char_life", "char_speed", "char_physA", "char_physD", "char_magA", "char_magD"];
 
-    if (player.userstats.skillpoints <= 0) {
-        for (var i = 0; i < document.getElementById("player_dataStats").getElementsByTagName("i").length; i++) {
-            document.getElementById("player_dataStats").getElementsByTagName("i")[i].style.display = "none";
-        }
-        pstats.getElementsByClassName("char_life")[0].classList.remove("char_sp_up");
-        pstats.getElementsByClassName("char_speed")[0].classList.remove("char_sp_up");
-        pstats.getElementsByClassName("char_physA")[0].classList.remove("char_sp_up");
-        pstats.getElementsByClassName("char_physD")[0].classList.remove("char_sp_up");
-        pstats.getElementsByClassName("char_magA")[0].classList.remove("char_sp_up");
-        pstats.getElementsByClassName("char_magD")[0].classList.remove("char_sp_up");
-    }
-    else {
-        pstats.getElementsByClassName("char_life")[0].classList.add("char_sp_up");
-        pstats.getElementsByClassName("char_speed")[0].classList.add("char_sp_up");
-        pstats.getElementsByClassName("char_physA")[0].classList.add("char_sp_up");
-        pstats.getElementsByClassName("char_physD")[0].classList.add("char_sp_up");
-        pstats.getElementsByClassName("char_magA")[0].classList.add("char_sp_up");
-        pstats.getElementsByClassName("char_magD")[0].classList.add("char_sp_up");
-    }
-
+    if (player.userStats.skillpoints > 0)
+        for (var i = 0; i < sp_arr.length; i++)
+            pstats.getElementsByClassName(sp_arr[i])[0].classList.add("char_sp_up");
+    else
+        for (var i = 0; i < sp_arr.length; i++)
+            pstats.getElementsByClassName(sp_arr[i])[0].classList.remove("char_sp_up");
 
     var ustats = document.getElementById("player_userStats");
 
@@ -115,8 +83,4 @@ document.getElementById("overview").addEventListener("player", () => { //player*
     ustats.getElementsByClassName("char_bestRank")[0].innerHTML = player.userStats.bestrank;
     ustats.getElementsByClassName("char_wins")[0].innerHTML = player.userStats.wins;
     ustats.getElementsByClassName("char_losses")[0].innerHTML = player.userStats.losses;
-
-
-    ////stats.getElementById("char_age").innerHTML = (new Date()).getTime() - player.userData.age;
-
 });
