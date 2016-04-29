@@ -48,7 +48,7 @@ namespace Server
                                     bestrank INTEGER NOT NULL,
                                     wins INTEGER NOT NULL DEFAULT 0,
                                     losses INTEGER NOT NULL DEFAULT 0,
-                                    skillpoints INTEGER DEFAULT 0)");
+                                    skillpoints INTEGER DEFAULT 4)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userhats (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
