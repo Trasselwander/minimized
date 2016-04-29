@@ -44,11 +44,11 @@ screens.league.elm.addEventListener("toggled", () => {
                 newleague.style = null;
                 screens.league.elm.getElementsByClassName("holder")[0].appendChild(newleague);
 
-                league.color = "rgba(57, 174, 221, 0.65)";
+                league[i].color = "rgba(57, 174, 221, 0.65)";
 
                 leauge_hex["league_canvas_" + i] = new hexstat("league_canvas_" + i);
-                leauge_hex["league_canvas_" + i].maxskill = (league.life + league.speed + league.physicalattack + league.physicaldefence + league.magicattack + league.magicdefence) / 6; // max of animate arguments
-                leauge_hex["league_canvas_" + i].animate([league]);
+                leauge_hex["league_canvas_" + i].maxskill = (league[i].life + league[i].speed + league[i].physicalattack + league[i].physicaldefence + league[i].magicattack + league[i].magicdefence) / 6; // max of animate arguments
+                leauge_hex["league_canvas_" + i].animate([league[i]]);
 
                 newleague.getElementsByClassName("joinleague_btn")[0].dataset.lid = league[i].ID;
                 newleague.getElementsByClassName("joinleague_btn")[0].dataset.lname = league[i].name;
