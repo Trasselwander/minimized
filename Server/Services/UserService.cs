@@ -40,6 +40,21 @@ namespace Server.Services
         public List<User> GetCloseUsersByScore(User u)
             => u.userStats == null ? null : SQLite.GetConnection().Query<User>(@"SELECT *, (abs(userstats.score - @score)) as absscore FROM userstats INNER JOIN users ON users.LID = @lid AND users.ID = userstats.UID AND NOT users.ID = @uid ORDER BY absscore LIMIT 10", new { lid = u.LID, score = u.userStats.score, uid = u.ID }).ToList();
 
+        public List<User> GetTop10ByLeauge(User u)
+            => u.LID == null ? null : GetTop10ByLeauge((int)u.LID);
+
+        public List<User> GetTopByLeauge(User u)
+            => u.LID == null ? null : GetTopByLeauge((int)u.LID);
+
+        public List<User> GetTopByLeauge(int lid)
+            => SQLite.GetConnection().Query<User>(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score", new { lid = lid }).ToList();
+
+        public List<User> GetTop10ByLeauge(int lid)
+            => SQLite.GetConnection().Query<User>(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score LIMIT 10", new { lid = lid }).ToList();
+
+        public void IncrementStat(string stat, User u)
+            => SQLite.GetConnection().Query("UPDATE userstats SET @stat += 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { stat = stat, uid = u.ID, lid = u.LID });
+
 
         public User CreateUser(string name, string hash, string email)
         {
@@ -61,8 +76,7 @@ namespace Server.Services
         {
             if (u.LID == null) return null;
 
-            if (u.userStats == null)
-                GetUserStats(u);
+            if (u.userStats == null) GetUserStats(u);
 
             User[] users = GetCloseUsersByScore(u).ToArray();
             return users[(new Random()).Next(0, users.Length - 1)];

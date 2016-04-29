@@ -13,14 +13,18 @@ namespace Server.Modules
         public PlayersModule()
             : base("api/players")
         {
-            //Get["/list"] = parameters =>
-            //{
-            //    Services.UserService.User user = AuthorizeUser();
-            //    user.userData = Users.GetUserData(user.ID);
-            //    var a = Users.GetUsersFromRank(user.userData.rank);
+            Get["/top/{id}"] = parameters =>
+            {
+                Services.UserService.User user = AuthorizeUser();
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetTopByLeauge(parameters.id)));
+            };
 
-            //    return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(a));
-            //};
+            Get["/top10/{id}"] = parameters =>
+            {
+                Services.UserService.User user = AuthorizeUser();
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetTop10ByLeauge(parameters.id)));
+            };
+
             Get["/player"] = parameters =>
             {
                 Services.UserService.User user = AuthorizeUser();
@@ -37,6 +41,48 @@ namespace Server.Modules
                 Users.GetUserLeague(user);
 
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetCloseUsersByScore(user)));
+            };
+
+            Get["/levelup/{id}"] = parameters =>
+            {
+                Services.UserService.User user = AuthorizeUser();
+                Users.GetUserStats(user);
+
+                if (user.userStats == null || user.userStats.skillpoints < 1)
+                    return CreateResponse(HttpStatusCode.BadRequest);
+
+                switch ((parameters.id as string).ToLower())
+                {
+                    case "1":
+                    case "life":
+                        Users.IncrementStat("life", user);
+                        break;
+                    case "2":
+                    case "speed":
+                        Users.IncrementStat("speed", user);
+                        break;
+                    case "3":
+                    case "physicalattack":
+                        Users.IncrementStat("physicalattack", user);
+                        break;
+                    case "4":
+                    case "physicaldefence":
+                        Users.IncrementStat("physicaldefence", user);
+                        break;
+                    case "5":
+                    case "magicattack":
+                        Users.IncrementStat("magicattack", user);
+                        break;
+                    case "6":
+                    case "magicdefence":
+                        Users.IncrementStat("magicdefence", user);
+                        break;
+
+                    default:
+                        return CreateResponse(HttpStatusCode.BadRequest);
+                }
+
+                return CreateResponse(HttpStatusCode.OK);
             };
         }
     }
