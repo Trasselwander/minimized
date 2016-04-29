@@ -18,6 +18,19 @@
         text-align: left;
     }
 
+    i {
+        padding-left: 10px;
+    }
+
+    .char_sp_up {
+        cursor: pointer;
+        transition: background-color .5s ease-in-out;
+
+        &:hover {
+            background-color: rgba(81, 231, 115, 0.26);
+        }
+    }
+
     tr {
         border-bottom: 1px solid #ddd;
 

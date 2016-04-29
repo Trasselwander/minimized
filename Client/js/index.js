@@ -66,28 +66,55 @@ document.getElementById("overview").addEventListener("player", () => { //player*
             }
         }
     }
-    else {        
+    else {
         document.getElementById("info_currentsession_holder").style.display = "none";
         document.getElementById("info_currentsession_addon").style.display = "inline";
     }
     //document.getElementById("info_rank").innerHTML = player.bestrank; //fix rank later
     //document.getElementById("info_currentsession").innerHTML = player.bestrank; //fix time later
 
+    var pstats = document.getElementById("player_dataStats");
 
 
-    document.getElementById("player_dataStats").getElementsByClassName("char_life")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.life;
-    document.getElementById("player_dataStats").getElementsByClassName("char_speed")[0].innerHTML = player.userStats.speed;
-    document.getElementById("player_dataStats").getElementsByClassName("char_physA")[0].innerHTML = player.userStats.physicalattack;
-    document.getElementById("player_dataStats").getElementsByClassName("char_physD")[0].innerHTML = player.userStats.physicaldefence;
-    document.getElementById("player_dataStats").getElementsByClassName("char_magA")[0].innerHTML = player.userStats.magicattack;
-    document.getElementById("player_dataStats").getElementsByClassName("char_magD")[0].innerHTML = player.userStats.magicdefence;
 
-    document.getElementById("player_userStats").getElementsByClassName("char_level")[0].innerHTML = player.userStats.level;
-    document.getElementById("player_userStats").getElementsByClassName("char_exp")[0].innerHTML = player.userStats.exp;
-    document.getElementById("player_userStats").getElementsByClassName("char_rank")[0].innerHTML = player.userStats.rank;
-    document.getElementById("player_userStats").getElementsByClassName("char_bestRank")[0].innerHTML = player.userStats.bestrank;
-    document.getElementById("player_userStats").getElementsByClassName("char_wins")[0].innerHTML = player.userStats.wins;
-    document.getElementById("player_userStats").getElementsByClassName("char_losses")[0].innerHTML = player.userStats.losses;
+
+    pstats.getElementsByClassName("char_life")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.life;
+    pstats.getElementsByClassName("char_speed")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.speed;
+    pstats.getElementsByClassName("char_physA")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.physicalattack;
+    pstats.getElementsByClassName("char_physD")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.physicaldefence;
+    pstats.getElementsByClassName("char_magA")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.magicattack;
+    pstats.getElementsByClassName("char_magD")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.magicdefence;
+
+
+    if (player.skillpoints <= 0) {
+        for (var i = 0; i < document.getElementById("player_dataStats").getElementsByTagName("i").length; i++) {
+            document.getElementById("player_dataStats").getElementsByTagName("i")[i].style.display = "none";
+        }
+        pstats.getElementsByClassName("char_life")[0].classList.remove("char_sp_up");
+        pstats.getElementsByClassName("char_speed")[0].classList.remove("char_sp_up");
+        pstats.getElementsByClassName("char_physA")[0].classList.remove("char_sp_up");
+        pstats.getElementsByClassName("char_physD")[0].classList.remove("char_sp_up");
+        pstats.getElementsByClassName("char_magA")[0].classList.remove("char_sp_up");
+        pstats.getElementsByClassName("char_magD")[0].classList.remove("char_sp_up");
+    }
+    else {
+        pstats.getElementsByClassName("char_life")[0].classList.add("char_sp_up");
+        pstats.getElementsByClassName("char_speed")[0].classList.add("char_sp_up");
+        pstats.getElementsByClassName("char_physA")[0].classList.add("char_sp_up");
+        pstats.getElementsByClassName("char_physD")[0].classList.add("char_sp_up");
+        pstats.getElementsByClassName("char_magA")[0].classList.add("char_sp_up");
+        pstats.getElementsByClassName("char_magD")[0].classList.add("char_sp_up");
+    }
+
+
+    var ustats = document.getElementById("player_userStats");
+
+    ustats.getElementsByClassName("char_level")[0].innerHTML = player.userStats.level;
+    ustats.getElementsByClassName("char_exp")[0].innerHTML = player.userStats.exp;
+    ustats.getElementsByClassName("char_rank")[0].innerHTML = player.userStats.rank;
+    ustats.getElementsByClassName("char_bestRank")[0].innerHTML = player.userStats.bestrank;
+    ustats.getElementsByClassName("char_wins")[0].innerHTML = player.userStats.wins;
+    ustats.getElementsByClassName("char_losses")[0].innerHTML = player.userStats.losses;
 
 
     ////stats.getElementById("char_age").innerHTML = (new Date()).getTime() - player.userData.age;
