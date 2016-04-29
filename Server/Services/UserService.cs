@@ -27,8 +27,6 @@ namespace Server.Services
 
         public void GetUserStats(User user)
             => user.userStats = user.LID != null ? GetUserStats(user.ID, (int)user.LID) : null;
-        //Jag tror att userstats inte är tom här så vi returnar null
-
 
         public void GetUserLeague(User user)
             => user.league = user.LID != null ? GetUserLeague((int)user.LID) : null;
@@ -36,11 +34,11 @@ namespace Server.Services
         public void CreateLeague(League l)
             => SQLite.GetConnection().Query("INSERT INTO leagues (name, start, end) VALUES (@name, @start, @end)", new { l.name, l.start, l.end });
 
-        public void SetScore(User u)
-            => SQLite.GetConnection().Query<int>("UPDATE userstats SET score=@score WHERE userstats.UID = @uid AND userstats.LID = @lid", new { score = u.userStats.score, uid = u.ID, lid = u.LID });
+        public void SetScore(User u) // Do not use this function.
+            => SQLite.GetConnection().Query("UPDATE userstats SET score=@score WHERE userstats.UID = @uid AND userstats.LID = @lid", new { score = u.userStats.score, uid = u.ID, lid = u.LID });
 
         public List<User> GetCloseUsersByScore(User u)
-                        => u.userStats == null ? null : SQLite.GetConnection().Query<User>(@"SELECT *, (abs(userstats.score - @score)) as absscore FROM userstats INNER JOIN users ON users.LID = @lid AND users.ID = userstats.UID AND NOT users.ID = @uid ORDER BY absscore LIMIT 10", new { lid = u.LID, score = u.userStats.score, uid = u.ID }).ToList();
+            => u.userStats == null ? null : SQLite.GetConnection().Query<User>(@"SELECT *, (abs(userstats.score - @score)) as absscore FROM userstats INNER JOIN users ON users.LID = @lid AND users.ID = userstats.UID AND NOT users.ID = @uid ORDER BY absscore LIMIT 10", new { lid = u.LID, score = u.userStats.score, uid = u.ID }).ToList();
 
 
         public User CreateUser(string name, string hash, string email)
@@ -72,18 +70,15 @@ namespace Server.Services
 
         public void JoinLeague(User u, int lid)
         {
-            // INSERT NEW USERSTATS
-            // CHANGE USERDATA LID to CURRENT LID
-            SQLite.GetConnection().QueryMultiple(@"DELETE FROM userstats WHERE userstats.uid = @uid;
+            SQLite.GetConnection().QueryMultiple(@"DELETE FROM userstats WHERE userstats.UID = @uid AND userstats.LID = @lid;
                                                    INSERT INTO userstats (UID, LID, bestrank)
                                                    SELECT @uid AS UID, @lid AS LID,
-	                                                   (SELECT COUNT(*) FROM users WHERE users.lid = @lid) AS bestrank;
+	                                                   (SELECT COUNT(*) FROM users WHERE users.LID = @lid) AS bestrank;
                                                    UPDATE users SET LID=@lid WHERE users.ID = @uid;", new { uid = u.ID, lid = lid });
         }
-        public void LeaveLeague(User u, int lid) //jag tror inte att detta funkar till 100% //JK funkar ayy lamo
-        {
-            SQLite.GetConnection().QueryMultiple(@"UPDATE users SET LID=null WHERE users.ID = @uid;", new { uid = u.ID, lid = lid });
-        }
+        public void LeaveLeague(User u)
+            => SQLite.GetConnection().QueryMultiple(@"UPDATE users SET LID=null WHERE users.ID = @uid;", new { uid = u.ID, u.LID });
+
         public List<League> GetLeagues()
         {
             List<League> leauge = SQLite.GetConnection().Query<League>("SELECT * FROM leagues").ToList();
@@ -93,13 +88,15 @@ namespace Server.Services
                 var d = SQLite.GetConnection().Query<League>(@"SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND users.LID=@lid", new { lid = l.ID }).FirstOrDefault();
 
                 var data = SQLite.GetConnection().Query<League>(@"SELECT 
-                                                                    SUM(userstats.life), 
-                                                                    SUM(userstats.speed),
-                                                                    SUM(userstats.physicalattack), 
-                                                                    SUM(userstats.physicaldefence), 
-                                                                    SUM(userstats.magicattack), 
-                                                                    SUM(userstats.magicdefence) 
+                                                                    SUM(userstats.life) AS life, 
+                                                                    SUM(userstats.speed) AS speed,
+                                                                    SUM(userstats.physicalattack) AS physicalattack, 
+                                                                    SUM(userstats.physicaldefence) AS physicaldefence, 
+                                                                    SUM(userstats.magicattack) AS magicattack, 
+                                                                    SUM(userstats.magicdefence) AS magicdefence
                                                                  FROM userstats INNER JOIN users ON userstats.UID=users.ID AND users.LID=@lid", new { lid = l.ID }).FirstOrDefault();
+
+                l.leader = SQLite.GetConnection().Query<string>(@"SELECT name FROM users INNER JOIN userstats ON users.ID=userstats.UID AND users.LID=@lid ORDER BY SCORE LIMIT 1", new { lid = l.ID }).FirstOrDefault();
 
                 l.life = data.life;
                 l.speed = data.speed;
@@ -148,9 +145,6 @@ namespace Server.Services
             public string salt { get; set; }
             [JsonIgnore]
             public string email { get; set; }
-
-            [JsonIgnore]
-            public int absscrore { get; set; }
 
             public int? LID { get; set; }
             public int? HID { get; set; }

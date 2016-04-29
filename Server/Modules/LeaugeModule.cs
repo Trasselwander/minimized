@@ -15,24 +15,22 @@ namespace Server.Modules
         {
             Get["/list"] = parameters =>
             {
-                // sendRequest("/leauges/list", function(text) { console.log(text) });
                 Services.UserService.User user = AuthorizeUser();
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetLeagues()));
             };
 
             Get["/join/{id}"] = parameters =>
             {
-                // sendRequest("/leauges/list", function(text) { console.log(text) });
                 Services.UserService.User user = AuthorizeUser();
                 Users.JoinLeague(user, parameters.id);
-                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetLeagues()));
+                return CreateResponse(HttpStatusCode.OK);
             };
-            Get["/leave/{id}"] = parameters =>
+
+            Get["/leave"] = parameters =>
             {
                 Services.UserService.User user = AuthorizeUser();
-                Users.LeaveLeague(user, parameters.id);
-
-                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetLeagues()));
+                Users.LeaveLeague(user); // ID't spelar ingen roll eftersom man inte kan lämna en league man inte är med i.
+                return CreateResponse(HttpStatusCode.OK);
             };
         }
     }
