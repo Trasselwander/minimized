@@ -17,7 +17,13 @@ namespace Server.Modules
                 for (int i = 0; i < 20; i++)
                 {
                     Services.UserService.User u = Users.CreateUser("test" + i, "" + hashpw("asdasd"), "test" + i);
+                    u = Users.GetUser(u.name);
                     Users.JoinLeague(u, 1);
+                    u.LID = 1;
+                    Users.GetUserStats(u);
+
+                    u.userStats.score = i;
+                    Users.SetScore(u);
                 }
 
                 return null;

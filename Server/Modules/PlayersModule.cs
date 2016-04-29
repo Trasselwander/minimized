@@ -29,6 +29,15 @@ namespace Server.Modules
 
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(user));
             };
+
+            Get["/enemy"] = parameters =>
+            {
+                Services.UserService.User user = AuthorizeUser();
+                Users.GetUserStats(user);
+                Users.GetUserLeague(user);
+
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetCloseUsersByScore(user)));
+            };
         }
     }
 }
