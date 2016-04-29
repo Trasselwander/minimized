@@ -5,13 +5,13 @@ screens.league.elm.addEventListener("toggled", () => {
     sendRequest("/leagues/list", (test, error) => {
         if (!error) {
 
-            for (var i = 1; i < document.getElementsByClassName("league_name").length; i++) { // removes old league divs
-                if (document.getElementsByClassName("league_name").innerHTML != "Tävlingar") {
-                    var firstParent = document.getElementsByClassName("league_name")[i].parentElement;
-                    firstParent.parentElement.removeChild(firstParent);
-                    i--;
-                }
+            var lnames = document.getElementsByClassName("league_name");
+            for (var i = 1; i < lnames.length; i++) { // removes old league divs
+                var firstParent = lnames[i].parentElement;
+                firstParent.parentElement.removeChild(firstParent);
+                i--;
             }
+
             leauge_hex = {}; // Hopefully this will destroy the instances of hexstats and make GC remove them from memory.
 
             league = JSON.parse(test);
