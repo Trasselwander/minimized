@@ -27,6 +27,8 @@ namespace Server.Services
 
         public void GetUserStats(User user)
             => user.userStats = user.LID != null ? GetUserStats(user.ID, (int)user.LID) : null;
+        //Jag tror att userstats inte är tom här så vi returnar null
+
 
         public void GetUserLeague(User user)
             => user.league = user.LID != null ? GetUserLeague((int)user.LID) : null;

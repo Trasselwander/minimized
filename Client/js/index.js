@@ -86,7 +86,7 @@ document.getElementById("overview").addEventListener("player", () => { //player*
     pstats.getElementsByClassName("char_magD")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.magicdefence;
 
 
-    if (player.skillpoints <= 0) {
+    if (player.userstats.skillpoints <= 0) {
         for (var i = 0; i < document.getElementById("player_dataStats").getElementsByTagName("i").length; i++) {
             document.getElementById("player_dataStats").getElementsByTagName("i")[i].style.display = "none";
         }
