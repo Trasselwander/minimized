@@ -11,7 +11,7 @@ namespace Server.Services
     public class UserService
     {
         public User GetUser(string name)
-            => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE name=@name", new { name = name }).FirstOrDefault();
+            => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE LOWER(name)=LOWER(@name)", new { name = name }).FirstOrDefault();
 
         public User GetUserByEmail(string email)
             => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE email=@email", new { email = email }).FirstOrDefault();
@@ -59,19 +59,18 @@ namespace Server.Services
         public User CreateUser(string name, string hash, string email)
         {
             User u = new User() { name = name, hash = hash, email = email };
+
+            if (GetUser(name) != null) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "Username already in use.");
+
             CryptoService.HashAndSavePassword(hash, u);
             SQLite.GetConnection().QueryMultiple(@"INSERT INTO users (name, email, hash, salt, lastloggedin, bestrank, age) SELECT @name as name, @email as email, @hash as hash, @salt as salt, @time as lastloggedin, (SELECT COUNT(*) FROM users) AS bestrank, @time AS age; 
                                                    INSERT INTO userstats (UID, bestrank)
 	                                                   SELECT (SELECT ID FROM users WHERE users.name = @name) AS UID, COUNT(*) AS bestrank FROM users;"
                                                    , new { name = u.name, email = u.email, hash = u.hash, salt = u.salt, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
 
-            return u;
+            return GetUser(name);
         }
-
-
-        //=> SQLite.GetConnection().Query<int>(@"SELECT COUNT(*) as s FROM users WHERE users.LID = @lid
-        //                                          SELECT * FROM s WHERE s.UID = @uid", new { lid = u.LID, uid = u.ID }).FirstOrDefault();
-
+        
         public User GetOpponent(User u)
         {
             if (u.LID == null) return null;

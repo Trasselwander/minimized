@@ -38,7 +38,14 @@ namespace Server.Modules
             {
                 Services.UserService.User user = AuthorizeUser();
                 Users.GetUserStats(user);
-                Users.GetUserLeague(user);
+
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetCloseUsersByScore(user)));
+            };
+
+            Get["/attack/{id}"] = parameters =>
+            {
+                Services.UserService.User user = AuthorizeUser();
+                Users.GetUserStats(user);
 
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetCloseUsersByScore(user)));
             };
