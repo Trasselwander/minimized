@@ -156,7 +156,6 @@ namespace Server.Services
             public long age { get; set; }
             public int totalwins { get; set; }
             public int totallosses { get; set; }
-            public int skillpoints { get; set; }
         }
 
         public class UserStats
@@ -176,6 +175,7 @@ namespace Server.Services
             public int level { get; set; }
             public int score { get; set; }
             public int exp { get; set; }
+            public int skillpoints { get; set; }
 
             // Dynamic
             public int rank { get; set; }
