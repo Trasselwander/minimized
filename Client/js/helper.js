@@ -128,6 +128,7 @@ function getDaysHoursMins(time) {
     time -= hours * (1000 * 60 * 60);
     var mins = Math.floor(time / (1000 * 60));
     time -= mins * (1000 * 60);
+    var secs = Math.floor(time / (1000));
 
-    return { days: days, hours: hours, mins: mins };
+    return { days: days, hours: hours, mins: mins, secs: secs };
 }

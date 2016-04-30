@@ -5,7 +5,7 @@ document.getElementById("overview").addEventListener("toggled", () => {
     screens.overview.visible = true;
 });
 
-document.getElementById("overview").addEventListener("detoggled", () => {
+screens.overview.elm.addEventListener("detoggled", () => {
     screens.overview.visible = false;
     main_hex.arr = [];
 });
@@ -23,9 +23,47 @@ window.addEventListener("load", () => {
     main_hex.drawOutline();
 });
 
-document.getElementById("overview").addEventListener("player", () => { //player* but this code is never used.
+screens.overview.elm.addEventListener("top10", () => { //player* but this code is never used.
     if (!screens.overview.visible)
         return;
+
+    var t10 = document.getElementsByClassName("top10")[0].getElementsByTagName("tbody")[0];
+    var trs = t10.getElementsByTagName("tr");
+
+
+    var pscore = -1;
+    var ind = 1;
+
+    for (var i = 0; i < top10.length; i++) {
+        trs[i].style.display = null;
+        
+        var t = top10[i];
+
+        var tds = trs[i].getElementsByTagName("td");
+        var rank = tds[0];
+        var name = tds[1];
+        var score = tds[2];
+        var lvl = tds[3];
+
+        if (pscore == t.userStats.score) ind--;
+        pscore = t.userStats.score;
+
+        rank.innerHTML = ind++;
+        name.innerHTML = t.name;
+        score.innerHTML = t.userStats.score;
+        name.lvl = t.userStats.level;
+    }
+
+    for (var i = 10 - top10.length; i > 0; i--) trs[10 - i].style.display = "none"; // if less than 10 players;
+
+    console.log(top10);
+});
+
+screens.overview.elm.addEventListener("player", () => { //player* but this code is never used.
+    if (!screens.overview.visible)
+        return;
+
+    getTop10();
 
     main_hex.maxskill = player.userStats.level * 4; // max of animate arguments
     player.userStats.color = "rgba(57, 174, 221, 0.65)";
@@ -33,6 +71,7 @@ document.getElementById("overview").addEventListener("player", () => { //player*
 
     var timenow = new Date().getTime();
     var agedhm = getDaysHoursMins(timenow - player.age)
+
     var lldhm = getDaysHoursMins(timenow - player.lastloggedin)
 
     for (var i = 0; i < document.getElementsByClassName("info_name").length; i++) {
@@ -41,19 +80,17 @@ document.getElementById("overview").addEventListener("player", () => { //player*
     if (agedhm.days <= 0) document.getElementById("info_age_days_holder").style.display = "none";
     if (agedhm.hours <= 0) document.getElementById("info_age_hours_holder").style.display = "none";
 
-    document.getElementById("info_age_days").innerHTML = agedhm.days + " dagar";
-    document.getElementById("info_age_hours").innerHTML = agedhm.hours + " timmar";
-    document.getElementById("info_age_minutes").innerHTML = agedhm.mins + " minuter";
+    document.getElementById("info_age_days").innerHTML = agedhm.days + (agedhm.days == 1 ? " dag" : " dagar");
+    document.getElementById("info_age_hours").innerHTML = agedhm.hours + (agedhm.hours == 1 ? " timme" : " timmar");
+    document.getElementById("info_age_minutes").innerHTML = agedhm.mins + (agedhm.mins == 1 ? " minut" : " minuter");
 
-    if (lldhm.llimins == 0 && lldhm.llihours == 0 && lldhm.llimins == 0) {
-        document.getElementById("info_currentsession_holder").style.display = "none";
-        document.getElementById("info_currentsession_addon").style.display = "inline";
-    } else {
-        var info_currses = document.getElementById("info_currentsession");
-        if (lldhm.llimins != 0) info_currses.innerHTML = lldhm.llimins + " minuters";
-        if (lldhm.llihours != 0) info_currses.innerHTML = lldhm.llihours + " timmars";
-        if (lldhm.llidays != 0) info_currses.innerHTML = lldhm.llidays + " dagars";
-    }
+
+    var info_currses = document.getElementById("info_currentsession");
+    if (lldhm.secs != 0) info_currses.innerHTML = lldhm.secs + (lldhm.secs == 1 ? " sekunds" : " sekunders");
+    if (lldhm.mins != 0) info_currses.innerHTML = lldhm.mins + (lldhm.mins == 1 ? " minuts" : " minuters");
+    if (lldhm.hours != 0) info_currses.innerHTML = lldhm.hours + (lldhm.hours == 1 ? " timmes" : " timmars");
+    if (lldhm.days != 0) info_currses.innerHTML = lldhm.days + (lldhm.days == 1 ? " dags" : " dagars");
+
     //document.getElementById("info_rank").innerHTML = player.bestrank; //fix rank later
     //document.getElementById("info_currentsession").innerHTML = player.bestrank; //fix time later
 

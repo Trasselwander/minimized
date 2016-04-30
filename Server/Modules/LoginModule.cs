@@ -10,6 +10,7 @@ namespace Server.Modules
             Get["/"] = parameters =>
             {
                 Services.UserService.User user = AuthorizeUser();
+                Users.UpdateLastLoggedIn(user);
                 return CreateResponse(HttpStatusCode.OK);
             };
         }

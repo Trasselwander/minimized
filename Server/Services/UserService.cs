@@ -47,13 +47,17 @@ namespace Server.Services
             => u.LID == null ? null : GetTopByLeauge((int)u.LID);
 
         public List<User> GetTopByLeauge(int lid)
-            => SQLite.GetConnection().Query<User>(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score", new { lid = lid }).ToList();
+            => SQLite.GetConnection().Query(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND userstats.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score", (User user, UserStats stats) => { user.userStats = stats; return user; },new { lid = lid }).ToList();
 
         public List<User> GetTop10ByLeauge(int lid)
-            => SQLite.GetConnection().Query<User>(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score LIMIT 10", new { lid = lid }).ToList();
+            => SQLite.GetConnection().Query(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND userstats.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score LIMIT 10", (User user, UserStats stats) => {
+                user.userStats = stats; return user; }, new { lid = lid }).ToList();
 
         public void IncrementStat(string stat, User u)
             => SQLite.GetConnection().Query("UPDATE userstats SET @stat += 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { stat = stat, uid = u.ID, lid = u.LID });
+
+        public void UpdateLastLoggedIn(User u)
+            => SQLite.GetConnection().Query("UPDATE users SET lastloggedin=@time WHERE users.ID = @uid", new { uid = u.ID, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
 
 
         public User CreateUser(string name, string hash, string email)
