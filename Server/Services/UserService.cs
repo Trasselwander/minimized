@@ -102,7 +102,7 @@ namespace Server.Services
 
             foreach (var l in leauge)
             {
-                var d = SQLite.GetConnection().Query<League>(@"SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND userstats.LID=@lid users.LID=@lid", new { lid = l.ID }).FirstOrDefault();
+                var d = SQLite.GetConnection().Query<League>(@"SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND userstats.LID=@lid AND users.LID=@lid", new { lid = l.ID }).FirstOrDefault();
 
                 var data = SQLite.GetConnection().Query<League>(@"SELECT 
                                                                     SUM(userstats.life) AS life, 
