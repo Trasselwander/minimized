@@ -47,10 +47,10 @@ namespace Server.Services
             => u.LID == null ? null : GetTopByLeauge((int)u.LID);
 
         public List<User> GetTopByLeauge(int lid)
-            => SQLite.GetConnection().Query(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND userstats.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score", (User user, UserStats stats) => { user.userStats = stats; return user; },new { lid = lid }).ToList();
+            => SQLite.GetConnection().Query(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND userstats.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score DESC", (User user, UserStats stats) => { user.userStats = stats; return user; },new { lid = lid }).ToList();
 
         public List<User> GetTop10ByLeauge(int lid)
-            => SQLite.GetConnection().Query(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND userstats.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score LIMIT 10", (User user, UserStats stats) => {
+            => SQLite.GetConnection().Query(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND userstats.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score DESC LIMIT 10", (User user, UserStats stats) => {
                 user.userStats = stats; return user; }, new { lid = lid }).ToList();
 
         public void IncrementStat(string stat, User u)
@@ -113,7 +113,7 @@ namespace Server.Services
                                                                     SUM(userstats.magicdefence) AS magicdefence
                                                                  FROM userstats INNER JOIN users ON userstats.UID=users.ID AND userstats.LID=@lid AND users.LID=@lid", new { lid = l.ID }).FirstOrDefault();
 
-                l.leader = SQLite.GetConnection().Query<string>(@"SELECT name FROM users INNER JOIN userstats ON users.ID=userstats.UID AND userstats.LID=@lid AND users.LID=@lid ORDER BY SCORE LIMIT 1", new { lid = l.ID }).FirstOrDefault();
+                l.leader = SQLite.GetConnection().Query<string>(@"SELECT name FROM users INNER JOIN userstats ON users.ID=userstats.UID AND userstats.LID=@lid AND users.LID=@lid ORDER BY SCORE DESC LIMIT 1", new { lid = l.ID }).FirstOrDefault();
 
                 l.life = data.life;
                 l.speed = data.speed;
