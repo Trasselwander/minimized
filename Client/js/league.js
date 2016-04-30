@@ -2,6 +2,11 @@
 var leauge_hex = {};
 
 screens.league.elm.addEventListener("toggled", () => {
+    for (var i in leauge_hex)
+        leauge_hex[i].arr = [];
+});
+
+screens.league.elm.addEventListener("toggled", () => {
     sendRequest("/leagues/list", (test, error) => {
         if (!error) {
 
