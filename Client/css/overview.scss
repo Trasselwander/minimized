@@ -5,6 +5,7 @@
         margin: 50px auto;
         display: block;
         max-width: 1050px;
+        padding: 0 10px;
 
         .menu {
             width: 100%;
@@ -57,6 +58,28 @@
                     width: 100px;
                 }
             }
+        }
+    }
+}
+
+
+@media (max-device-width: 580px) {
+    .holder .info {
+        flex-direction: column;
+
+        .one-half {
+            width: initial;
+            margin-bottom: 20px;
+        }
+    }
+}
+@media (max-device-width: 670px) {
+    #overview .holder .info {
+        flex-direction: column;
+
+        .one-third {
+            width: initial;
+            margin-bottom: 20px;
         }
     }
 }
