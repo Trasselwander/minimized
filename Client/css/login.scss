@@ -1,4 +1,5 @@
-﻿
+﻿@import "variables";
+
 #login, #register {
     font-size: 16px;
 
@@ -14,28 +15,28 @@
         text-decoration: underline;
 
         &#reg {
-            color: rgba(186, 10, 10, 0.85);
+            color: $green;
         }
 
         &#log {
-            color: rgb(52, 146, 239);
+            color: $blue;
         }
     }
 
 
-    #login_password, #login_name, #login_btn {
-        border: 1px solid rgba(141, 196, 250, 0.65);
+    #login_password, #login_name {
+        border: 1px solid rgba($blue, $medium);
 
         &:hover, &:active {
-            border: 1px solid rgba(102, 179, 255, 1);
+            border: 1px solid rgba($blue, $medium * 1.8);
         }
     }
 
-    #register_password, #register_name, #register_email, #register_btn, #register_password_repeat {
-        border: 1px solid rgba(224, 114, 114, 0.50);
+    #register_password, #register_name, #register_email, #register_password_repeat {
+        border: 1px solid rgba($green, $medium);
 
         &:hover, &:active {
-            border: 1px solid rgba(224, 67, 67, 0.94);
+            border: 1px solid rgba($green, $medium * 1.8);
         }
     }
 
@@ -48,19 +49,10 @@
         max-width: 300px;
         border: 1px solid #ABADB3;
 
-        #login_btn, #register_btn {
-            color: rgba(0, 0, 0, 0.87);
-            background-color: white;
 
-            &:hover {
-                cursor: pointer;
-            }
-        }
         #register_password.wrong, #register_password_repeat.wrong {
-        border: 1px solid rgb(52, 146, 239);
-            
-}
-
+            border: 1px solid rgba(0, 0, 0, 0.50);
+        }
     }
 
     .inline {
@@ -86,4 +78,3 @@
         }
     }
 }
-

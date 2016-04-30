@@ -1,0 +1,14 @@
+﻿$light: 0.2;
+$medium: $light * 2;
+
+$blue: #2196f3;
+$lightblue: rgba($blue, $light);
+$green: #4caf50;
+$lightgreen: rgba($green, $light);
+$orange: #ff9800;
+$lightorange: rgba($orange, $light);
+$red: #f44336;
+$lightred: rgba($red, $light);
+$black: rgba(0,0,0,0.5);
+$lightblack: rgba($black, $light);
+$white: #fff;
