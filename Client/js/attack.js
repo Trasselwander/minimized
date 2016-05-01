@@ -1,16 +1,25 @@
 ﻿var attack_hexstat;
+var enemy_loaded = false;
 
 document.getElementById("attack").addEventListener("toggled", () => {
     attack_hexstat.arr = [];
     screens.attack.visible = true;
 
     getPlayer();
-    //getEnemy();
+    getEnemy();
 });
 
 screens.attack.elm.addEventListener("enemy", () => {
+    console.log(enemy);
 
+    if (enemy_loaded == true) {
 
+        attack_hexstat.maxskill = 40; //player.userData.level * 4; //ta den högsta leveln av båda karaktärerna.
+        attack_hexstat.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(38, 94, 209, 0.5)" },
+            { "life": enemy.userStats.life, "speed": enemy.userStats.speed, "physicalattack": enemy.userStats.physicalattack, "physicaldefence": enemy.userStats.physicaldefence, "magicattack": enemy.userStats.magicattack, "magicdefence": enemy.userStats.magicdefence, "color": "rgba(18, 149, 33, 0.5)" }])
+        displayData();
+    }
+    else enemy_loaded = true;
 
 });
 
@@ -18,20 +27,13 @@ document.getElementById("attack").addEventListener("detoggled", () => {
     attack_hexstat.arr = [];
     screens.attack.visible = false;
 });
-
-document.getElementById("overview").addEventListener("player", () => {
-    if (!screens.attack.visible)
-        return;
-
-    attack_hexstat.maxskill = 40; //player.userData.level * 4; //ta den högsta leveln av båda karaktärerna.
-    attack_hexstat.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(38, 94, 209, 0.5)" },
-        { "life": 5, "speed": 30, "physicalattack": 20, "physicaldefence": 10, "magicattack": 10, "magicdefence": 30, "color": "rgba(18, 149, 33, 0.5)" }])
+function displayData() {
 
     var attdiff = document.getElementById("attack_diff_table");
     var attdiffths = attdiff.getElementsByTagName("th");
 
     attdiffths[1].innerHTML = player.name;
-    attdiffths[2].innerHTML = "adam"; //enemy name
+    attdiffths[2].innerHTML = enemy.name; //enemy name
 
     function shortAtt(statname, pvalue, evalue) {
         attdiff.getElementsByClassName("char_" + statname)[0].innerHTML = pvalue;
@@ -40,17 +42,35 @@ document.getElementById("overview").addEventListener("player", () => {
         attdiff.getElementsByClassName(statname + "_diff")[0].classList.add((pvalue - evalue == 0) ? "blue" : ((pvalue - evalue > 0) ? "green" : "red")); //enemy life
     }
 
-    shortAtt("life", player.userStats.life, 10);
-    shortAtt("speed", player.userStats.speed, 10);
-    shortAtt("physA", player.userStats.physicalattack, 0);
-    shortAtt("physD", player.userStats.physicaldefence, 2);
-    shortAtt("magA", player.userStats.magicattack, 1);
-    shortAtt("magD", player.userStats.magicdefence, 1);
+    shortAtt("life", player.userStats.life, enemy.userStats.life);
+    shortAtt("speed", player.userStats.speed, enemy.userStats.speed);
+    shortAtt("physA", player.userStats.physicalattack, enemy.userStats.physicalattack);
+    shortAtt("physD", player.userStats.physicaldefence, enemy.userStats.physicaldefence);
+    shortAtt("magA", player.userStats.magicattack, enemy.userStats.magicattack);
+    shortAtt("magD", player.userStats.magicdefence, enemy.userStats.magicdefence);
 
     var totdiff = attdiff.getElementsByClassName("total_diff")[0];
-    var totdiffval =  player.userStats.life + player.userStats.speed + player.userStats.physicalattack + player.userStats.physicaldefence + player.userStats.magicattack + player.userStats.magicdefence - 10 - 10 - 7 - 2 - 1 - 1;
+    var totdiffval = player.userStats.life + player.userStats.speed + player.userStats.physicalattack + player.userStats.physicaldefence + player.userStats.magicattack + player.userStats.magicdefence - enemy.userStats.life + enemy.userStats.speed + enemy.userStats.physicalattack + enemy.userStats.physicaldefence + enemy.userStats.magicattack + enemy.userStats.magicdefence;
     totdiff.innerHTML = totdiffval;
     totdiff.classList.add((totdiffval == 0) ? "blue" : ((totdiffval > 0) ? "green" : "red"));
+
+
+}
+document.getElementById("overview").addEventListener("player", () => {
+    if (!screens.attack.visible)
+        return;
+
+    if (enemy_loaded == true) {
+
+        attack_hexstat.maxskill = 40; //player.userData.level * 4; //ta den högsta leveln av båda karaktärerna.
+        attack_hexstat.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(38, 94, 209, 0.5)" },
+            { "life": enemy.userStats.life, "speed": enemy.userStats.speed, "physicalattack": enemy.userStats.physicalattack, "physicaldefence": enemy.userStats.physicaldefence, "magicattack": enemy.userStats.magicattack, "magicdefence": enemy.userStats.magicdefence, "color": "rgba(18, 149, 33, 0.5)" }])
+        displayData();
+    }
+    else enemy_loaded = true;
+
+
+
 });
 
 
