@@ -18,6 +18,8 @@ function getEnemy() {
 }
 
 function getTop10() {
+    if (!player.LID) return;
+
     sendRequest("/players/top10/" + player.LID, (test, error) => {
         if (!error) {
             top10 = JSON.parse(test);
