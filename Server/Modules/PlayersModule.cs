@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Nancy;
 using Newtonsoft.Json;
 using static Server.Services.UserService;
+using Server.Services;
 
 namespace Server.Modules
 {
@@ -42,9 +43,9 @@ namespace Server.Modules
                 Users.GetUserStats(user);
 
                 User[] users = Users.GetCloseUsersByScore(user).ToArray();
-                if (users.Length == 0) CreateResponse(HttpStatusCode.BadRequest, "Forever alone.");
+                if (users.Length == 0) return CreateResponse(HttpStatusCode.BadRequest, "Forever alone.");
 
-                int random = new Random().Next(0, users.Length - 1);
+                int random = RandomService.rnd.Next(users.Length);
 
                 Users.GetUserStats(users[random]);
                 Users.GetRank(users[random]);
