@@ -67,9 +67,11 @@ screens.league.elm.addEventListener("toggled", () => {
                 
                 var tl = newleague.getElementsByClassName("toplist_btn")[0];
                 tl.dataset.lid = league[i].ID;
+                tl.dataset.leaguename = league[i].name;
                 tl.onclick = function () {
                     sendRequest("/leagues/top/" + this.dataset.lid, (text, error) => {
                         if (!error) {
+                            document.getElementById("leaguetoplist_leaguename").dataset.leaguename = this.dataset.leaguename;
                             leaguetoplist = JSON.parse(text);
                             screens.leaguetoplist.elm.dispatchEvent(new Event("loaded"));
                             toggleScreen(screens.leaguetoplist.elm);

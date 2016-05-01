@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="lib/fa/css/font-awesome.min.css" />
     <link rel="stylesheet" href="lib/swal/sweetalert.css" />
 
+    <link rel="stylesheet" href="css/league.css" />
     <link rel="stylesheet" href="css/buttons.css" />
     <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" type="text/css" href="css/overview.css">
@@ -423,10 +424,14 @@
     </div>
 
     <div id="leaguetoplist" class="content">
+
         <div class="holder">
-            <div id="shadow_player" style="display:none">
-                <span class="leaguetoplist_rank"></span>
-                <span class="leaguetoplist_name"></span>
+            <h3 id="leaguetoplist_leaguename"></h3>
+            <div class="info">
+                <div id="shadow_player" style="display:none">
+                    <span class="leaguetoplist_rank"></span>
+                    <span class="leaguetoplist_name"></span>
+                </div>
             </div>
         </div>
     </div>
@@ -468,6 +473,7 @@
     <script src="lib/easeljs.min.js"></script>
     <script src="js/hexstat.js"></script>
 
+    <script src="js/leaguetoplist.js"></script>
     <script src="js/animation.js"></script>
     <script src="js/helper.js"></script>
     <script src="js/attack.js"></script>

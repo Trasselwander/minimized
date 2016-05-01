@@ -1,2 +1,23 @@
 ﻿body {
 }
+
+#leaguetoplist {
+    #leaguetoplist_info {
+        background-color: rgba(0, 0, 0, 0.02);
+
+        div {
+            margin: 2px 2px;
+            margin-top: 2px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+            font-size: 12px;
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .leaguetoplist_name {
+            margin-left: 20px;
+        }
+    }
+}

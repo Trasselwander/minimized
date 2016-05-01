@@ -1,5 +1,5 @@
 ﻿
-#overview, #attack, #league, #battle {
+#overview, #attack, #league, #battle, #leaguetoplist {
 
     .holder {
         margin: 50px auto;
@@ -29,6 +29,11 @@
             font-size: 0;
             align-items: center;
             display: flex;
+
+            &.topleague_player {
+                font-size: 12px;
+                display: initial;
+            }
 
             .one-third, .one-half {
                 table, canvas {
@@ -73,6 +78,7 @@
         }
     }
 }
+
 @media (max-device-width: 670px) {
     #overview .holder .info {
         flex-direction: column;
