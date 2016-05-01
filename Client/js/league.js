@@ -71,14 +71,12 @@ screens.league.elm.addEventListener("toggled", () => {
                 tl.onclick = function () {
                     sendRequest("/leagues/top/" + this.dataset.lid, (text, error) => {
                         if (!error) {
-                            document.getElementById("leaguetoplist_leaguename").dataset.leaguename = this.dataset.leaguename;
                             leaguetoplist = JSON.parse(text);
-                            screens.leaguetoplist.elm.dispatchEvent(new Event("loaded"));
-                            toggleScreen(screens.leaguetoplist.elm);
+                            screens.leaguetoplist.elm.dispatchEvent(new Event("toplist"));
                         }
                     });
-
-
+                    document.getElementById("leaguetoplist_leaguename").dataset.leaguename = this.dataset.leaguename;
+                    toggleScreen(screens.leaguetoplist.elm);
                 }
 
                 if (player.league) {

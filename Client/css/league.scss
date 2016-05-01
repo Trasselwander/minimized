@@ -1,27 +1,16 @@
-﻿body {
-}
-
+﻿
 #leaguetoplist {
-    .holder {
-        margin: 50px auto;
-        display: block;
-        max-width: 1050px;
-        padding: 0 10px;
+    .stats-table {
+        tr {
+            cursor: pointer;
+            transition: height ease-in-out 0.5s; // meh
 
-        .info {
-            margin: 20px;
-            background-color: rgba(0, 0, 0, 0.02);
-            padding: 10px;
-            padding-left: 20px;
+            td {
+                vertical-align: top;
+            }
 
-            .topleague_player {
-                margin: 2px 2px;
-                margin-top: 2px;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.11);
-
-                &:last-child {
-                    border-bottom: none;
-                }
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.08);
             }
         }
     }
