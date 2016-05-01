@@ -41,6 +41,9 @@ namespace Server.Modules
                 Users.GetUserStats(user);
 
                 User[] users = Users.GetCloseUsersByScore(user).ToArray();
+                if (users.Length == 0) CreateResponse(HttpStatusCode.BadRequest, "Forever alone.");
+
+
                 int random = new Random().Next(0, users.Length - 1);
 
                 Users.GetUserStats(users[random]);
