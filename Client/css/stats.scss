@@ -4,7 +4,6 @@
     max-width: 600px;
 
     &#player_dataStats, &#player_skill_points {
-        display: inline-block;
         vertical-align: middle;
     }
 
@@ -25,10 +24,10 @@
 
     .char_sp_up {
         cursor: pointer;
-        transition: background-color .5s ease-in-out;
+        transition: background-color .2s ease-in-out;
 
         &:hover {
-            background-color: rgba(81, 231, 115, 0.26);
+            background-color: rgba(18, 221, 64, 0.43);
         }
 
         i {

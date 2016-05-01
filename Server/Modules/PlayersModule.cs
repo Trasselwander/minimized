@@ -57,8 +57,7 @@ namespace Server.Modules
 
                 if (user.userStats == null || user.userStats.skillpoints < 1)
                     return CreateResponse(HttpStatusCode.BadRequest);
-
-                switch ((parameters.id as string).ToLower())
+                switch (((string)parameters.id).ToLower())
                 {
                     case "1":
                     case "life":
