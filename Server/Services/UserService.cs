@@ -59,7 +59,7 @@ namespace Server.Services
             => SQLite.GetConnection().Query("UPDATE users SET lastloggedin=@time WHERE users.ID = @uid", new { uid = u.ID, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
 
         public void IncrementStat(string stat, User u)
-            => SQLite.GetConnection().Query("UPDATE userstats SET " + stat + " = " + stat + " + 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID });
+            => SQLite.GetConnection().Query("UPDATE userstats SET " + stat + " = " + stat + " + 1, skillpoints = skillpoints - 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID });
 
         public void GetRank(User user)
         {
