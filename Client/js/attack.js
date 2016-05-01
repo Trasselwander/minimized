@@ -89,6 +89,8 @@ window.addEventListener("load", () => {
             if (!error) {
                 battleLife = JSON.parse(test);
                 screens.battle.elm.dispatchEvent(new Event("init"));
+                toggleScreen(screens.battle.elm);
+
             }
         });
     }
