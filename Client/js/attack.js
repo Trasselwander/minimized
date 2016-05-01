@@ -79,6 +79,10 @@ window.addEventListener("load", () => {
     document.getElementById("cancel_btn").onclick = () => {
         toggleScreen(screens.overview.elm);
     }
+    document.getElementById("next_match_btn").onclick = () => {
+        toggleScreen(screens.attack.elm);
+    }
+
     attack_hexstat = new hexstat("canvas_attack");
     attack_hexstat.drawLines();
     attack_hexstat.drawOutline();
