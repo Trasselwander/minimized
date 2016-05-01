@@ -250,6 +250,25 @@
             </div>
         </div>
     </div>
+
+
+    <div id="battle" class="content">
+        <div class="holder">
+            <h3>Fight</h3>
+
+            <canvas id="battle_animation"></canvas>
+
+            <div class="menu">
+                <button id="battle_attack_1" class="material-btn green">ATTACK 1</button>
+                <button id="battle_attack_2" class="material-btn orange">ATTACK 2</button>
+                <button id="battle_attack_3" class="material-btn red">ATTACK 3</button>
+                <button id="battle_attack_4" class="material-btn black">ATTACK 4</button>
+            </div>
+
+
+        </div>
+    </div>
+
     <div id="attack" class="content">
         <div class="holder">
 
@@ -402,6 +421,8 @@
             </div>
         </div>
     </div>
+
+
     <script>
         screens = {
             login: {
@@ -423,6 +444,10 @@
             league: {
                 elm: document.getElementById("league"),
                 visible: false,
+            },
+            battle: {
+                elm: document.getElementById("battle"),
+                visible: false,
             }
         }
     </script>
@@ -431,6 +456,7 @@
     <script src="lib/easeljs.min.js"></script>
     <script src="js/hexstat.js"></script>
 
+    <script src="js/animation.js"></script>
     <script src="js/helper.js"></script>
     <script src="js/attack.js"></script>
     <script src="js/index.js"></script>

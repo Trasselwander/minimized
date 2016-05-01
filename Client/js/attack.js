@@ -84,7 +84,14 @@ window.addEventListener("load", () => {
     document.getElementById("next_match_btn").onclick = () => {
         toggleScreen(screens.attack.elm);
     }
-
+    document.getElementById("attack_request_btn").onclick = () => {
+        sendRequest("/battle/init/" + enemy.ID, (test, error) => {
+            if (!error) {
+                battleLife = JSON.parse(test);
+                screens.battle.elm.dispatchEvent(new Event("init"));
+            }
+        });
+    }
     attack_hexstat = new hexstat("canvas_attack");
     attack_hexstat.drawLines();
     attack_hexstat.drawOutline();
