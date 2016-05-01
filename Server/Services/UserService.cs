@@ -161,6 +161,20 @@ namespace Server.Services
             return new Battle { enemyHP = defender.userStats.life, playerHP = user.userStats.life };
         }
 
+        public Attack GetAttack(User user)
+            => SQLite.GetConnection().Query<Attack>("SELECT * FROM attacks WHERE AHP > 0 AND DHP > 0 AND AID = @uid", new { uid = user.ID }).FirstOrDefault();
+        
+
+
+        public class Attack
+        {
+            public int ID { get; set; }
+            public int AID { get; set; }
+            public int DID { get; set; }
+            public int DHP { get; set; }
+            public int AHP { get; set; }
+            public long start { get; set; }
+        }
 
         public class Battle
         {
