@@ -151,7 +151,7 @@ function Particle(x, y) {
     // gravity will be applied and pull the particle down
     this.gravity = 1;
     // set the hue to a random number +-20 of the overall hue variable
-    this.hue = random(hue - 30, hue + 30);
+    this.hue = random(hue - 10, hue + 10);
     this.brightness = random(50, 80);
     this.alpha = 1;
     // set how fast the particle fades out
@@ -203,7 +203,7 @@ function loop() {
     requestAnimFrame(loop);
 
     // increase the hue to get different colored fireworks over time
-    hue += 0.25;
+    hue += 0.15;
 
     // normally, clearRect() would be used to clear the canvas
     // we want to create a trailing effect though
@@ -241,3 +241,12 @@ function attackPlayer() {
 // once the window loads, we are ready for some fireworks!
 window.onload = loop;
 
+window.addEventListener("load", () => {
+    document.getElementById("battle_attack_1").onclick = function () {
+        attackEnemy();
+    };
+    document.getElementById("battle_attack_2").onclick = function () {
+        attackPlayer();
+    };
+
+});
