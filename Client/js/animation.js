@@ -281,13 +281,3 @@ function enemyDefence() {
 }
 // once the window loads, we are ready for some fireworks!
 window.onload = loop;
-
-window.addEventListener("load", () => {
-    document.getElementById("battle_attack_1").onclick = function () {
-        attackEnemy();
-    };
-    document.getElementById("battle_attack_2").onclick = function () {
-        attackPlayer();
-    };
-
-});
