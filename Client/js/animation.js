@@ -2,14 +2,14 @@
     var animation_attack_width = 10;
 // when animating on canvas, it is best to use requestAnimationFrame instead of setTimeout or setInterval
 // not supported in all browsers though and sometimes needs a prefix, so we need a shim
-    window.requestAnimFrame = (function () {
-        return window.requestAnimationFrame ||
-                    window.webkitRequestAnimationFrame ||
-                    window.mozRequestAnimationFrame ||
-                    function (callback) {
-                        window.setTimeout(callback, 1000 / 60);
-                    };
-    })();
+window.requestAnimFrame = (function () {
+    return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+})();
 
 // now we will setup our basic variables for the demo
 var canvas = document.getElementById('battle_animation'),
@@ -54,7 +54,7 @@ function calculateDistance(p1x, p1y, p2x, p2y) {
 }
 
 // create firework
-function Firework(sx, sy, tx, ty) {
+function Firework(sx, sy, tx, ty, color, speed) {
     // actual coordinates
     this.x = sx;
     this.y = sy;
@@ -75,9 +75,9 @@ function Firework(sx, sy, tx, ty) {
         this.coordinates.push([this.x, this.y]);
     }
     this.angle = Math.atan2(ty - sy, tx - sx);
-    this.speed = 2;
+    this.speed = speed;
     this.acceleration = 1.05;
-    this.brightness = random(50, 70);
+    this.brightness = random(color - 5, color + 5) || random(50, 70);
     // circle target indicator radius
     this.targetRadius = 1;
 }
@@ -107,7 +107,7 @@ Firework.prototype.update = function (index) {
 
     // if the distance traveled, including velocities, is greater than the initial distance to the target, then the target has been reached
     if (this.distanceTraveled >= this.distanceToTarget) {
-        createParticles(this.tx, this.ty);
+        createParticles(this.tx, this.ty, this.brightness);
         // remove the firework, use the index passed into the update function to determine which to remove
         fireworks.splice(index, 1);
     } else {
@@ -123,7 +123,8 @@ Firework.prototype.draw = function () {
     // move to the last tracked coordinate in the set, then draw a line to the current x and y
     ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
     ctx.lineTo(this.x, this.y);
-    ctx.strokeStyle = 'hsl(' + hue + ', 100%, ' + this.brightness + '%)';
+    if (this.color) ctx.strokeStyle = 'hsl(' + this.color + ', 100%, ' + this.brightness + '%)';
+    else ctx.strokeStyle = 'hsl(' + hue + ', 100%, ' + this.brightness + '%)';
     ctx.lineWidth = animation_attack_width;
     ctx.stroke();
 
@@ -134,7 +135,7 @@ Firework.prototype.draw = function () {
 }
 
 // create particle
-function Particle(x, y) {
+function Particle(x, y, color) {
     this.x = x;
     this.y = y;
     // track the past coordinates of each particle to create a trail effect, increase the coordinate count to create more prominent trails
@@ -151,8 +152,8 @@ function Particle(x, y) {
     // gravity will be applied and pull the particle down
     this.gravity = 1;
     // set the hue to a random number +-20 of the overall hue variable
-    this.hue = random(hue - 30, hue + 30);
-    this.brightness = random(50, 80);
+    this.hue = random(hue - 40, hue + 40);
+    this.brightness = color || random(50, 80);
     this.alpha = 1;
     // set how fast the particle fades out
     this.decay = random(0.015, 0.03);
@@ -185,15 +186,17 @@ Particle.prototype.draw = function () {
     ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
     ctx.lineTo(this.x, this.y);
     ctx.strokeStyle = 'hsla(' + this.hue + ', 100%, ' + this.brightness + '%, ' + this.alpha + ')';
+    ctx.lineWidth = animation_attack_width;
+
     ctx.stroke();
 }
 
 // create particle group/explosion
-function createParticles(x, y) {
+function createParticles(x, y, color) {
     // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
     var particleCount = 30;
     while (particleCount--) {
-        particles.push(new Particle(x, y));
+        particles.push(new Particle(x, y, color));
     }
 }
 
@@ -230,14 +233,52 @@ function loop() {
         particles[i].update(i);
     }
 }
+var baseSpeed = 2;
+function normalAttack() {
+    animation_attack_width = 10;
 
-function attackEnemy() {
-    fireworks.push(new Firework(100, ch / 2, cw - 100, ch / 2));
+    fireworks.push(new Firework(100, ch / 2, cw - 100, ch / 2, 15, baseSpeed));
 }
-function attackPlayer() {
-    fireworks.push(new Firework(cw - 100, ch / 2, 100, ch / 2));
-} 
+function fastAttack() {
+    hue = 50;
+    animation_attack_width = 5;
+    fireworks.push(new Firework(100, ch / 2, cw - 100, ch / 2, random(40, 60), 8));
+}
+function magicAttack() {
+    animation_attack_width = 40;
+    fireworks.push(new Firework(100, ch / 2, cw - 100, ch / 2, random(60, 80), 2));
+}
 
+function defence() {
+    animation_attack_width = 1;
+
+    var particleCount = 30;
+    while (particleCount--) {
+        particles.push(new Particle(100, ch / 2, random(4, 16)));
+    }
+}
+
+function enemyNormalAttack() {
+    fireworks.push(new Firework(cw - 100, ch / 2, 100, ch / 2, 15, baseSpeed));
+}
+function enemyFastAttack() {
+    hue = 50;
+    animation_attack_width = 5;
+    fireworks.push(new Firework(cw - 100, ch / 2, 100, ch / 2, random(40, 60), 8));
+}
+function enemyMagicAttack() {
+    animation_attack_width = 40;
+    fireworks.push(new Firework(cw - 100, ch / 2, 100, ch / 2, random(60, 80), 2));
+}
+
+function enemyDefence() {
+    animation_attack_width = 1;
+
+    var particleCount = 30;
+    while (particleCount--) {
+        particles.push(new Particle(cw - 100, ch / 2, random(4, 16)));
+    }
+}
 // once the window loads, we are ready for some fireworks!
 window.onload = loop;
 
