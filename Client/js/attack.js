@@ -39,6 +39,7 @@ function displayData() {
         attdiff.getElementsByClassName("char_" + statname)[0].innerHTML = pvalue;
         attdiff.getElementsByClassName("enemy_" + statname)[0].innerHTML = evalue; // enenym life
         attdiff.getElementsByClassName(statname + "_diff")[0].innerHTML = pvalue - evalue; //enemy life
+        attdiff.getElementsByClassName(statname + "_diff")[0].classList.remove("blue", "green", "red");
         attdiff.getElementsByClassName(statname + "_diff")[0].classList.add((pvalue - evalue == 0) ? "blue" : ((pvalue - evalue > 0) ? "green" : "red")); //enemy life
     }
 
@@ -52,6 +53,7 @@ function displayData() {
     var totdiff = attdiff.getElementsByClassName("total_diff")[0];
     var totdiffval = (player.userStats.life + player.userStats.speed + player.userStats.physicalattack + player.userStats.physicaldefence + player.userStats.magicattack + player.userStats.magicdefence) - (enemy.userStats.life + enemy.userStats.speed + enemy.userStats.physicalattack + enemy.userStats.physicaldefence + enemy.userStats.magicattack + enemy.userStats.magicdefence);
     totdiff.innerHTML = totdiffval;
+    totdiff.classList.remove("blue", "green", "red");
     totdiff.classList.add((totdiffval == 0) ? "blue" : ((totdiffval > 0) ? "green" : "red"));
 
 
