@@ -47,48 +47,19 @@ namespace Server.Services
             => u.LID == null ? null : GetTopByLeauge((int)u.LID);
 
         public List<User> GetTopByLeauge(int lid)
-            => SQLite.GetConnection().Query(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND userstats.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score DESC", (User user, UserStats stats) => { user.userStats = stats; return user; },new { lid = lid }).ToList();
+            => SQLite.GetConnection().Query(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND userstats.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score DESC", (User user, UserStats stats) => { user.userStats = stats; return user; }, new { lid = lid }).ToList();
 
         public List<User> GetTop10ByLeauge(int lid)
-            => SQLite.GetConnection().Query(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND userstats.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score DESC LIMIT 10", (User user, UserStats stats) => {
-                user.userStats = stats; return user; }, new { lid = lid }).ToList();
+            => SQLite.GetConnection().Query(@"SELECT * FROM users INNER JOIN userstats ON users.LID = @lid AND userstats.LID = @lid AND users.ID = userstats.UID ORDER BY userstats.score DESC LIMIT 10", (User user, UserStats stats) =>
+            {
+                user.userStats = stats; return user;
+            }, new { lid = lid }).ToList();
 
         public void UpdateLastLoggedIn(User u)
             => SQLite.GetConnection().Query("UPDATE users SET lastloggedin=@time WHERE users.ID = @uid", new { uid = u.ID, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
 
-
         public void IncrementStat(string stat, User u)
-        {
-            switch (stat)
-            {
-                case "1":
-                case "life":
-                    SQLite.GetConnection().Query("UPDATE userstats SET life += 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID });
-                    break;
-                case "2":
-                case "speed":
-                    SQLite.GetConnection().Query("UPDATE userstats SET speed += 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID });
-                    break;
-                case "3":
-                case "physicalattack":
-                    SQLite.GetConnection().Query("UPDATE userstats SET physicalattack += 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID });
-                    break;
-                case "4":
-                case "physicaldefence":
-                    SQLite.GetConnection().Query("UPDATE userstats SET physicaldefence += 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID });
-                    break;
-                case "5":
-                case "magicattack":
-                    SQLite.GetConnection().Query("UPDATE userstats SET magicattack += 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID });
-                    break;
-                case "6":
-                case "magicdefence":
-                    SQLite.GetConnection().Query("UPDATE userstats SET magicdefence += 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID });
-                    break;
-                default:
-                    throw new HttpErrorException(Nancy.HttpStatusCode.BadGateway, "Invalid stat.");
-            }
-        }
+            => SQLite.GetConnection().Query("UPDATE userstats SET " + stat + " = " + stat + " + 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID });
 
         public void GetRank(User user)
         {
@@ -116,7 +87,7 @@ namespace Server.Services
 
             return GetUser(name);
         }
-        
+
         public User GetOpponent(User u)
         {
             if (u.LID == null) return null;

@@ -67,7 +67,37 @@ namespace Server.Modules
                 if (user.userStats == null || user.userStats.skillpoints < 1)
                     return CreateResponse(HttpStatusCode.BadRequest);
 
-                Users.IncrementStat(((string)parameters.id).ToLower(), user);
+                switch (((string)parameters.id).ToLower())
+                {
+                    case "1":
+                    case "life":
+                        Users.IncrementStat("life", user);
+                        break;
+                    case "2":
+                    case "speed":
+                        Users.IncrementStat("speed", user);
+                        break;
+                    case "3":
+                    case "physicalattack":
+                        Users.IncrementStat("physicalattack", user);
+                        break;
+                    case "4":
+                    case "physicaldefence":
+                        Users.IncrementStat("physicaldefence", user);
+                        break;
+                    case "5":
+                    case "magicattack":
+                        Users.IncrementStat("magicattack", user);
+                        break;
+                    case "6":
+                    case "magicdefence":
+                        Users.IncrementStat("magicdefence", user);
+                        break;
+
+                    default:
+                        return CreateResponse(HttpStatusCode.BadRequest);
+                }
+
                 return CreateResponse(HttpStatusCode.OK);
             };
         }
