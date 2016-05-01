@@ -116,17 +116,18 @@ screens.overview.elm.addEventListener("player", () => { //player* but this code 
     if (player.userStats.skillpoints > 0)
         for (var i = 0; i < sp_arr.length; i++) {
             pstats.getElementsByClassName(sp_arr[i])[0].classList.add("char_sp_up");
-            document.getElementsByClassName(sp_arr[i])[0].dataset.num = i +1;
-            document.getElementsByClassName(sp_arr[i])[0].onclick = function() {
-                console.log(this);
-                sendRequest("/players/levelup/" + this.dataset.num, (test, error) => {
-
-                    if (!error) {
-                        getPlayer();
-                    }
-                });
+            document.getElementsByClassName(sp_arr[i])[0].dataset.num = i + 1;
+            document.getElementsByClassName(sp_arr[i])[0].onclick = function () {
+                if (player.userStats.skillpoints > 0) {
+                    sendRequest("/players/levelup/" + this.dataset.num, (test, error) => {
+                        if (!error) {
+                            getPlayer();
+                        }
+                    });
+                }
             };
         }
+
     else
         for (var i = 0; i < sp_arr.length; i++)
             pstats.getElementsByClassName(sp_arr[i])[0].classList.remove("char_sp_up");
