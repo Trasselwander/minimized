@@ -90,7 +90,8 @@ screens.overview.elm.addEventListener("player", () => { //player* but this code 
 
 
     var info_currses = document.getElementById("info_currentsession");
-    if (lldhm.secs != 0) info_currses.innerHTML = lldhm.secs + (lldhm.secs == 1 ? " sekunds" : " sekunders");
+
+    info_currses.innerHTML = lldhm.secs + (lldhm.secs == 1 ? " sekunds" : " sekunders");
     if (lldhm.mins != 0) info_currses.innerHTML = lldhm.mins + (lldhm.mins == 1 ? " minuts" : " minuters");
     if (lldhm.hours != 0) info_currses.innerHTML = lldhm.hours + (lldhm.hours == 1 ? " timmes" : " timmars");
     if (lldhm.days != 0) info_currses.innerHTML = lldhm.days + (lldhm.days == 1 ? " dags" : " dagars");

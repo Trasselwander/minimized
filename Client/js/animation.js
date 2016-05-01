@@ -206,7 +206,7 @@ function loop() {
     requestAnimFrame(loop);
 
     // increase the hue to get different colored fireworks over time
-    hue += 0.25;
+    hue += 0.15;
 
     // normally, clearRect() would be used to clear the canvas
     // we want to create a trailing effect though
@@ -282,3 +282,12 @@ function enemyDefence() {
 // once the window loads, we are ready for some fireworks!
 window.onload = loop;
 
+window.addEventListener("load", () => {
+    document.getElementById("battle_attack_1").onclick = function () {
+        attackEnemy();
+    };
+    document.getElementById("battle_attack_2").onclick = function () {
+        attackPlayer();
+    };
+
+});
