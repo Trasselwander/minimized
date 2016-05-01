@@ -1,6 +1,12 @@
 ﻿window.addEventListener("load", () => {
+    UpdateButtons();
+});
+
+function UpdateButtons() {
     [].forEach.call(document.querySelectorAll('.material-btn'), function (b) {
-        b.onmouseenter = b.ontouchstart =  function (e) {
+        if (b.dataset.material == "true") return;
+
+        b.onmouseenter = b.ontouchstart = function (e) {
             var c = document.createElement('div'),
                 size = Math.sqrt(Math.pow(b.offsetWidth, 2) + Math.pow(b.offsetHeight, 2));
             b.appendChild(c);
@@ -17,5 +23,6 @@
                 }
             })(c);
         };
+        b.dataset.material = "true";
     });
-});
+}

@@ -19,6 +19,8 @@ screens.league.elm.addEventListener("toggled", () => {
 
             leauge_hex = {}; // Hopefully this will destroy the instances of hexstats and make GC remove them from memory.
 
+            [].forEach.call(document.getElementById("shadow_league").getElementsByClassName("material-btn"), function (b) { b.dataset.material = null; });
+
             league = JSON.parse(test);
             for (var i = 0; i < league.length; i++) {
                 var clone = document.getElementById("shadow_league");
@@ -36,15 +38,6 @@ screens.league.elm.addEventListener("toggled", () => {
                 newstatstbl.getElementsByClassName("highestlevel")[0].innerHTML = league[i].highestlevel;
                 newstatstbl.getElementsByClassName("totalfights")[0].innerHTML = league[i].totalfights;
                 newstatstbl.getElementsByClassName("leader")[0].innerHTML = league[i].leader;
-
-                //var timenow = new Date().getTime();
-                //var diff = timenow - player.age;
-                //var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                //diff -= days * (1000 * 60 * 60 * 24);
-                //var hours = Math.floor(diff / (1000 * 60 * 60));
-                //diff -= hours * (1000 * 60 * 60);
-                //var mins = Math.floor(diff / (1000 * 60));
-                //diff -= mins * (1000 * 60);
 
                 newleague.style = null;
                 screens.league.elm.getElementsByClassName("holder")[0].appendChild(newleague);
@@ -93,6 +86,7 @@ screens.league.elm.addEventListener("toggled", () => {
                     }
                 }
             }
+            UpdateButtons();
         }
     });
 });
