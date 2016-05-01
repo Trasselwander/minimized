@@ -259,12 +259,12 @@ function normalAttack() {
 function fastAttack() {
     hue = 50;
     animation_attack_width = 5;
-    fireworks.push(new Firework(100, ch / 2, cw - 120 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), random(40, 60), 8));
+    fireworks.push(new Firework(130, ch / 2 + 30, cw - 120 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), random(40, 60), 8));
 }
 function magicAttack() {
     hue = random(0, 360);
     animation_attack_width = 40;
-    fireworks.push(new Firework(100, ch / 2, cw - 120 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), random(60, 80), 2));
+    fireworks.push(new Firework(130, ch / 2 + 30, cw - 120 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), random(60, 80), 2));
 }
 
 function defence() {
