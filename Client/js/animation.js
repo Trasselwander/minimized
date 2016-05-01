@@ -12,6 +12,8 @@ window.requestAnimFrame = (function () {
 })();
 
 // now we will setup our basic variables for the demo
+
+
 var canvas = document.getElementById('battle_animation'),
 		ctx = canvas.getContext('2d'),
 		// full screen dimensions
@@ -40,6 +42,18 @@ canvas.width = cw;
 canvas.height = ch;
 
 // now we are going to setup our function placeholders for the entire demo
+function drawCharacters() {
+    //ctx.scale(1, 1);
+    var img = new Image();
+    img.src = "../img/Character.png";
+    ctx.drawImage(img, 0, 0, 400, 400, 25, ch / 2 - 100, 200, 200);
+
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.drawImage(img, 0, 0, 400, 400, -(cw - 25), (ch / 2 - 100), 200, 200); //rör ej!
+
+    ctx.restore();
+}
 
 // get a random number within a range
 function random(min, max) {
@@ -204,7 +218,7 @@ function createParticles(x, y, color) {
 function loop() {
     // this function will run endlessly with requestAnimationFrame
     requestAnimFrame(loop);
-
+    drawCharacters();
     // increase the hue to get different colored fireworks over time
     hue += 0.15;
 
@@ -234,20 +248,23 @@ function loop() {
     }
 }
 var baseSpeed = 2;
+
+var charWidth = 120,
+    charHeight = 150;
 function normalAttack() {
     animation_attack_width = 10;
     hue = random(0, 360);
-    fireworks.push(new Firework(100, ch / 2, cw - 100, ch / 2, 15, baseSpeed));
+    fireworks.push(new Firework(130, ch / 2 + 30, cw - 120 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), 15, baseSpeed));
 }
 function fastAttack() {
     hue = 50;
     animation_attack_width = 5;
-    fireworks.push(new Firework(100, ch / 2, cw - 100, ch / 2, random(40, 60), 8));
+    fireworks.push(new Firework(100, ch / 2, cw - 120 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), random(40, 60), 8));
 }
 function magicAttack() {
     hue = random(0, 360);
     animation_attack_width = 40;
-    fireworks.push(new Firework(100, ch / 2, cw - 100, ch / 2, random(60, 80), 2));
+    fireworks.push(new Firework(100, ch / 2, cw - 120 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), random(60, 80), 2));
 }
 
 function defence() {
@@ -256,23 +273,32 @@ function defence() {
 
     var particleCount = 30;
     while (particleCount--) {
-        particles.push(new Particle(100, ch / 2, random(4, 16)));
+        particles.push(new Particle(150 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), random(4, 16)));
     }
 }
 
+
+
+
+
+
+
+
+
 function enemyNormalAttack() {
+    animation_attack_width = 10;
     hue = random(0, 360);
-    fireworks.push(new Firework(cw - 100, ch / 2, 100, ch / 2, 15, baseSpeed));
+    fireworks.push(new Firework(cw - 100, ch / 2, 150 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), 15, baseSpeed));
 }
 function enemyFastAttack() {
     hue = 50;
     animation_attack_width = 5;
-    fireworks.push(new Firework(cw - 100, ch / 2, 100, ch / 2, random(40, 60), 8));
+    fireworks.push(new Firework(cw - 100, ch / 2, 150 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), random(40, 60), 8));
 }
 function enemyMagicAttack() {
     hue = random(0, 360);
     animation_attack_width = 40;
-    fireworks.push(new Firework(cw - 100, ch / 2, 100, ch / 2, random(60, 80), 2));
+    fireworks.push(new Firework(cw - 100, ch / 2, 150 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), random(60, 80), 2));
 }
 
 function enemyDefence() {
@@ -281,7 +307,7 @@ function enemyDefence() {
 
     var particleCount = 30;
     while (particleCount--) {
-        particles.push(new Particle(cw - 100, ch / 2, random(4, 16)));
+        particles.push(new Particle(cw - 120 + random(-charWidth / 2, charWidth / 5), ch / 2 + random(-charHeight / 2, charHeight / 2), random(4, 16)));
     }
 }
 // once the window loads, we are ready for some fireworks!
