@@ -20,7 +20,7 @@ function getEnemy() {
 function getTop10() {
     if (!player.LID) return;
 
-    sendRequest("/players/top10/" + player.LID, (test, error) => {
+    sendRequest("/leagues/top10/" + player.LID, (test, error) => {
         if (!error) {
             top10 = JSON.parse(test);
             screens.overview.elm.dispatchEvent(new Event("top10"));

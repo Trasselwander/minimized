@@ -95,8 +95,7 @@ screens.overview.elm.addEventListener("player", () => { //player* but this code 
     if (lldhm.hours != 0) info_currses.innerHTML = lldhm.hours + (lldhm.hours == 1 ? " timmes" : " timmars");
     if (lldhm.days != 0) info_currses.innerHTML = lldhm.days + (lldhm.days == 1 ? " dags" : " dagars");
 
-    //document.getElementById("info_rank").innerHTML = player.bestrank; //fix rank later
-    //document.getElementById("info_currentsession").innerHTML = player.bestrank; //fix time later
+    document.getElementById("info_rank").innerHTML = player.userStats.rank;
 
     main_hex.maxskill = Math.max(player.userStats.life, player.userStats.speed, player.userStats.physicalattack, player.userStats.physicaldefence, player.userStats.magicattack, player.userStats.magicdefence); // max of animate arguments
     player.userStats.color = "rgba(57, 174, 221, 0.65)";
@@ -127,7 +126,6 @@ screens.overview.elm.addEventListener("player", () => { //player* but this code 
                 }
             };
         }
-
     else
         for (var i = 0; i < sp_arr.length; i++)
             pstats.getElementsByClassName(sp_arr[i])[0].classList.remove("char_sp_up");
