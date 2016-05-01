@@ -1,1 +1,1 @@
-﻿#leaguetoplist .stats-table tr{cursor:pointer;transition:height ease-in-out .5s;}#leaguetoplist .stats-table tr td{vertical-align:top;}#leaguetoplist .stats-table tr:hover{background-color:rgba(0,0,0,.08);}
+﻿#leaguetoplist .stats-table tr{cursor:pointer;transition:height ease-in-out .5s;}#leaguetoplist .stats-table tr td{vertical-align:top;width:25%;}#leaguetoplist .stats-table tr td span{font-size:.9em;color:#6e6e6e;}#leaguetoplist .stats-table tr canvas{margin-top:-20px;}#leaguetoplist .stats-table tr:hover{background-color:rgba(0,0,0,.08);}

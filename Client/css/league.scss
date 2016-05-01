@@ -4,9 +4,18 @@
         tr {
             cursor: pointer;
             transition: height ease-in-out 0.5s; // meh
-
             td {
                 vertical-align: top;
+                width: 25%;
+
+                span {
+                    font-size: 0.9em;
+                    color: #6e6e6e;
+                }
+            }
+
+            canvas {
+                margin-top: -20px;
             }
 
             &:hover {
