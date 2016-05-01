@@ -2,22 +2,27 @@
 }
 
 #leaguetoplist {
-    #leaguetoplist_info {
-        background-color: rgba(0, 0, 0, 0.02);
+    .holder {
+        margin: 50px auto;
+        display: block;
+        max-width: 1050px;
+        padding: 0 10px;
 
-        div {
-            margin: 2px 2px;
-            margin-top: 2px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.11);
-            font-size: 12px;
+        .info {
+            margin: 20px;
+            background-color: rgba(0, 0, 0, 0.02);
+            padding: 10px;
+            padding-left: 20px;
 
-            &:last-child {
-                border-bottom: none;
+            .topleague_player {
+                margin: 2px 2px;
+                margin-top: 2px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+
+                &:last-child {
+                    border-bottom: none;
+                }
             }
-        }
-
-        .leaguetoplist_name {
-            margin-left: 20px;
         }
     }
 }
