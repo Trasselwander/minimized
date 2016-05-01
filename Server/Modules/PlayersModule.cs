@@ -15,17 +15,6 @@ namespace Server.Modules
         public PlayersModule()
             : base("api/players")
         {
-            Get["/top/{id}"] = parameters =>
-            {
-                User user = AuthorizeUser();
-                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetTopByLeauge(parameters.id)));
-            };
-
-            Get["/top10/{id}"] = parameters =>
-            {
-                User user = AuthorizeUser();
-                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetTop10ByLeauge(parameters.id)));
-            };
 
             Get["/player"] = parameters =>
             {

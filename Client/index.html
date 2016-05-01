@@ -422,6 +422,14 @@
         </div>
     </div>
 
+    <div id="leaguetoplist" class="content">
+        <div class="holder">
+            <div id="shadow_player" style="display:none">
+                <span class="leaguetoplist_rank"></span>
+                <span class="leaguetoplist_name"></span>
+            </div>
+        </div>
+    </div>
 
     <script>
         screens = {
@@ -443,6 +451,10 @@
             },
             league: {
                 elm: document.getElementById("league"),
+                visible: false,
+            },
+            leaguetoplist: {
+                elm: document.getElementById("leaguetoplist"),
                 visible: false,
             },
             battle: {

@@ -64,6 +64,21 @@ screens.league.elm.addEventListener("toggled", () => {
                     });
                 }
 
+                
+                var tl = newleague.getElementsByClassName("toplist_btn")[0];
+                tl.dataset.lid = league[i].ID;
+                tl.onclick = function () {
+                    sendRequest("/leagues/top/" + this.dataset.lid, (text, error) => {
+                        if (!error) {
+                            leaguetoplist = JSON.parse(text);
+                            screens.leaguetoplist.elm.dispatchEvent(new Event("loaded"));
+                            toggleScreen(screens.leaguetoplist.elm);
+                        }
+                    });
+
+
+                }
+
                 if (player.league) {
                     if (league[i].ID == player.league.ID) {
                         var jl = newleague.getElementsByClassName("joinleague_btn")[0];
@@ -90,3 +105,9 @@ screens.league.elm.addEventListener("toggled", () => {
         }
     });
 });
+
+
+
+
+
+
