@@ -33,8 +33,8 @@ namespace Server
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userstats (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-                                    UID INTEGER NOT NULL DEFAULT 1,
-                                    LID INTEGER,
+                                    UID INTEGER NOT NULL,
+                                    LID INTEGER NOT NULL,
                                     life INTEGER NOT NULL DEFAULT 1,
                                     speed INTEGER NOT NULL DEFAULT 1,
                                     physicalattack INTEGER NOT NULL DEFAULT 1,
@@ -62,7 +62,7 @@ namespace Server
                                     end INTEGER NOT NULL)");
 
             (new UserService()).CreateLeague(new UserService.League() {
-                name = "ADAM",
+                name = (new Random()).NextDouble() > .5 ? "ADAM" : "DANIEL",
                 start = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds),
                 end = (long)((DateTime.UtcNow.AddHours(10) - new DateTime(1970, 1, 1)).TotalMilliseconds)
             });
@@ -71,6 +71,17 @@ namespace Server
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                                     name CHAR(50) NOT NULL,
                                     url CHAR(70) NOT NULL)");
+
+
+            GetConnection().Query(@"CREATE TABLE IF NOT EXISTS attacks (
+                                    ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                    LID INTEGER NOT NULL,
+                                    AID INTEGER NOT NULL,
+                                    DID INTEGER NOT NULL,
+                                    AHP INTEGER NOT NULL,
+                                    DHP INTEGER NOT NULL,
+                                    start INTEGER NOT NULL)"); // AID = attacker id, DID = defender id (both derived from UID)
+
         }
 
     }
