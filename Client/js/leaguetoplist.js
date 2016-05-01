@@ -51,8 +51,6 @@ screens.leaguetoplist.elm.addEventListener("toplist", () => { // Is this the rig
 
             this.dataset.open = "true";
 
-
-
             var l = "<br/>";
             tdr.innerHTML += l + "<span>Bästa rank: " + data.bestrank + "</span>";
             tds.innerHTML += l + "<span>Vunnit: " + data.totalwins + l + "Förlorat: " + data.totallosses + "</span>";
@@ -68,7 +66,6 @@ screens.leaguetoplist.elm.addEventListener("toplist", () => { // Is this the rig
             top_hex[data.name].maxskill = Math.max(data.userStats.life, data.userStats.speed, data.userStats.physicalattack, data.userStats.physicaldefence, data.userStats.magicattack, data.userStats.magicdefence);
             data.userStats.color = "rgba(57, 174, 221, 0.65)";
             top_hex[data.name].animate([data.userStats]);
-            //console.log(data);
         }
 
         bdy.appendChild(tr);
