@@ -80,8 +80,11 @@ function toggleScreen(elm, noevent) {
         if (divs[div].classList.contains('content')) {
             if (!noevent) divs[div].dispatchEvent(new Event('detoggled'));
             divs[div].classList.remove('active');
+
+            divs[div].style.top = "-9999px";
         }
     }
+    elm.style.top = null;
 
     if (!noevent) elm.dispatchEvent(new Event('toggled'));
     elm.classList.add('active');
