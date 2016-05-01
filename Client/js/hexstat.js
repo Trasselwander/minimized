@@ -2,13 +2,17 @@
     this.canvas = document.getElementById(id);
     if (this.canvas == null) return;
     this.stage = new createjs.Stage(id);
+    this.stage.enableDOMEvents(false);
 
     this.maxskill = 200; //this.level * 4 / 2;
     this.size = this.canvas.width / 2;
 
     this.test = { time: 0, t:0 };
     var that = this;
+    var b = false;
+
     this.arr = [];
+    this.oldarr = [];
 
     this.data = [];
 
@@ -74,12 +78,14 @@
     }
 
     this.hardReset = function () {
+        b = false;
         this.stage.clear();
         this.stage.removeAllChildren();
         this.arr = [];
     }
 
     this.animate = function (statsarr) {
+        b = false;
         this.arr = statsarr;
         this.drawLines();
         this.drawOutline();
@@ -97,11 +103,16 @@
         });
         this.datalist = [];
     }
-
     function tick() {
-        that.test.t = Math.min(1 / 120 + that.test.t, 1);
-        that.test.time = createjs.Ease.quintInOut(that.test.t);
+        if (JSON.stringify(that.arr) != that.oldarr) b = false;
 
+        that.oldarr = JSON.stringify(that.arr);
+        that.test.t = Math.min(1 / 120 + that.test.t, 1);
+
+        if (b && that.test.t == 1) return;
+        if (that.test.t == 1) b = true;
+
+        that.test.time = createjs.Ease.quintInOut(that.test.t);
         that.removeData();
 
         statsarr = that.arr;
