@@ -3,6 +3,11 @@
     border-spacing: 0;
     max-width: 600px;
 
+    &.top10 {
+        width: 100%;
+        max-width: initial;
+    }
+
     &#player_dataStats, &#player_skill_points {
         vertical-align: middle;
     }

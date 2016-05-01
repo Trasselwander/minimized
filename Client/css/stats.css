@@ -2,6 +2,9 @@
   border-collapse: collapse;
   border-spacing: 0;
   max-width: 600px; }
+  .stats-table.top10 {
+    width: 100%;
+    max-width: initial; }
   .stats-table#player_dataStats, .stats-table#player_skill_points {
     vertical-align: middle; }
   .stats-table#player_skill_points {
