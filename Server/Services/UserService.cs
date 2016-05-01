@@ -63,7 +63,7 @@ namespace Server.Services
 
         public void GetRank(User user)
         {
-            if (user.userStats == null) throw new HttpErrorException(Nancy.HttpStatusCode.BadGateway, "No userstats.");
+            if (user.userStats == null) return;
 
             int[] scores = SQLite.GetConnection().Query<int>("SELECT score FROM userstats INNER JOIN users ON userstats.score > @score AND userstats.UID = users.ID AND userstats.LID = users.LID ORDER BY userstats.score DESC", new { score = user.userStats.score }).ToArray();
 
