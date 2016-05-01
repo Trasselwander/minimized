@@ -36,7 +36,7 @@ screens.overview.elm.addEventListener("top10", () => { //player* but this code i
 
     for (var i = 0; i < top10.length; i++) {
         trs[i].style.display = null;
-        
+
         var t = top10[i];
 
         var tds = trs[i].getElementsByTagName("td");
@@ -107,8 +107,19 @@ screens.overview.elm.addEventListener("player", () => { //player* but this code 
     var sp_arr = ["char_life", "char_speed", "char_physA", "char_physD", "char_magA", "char_magD"];
 
     if (player.userStats.skillpoints > 0)
-        for (var i = 0; i < sp_arr.length; i++)
+        for (var i = 0; i < sp_arr.length; i++) {
             pstats.getElementsByClassName(sp_arr[i])[0].classList.add("char_sp_up");
+            document.getElementsByClassName(sp_arr[i])[0].dataset.num = i +1;
+            document.getElementsByClassName(sp_arr[i])[0].onclick = function() {
+                console.log(this);
+                sendRequest("/players/levelup/" + this.dataset.num, (test, error) => {
+
+                    if (!error) {
+                        getPlayer();
+                    }
+                });
+            };
+        }
     else
         for (var i = 0; i < sp_arr.length; i++)
             pstats.getElementsByClassName(sp_arr[i])[0].classList.remove("char_sp_up");

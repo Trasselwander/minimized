@@ -3,7 +3,6 @@
   border-spacing: 0;
   max-width: 600px; }
   .stats-table#player_dataStats, .stats-table#player_skill_points {
-    display: inline-block;
     vertical-align: middle; }
   .stats-table#player_skill_points {
     font-weight: 800;
@@ -16,9 +15,9 @@
     display: none; }
   .stats-table .char_sp_up {
     cursor: pointer;
-    transition: background-color .5s ease-in-out; }
+    transition: background-color .2s ease-in-out; }
     .stats-table .char_sp_up:hover {
-      background-color: rgba(81, 231, 115, 0.26); }
+      background-color: rgba(18, 221, 64, 0.43); }
     .stats-table .char_sp_up i {
       display: initial; }
   .stats-table tr {
