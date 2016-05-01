@@ -31,6 +31,7 @@ namespace Server.Modules
                 User user = AuthorizeUser();
                 Users.GetUserStats(user);
                 Users.GetUserLeague(user);
+                Users.GetRank(user);
 
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(user));
             };
@@ -43,10 +44,10 @@ namespace Server.Modules
                 User[] users = Users.GetCloseUsersByScore(user).ToArray();
                 if (users.Length == 0) CreateResponse(HttpStatusCode.BadRequest, "Forever alone.");
 
-
                 int random = new Random().Next(0, users.Length - 1);
 
                 Users.GetUserStats(users[random]);
+                Users.GetRank(users[random]);
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(users[random]));
             };
 
