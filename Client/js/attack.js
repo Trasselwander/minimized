@@ -13,8 +13,8 @@ screens.attack.elm.addEventListener("enemy", () => {
     console.log(enemy);
 
     if (enemy_loaded == true) {
+        attack_hexstat.maxskill = Math.max(player.userStats.life, player.userStats.speed, player.userStats.physicalattack, player.userStats.physicaldefence, player.userStats.magicattack, player.userStats.magicdefence, enemy.userStats.life, enemy.userStats.speed, enemy.userStats.physicalattack, enemy.userStats.physicaldefence, enemy.userStats.magicattack, enemy.userStats.magicdefence);
 
-        attack_hexstat.maxskill = 40; //player.userData.level * 4; //ta den högsta leveln av båda karaktärerna.
         attack_hexstat.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(38, 94, 209, 0.5)" },
             { "life": enemy.userStats.life, "speed": enemy.userStats.speed, "physicalattack": enemy.userStats.physicalattack, "physicaldefence": enemy.userStats.physicaldefence, "magicattack": enemy.userStats.magicattack, "magicdefence": enemy.userStats.magicdefence, "color": "rgba(18, 149, 33, 0.5)" }])
         displayData();
@@ -50,7 +50,7 @@ function displayData() {
     shortAtt("magD", player.userStats.magicdefence, enemy.userStats.magicdefence);
 
     var totdiff = attdiff.getElementsByClassName("total_diff")[0];
-    var totdiffval = player.userStats.life + player.userStats.speed + player.userStats.physicalattack + player.userStats.physicaldefence + player.userStats.magicattack + player.userStats.magicdefence - enemy.userStats.life + enemy.userStats.speed + enemy.userStats.physicalattack + enemy.userStats.physicaldefence + enemy.userStats.magicattack + enemy.userStats.magicdefence;
+    var totdiffval = (player.userStats.life + player.userStats.speed + player.userStats.physicalattack + player.userStats.physicaldefence + player.userStats.magicattack + player.userStats.magicdefence) - (enemy.userStats.life + enemy.userStats.speed + enemy.userStats.physicalattack + enemy.userStats.physicaldefence + enemy.userStats.magicattack + enemy.userStats.magicdefence);
     totdiff.innerHTML = totdiffval;
     totdiff.classList.add((totdiffval == 0) ? "blue" : ((totdiffval > 0) ? "green" : "red"));
 
@@ -62,7 +62,8 @@ document.getElementById("overview").addEventListener("player", () => {
 
     if (enemy_loaded == true) {
 
-        attack_hexstat.maxskill = 40; //player.userData.level * 4; //ta den högsta leveln av båda karaktärerna.
+        attack_hexstat.maxskill = Math.max(player.userStats.life, player.userStats.speed, player.userStats.physicalattack, player.userStats.physicaldefence, player.userStats.magicattack, player.userStats.magicdefence, enemy.userStats.life, enemy.userStats.speed, enemy.userStats.physicalattack, enemy.userStats.physicaldefence, enemy.userStats.magicattack, enemy.userStats.magicdefence);
+
         attack_hexstat.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(38, 94, 209, 0.5)" },
             { "life": enemy.userStats.life, "speed": enemy.userStats.speed, "physicalattack": enemy.userStats.physicalattack, "physicaldefence": enemy.userStats.physicaldefence, "magicattack": enemy.userStats.magicattack, "magicdefence": enemy.userStats.magicdefence, "color": "rgba(18, 149, 33, 0.5)" }])
         displayData();
