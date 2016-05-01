@@ -236,7 +236,7 @@ function loop() {
 var baseSpeed = 2;
 function normalAttack() {
     animation_attack_width = 10;
-
+    hue = random(0, 360);
     fireworks.push(new Firework(100, ch / 2, cw - 100, ch / 2, 15, baseSpeed));
 }
 function fastAttack() {
@@ -245,12 +245,14 @@ function fastAttack() {
     fireworks.push(new Firework(100, ch / 2, cw - 100, ch / 2, random(40, 60), 8));
 }
 function magicAttack() {
+    hue = random(0, 360);
     animation_attack_width = 40;
     fireworks.push(new Firework(100, ch / 2, cw - 100, ch / 2, random(60, 80), 2));
 }
 
 function defence() {
     animation_attack_width = 1;
+    hue = random(0, 360);
 
     var particleCount = 30;
     while (particleCount--) {
@@ -259,6 +261,7 @@ function defence() {
 }
 
 function enemyNormalAttack() {
+    hue = random(0, 360);
     fireworks.push(new Firework(cw - 100, ch / 2, 100, ch / 2, 15, baseSpeed));
 }
 function enemyFastAttack() {
@@ -267,11 +270,13 @@ function enemyFastAttack() {
     fireworks.push(new Firework(cw - 100, ch / 2, 100, ch / 2, random(40, 60), 8));
 }
 function enemyMagicAttack() {
+    hue = random(0, 360);
     animation_attack_width = 40;
     fireworks.push(new Firework(cw - 100, ch / 2, 100, ch / 2, random(60, 80), 2));
 }
 
 function enemyDefence() {
+    hue = random(0, 360);
     animation_attack_width = 1;
 
     var particleCount = 30;
