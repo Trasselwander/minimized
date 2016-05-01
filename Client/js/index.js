@@ -12,7 +12,14 @@ screens.overview.elm.addEventListener("detoggled", () => {
 
 window.addEventListener("load", () => {
     document.getElementById("attack_btn").onclick = () => {
-        toggleScreen(screens.attack.elm);
+        if (!player.userStats)
+            swal({
+                title: "Fel!",
+                text: "Du måste gå med i en tävling för att kunna attackera någon!",
+                type: "error",
+            });
+        else
+            toggleScreen(screens.attack.elm);
     }
     document.getElementById("league_btn").onclick = () => {
         toggleScreen(screens.league.elm);
