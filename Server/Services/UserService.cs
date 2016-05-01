@@ -13,6 +13,9 @@ namespace Server.Services
         public User GetUser(string name)
             => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE LOWER(name)=LOWER(@name)", new { name = name }).FirstOrDefault();
 
+        public User GetUser(int uid)
+            => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE ID=@uid", new { uid = uid }).FirstOrDefault();
+
         public User GetUserByEmail(string email)
             => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE email=@email", new { email = email }).FirstOrDefault();
 
@@ -137,6 +140,32 @@ namespace Server.Services
             }
 
             return leauge;
+        }
+
+
+        public Battle GetBattle(int did, User user) // defender id
+        {
+            User defender = GetUser(did);
+            GetUserStats(defender);
+
+            int timelimit = SQLite.GetConnection().Query<int>(@"SELECT 1 FROM attacks WHERE start > @time LIMIT 1", new { time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) - 4000, uid = user.ID, lid = user.LID }).FirstOrDefault();
+            if (timelimit == 1) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "You can't attack that fast.");
+
+            if (user.userStats == null) GetUserStats(user);
+            if (defender.LID != user.LID) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "Invalid defender id, user from another league.");
+
+            SQLite.GetConnection().Query(@"INSERT INTO attacks (LID, AID, DID, DHP, AHP, start)
+                                             SELECT @lid AS LID, @aid AS AID, @did AS DID, @dhp AS DHP, @ahp AS AHP, @time as start", 
+                                                new { lid = user.LID, aid = user.ID, did = defender.ID, dhp = defender.userStats.life, ahp = user.userStats.life, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
+            
+            return new Battle { enemyHP = defender.userStats.life, playerHP = user.userStats.life };
+        }
+
+
+        public class Battle
+        {
+            public int playerHP { get; set; }
+            public int enemyHP { get; set; }
         }
 
         public class League

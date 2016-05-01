@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="CustomBootstrapper.cs" />
     <Compile Include="HttpErrorException.cs" />
+    <Compile Include="Modules\BattleModule.cs" />
     <Compile Include="Modules\HelperModule.cs" />
     <Compile Include="Modules\LeaugeModule.cs" />
     <Compile Include="Modules\LoginModule.cs" />
