@@ -98,7 +98,7 @@ screens.overview.elm.addEventListener("player", () => { //player* but this code 
     //document.getElementById("info_rank").innerHTML = player.bestrank; //fix rank later
     //document.getElementById("info_currentsession").innerHTML = player.bestrank; //fix time later
 
-    main_hex.maxskill = player.userStats.level * 4; // max of animate arguments
+    main_hex.maxskill = Math.max(player.userStats.life, player.userStats.speed, player.userStats.physicalattack, player.userStats.physicaldefence, player.userStats.magicattack, player.userStats.magicdefence); // max of animate arguments
     player.userStats.color = "rgba(57, 174, 221, 0.65)";
     main_hex.animate([player.userStats]) //{ "life": 25, "speed": 10, "physicalattack": 0, "physicaldefence": 5, "magicattack": 30, "magicdefence": 15, "color": "rgba(0, 0, 0, 0.5)" },
 
