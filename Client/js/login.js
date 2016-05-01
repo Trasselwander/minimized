@@ -58,7 +58,7 @@ window.addEventListener("load", () => {
         }
 
         console.log(user.name, user.password);
-        sendRequest("/register" + (user.email ? btoa(user.email) : ""), (text, error) => {
+        sendRequest("/register/" + (user.email ? btoa(user.email) : ""), (text, error) => {
             if (!error) {
                 toggleScreen(screens.overview.elm);
                 user.save();

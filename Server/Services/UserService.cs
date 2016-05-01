@@ -67,10 +67,8 @@ namespace Server.Services
             if (GetUser(name) != null) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "Username already in use.");
 
             CryptoService.HashAndSavePassword(hash, u);
-            SQLite.GetConnection().QueryMultiple(@"INSERT INTO users (name, email, hash, salt, lastloggedin, bestrank, age) SELECT @name as name, @email as email, @hash as hash, @salt as salt, @time as lastloggedin, (SELECT COUNT(*) FROM users) AS bestrank, @time AS age; 
-                                                   INSERT INTO userstats (UID, bestrank)
-	                                                   SELECT (SELECT ID FROM users WHERE users.name = @name) AS UID, COUNT(*) AS bestrank FROM users;"
-                                                   , new { name = u.name, email = u.email, hash = u.hash, salt = u.salt, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
+            SQLite.GetConnection().Query(@"INSERT INTO users (name, email, hash, salt, lastloggedin, bestrank, age) SELECT @name as name, @email as email, @hash as hash, @salt as salt, @time as lastloggedin, (SELECT COUNT(*) FROM users) AS bestrank, @time AS age",
+                                            new { name = u.name, email = u.email, hash = u.hash, salt = u.salt, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
 
             return GetUser(name);
         }
