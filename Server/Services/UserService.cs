@@ -163,8 +163,9 @@ namespace Server.Services
 
         public Attack GetAttack(User user)
             => SQLite.GetConnection().Query<Attack>("SELECT * FROM attacks WHERE AHP > 0 AND DHP > 0 AND AID = @uid", new { uid = user.ID }).FirstOrDefault();
-        
 
+        public void SaveAttack(Attack attack)
+            => SQLite.GetConnection().Query<Attack>("UPSATE attacks SET AHP = @ahp, DHP = @dhp, DDUP = @ddup, DAUP = @daup WHERE AHP > 0 AND DHP > 0 AND AID = @aid", new { aid = attack.AID, ahp = attack.AHP, dhp = attack.DHP, ddup = attack.DDUP, daup = attack.DAUP }).FirstOrDefault();
 
         public class Attack
         {
@@ -173,7 +174,11 @@ namespace Server.Services
             public int DID { get; set; }
             public int DHP { get; set; }
             public int AHP { get; set; }
+            public int DDUP { get; set; }
+            public int DAUP { get; set; }
             public long start { get; set; }
+
+            public int damage { get; set; } // dynamic
         }
 
         public class Battle
