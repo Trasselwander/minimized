@@ -13,7 +13,8 @@ window.requestAnimFrame = (function () {
 
 // now we will setup our basic variables for the demo
 
-
+var init_player_life = null,
+    init_enemy_life = null;
 var canvas = document.getElementById('battle_animation'),
 		ctx = canvas.getContext('2d'),
 		// full screen dimensions
@@ -41,6 +42,36 @@ var canvas = document.getElementById('battle_animation'),
 canvas.width = cw;
 canvas.height = ch;
 
+function drawBattleLife() {
+
+
+
+
+    var playerRatio = battleStats.playerHP / player.userStats.life,
+        enemyRatio = battleStats.enemyHP / enemy.userStats.life;
+
+    ctx.fillStyle = "rgb(188, 188, 188)";
+    ctx.fillRect(32, ch / 2 + 115, 200, 6);
+
+    ctx.fillStyle = "rgb(51, 204, 51)";
+    ctx.fillRect(33, ch / 2 + 116, 198 * playerRatio, 2);
+
+    ctx.fillStyle = "rgb(0, 153, 0)";
+    ctx.fillRect(33, ch / 2 + 118, 198 * playerRatio, 2);
+
+
+
+    ctx.fillStyle = "rgb(188, 188, 188)";
+    ctx.fillRect(cw - 232, ch / 2 + 115, 200, 6);
+
+    ctx.fillStyle = "rgb(51, 204, 51)";
+    ctx.fillRect(cw - 231, ch / 2 + 116, 198 * enemyRatio, 2);
+
+    ctx.fillStyle = "rgb(0, 153, 0)";
+    ctx.fillRect(cw - 231, ch / 2 + 118, 198 * enemyRatio, 2);
+
+
+}
 // now we are going to setup our function placeholders for the entire demo
 function drawCharacters() {
     //ctx.scale(1, 1);
@@ -219,6 +250,10 @@ function loop() {
     // this function will run endlessly with requestAnimationFrame
     requestAnimFrame(loop);
     drawCharacters();
+    ctx.globalCompositeOperation = "source-over";
+    if (battleStats) {
+        drawBattleLife();
+    }
     // increase the hue to get different colored fireworks over time
     hue += 0.15;
 

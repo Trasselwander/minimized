@@ -87,8 +87,7 @@ window.addEventListener("load", () => {
     document.getElementById("attack_request_btn").onclick = () => {
         sendRequest("/battle/init/" + enemy.ID, (test, error) => {
             if (!error) {
-                battleLife = JSON.parse(test);
-                screens.battle.elm.dispatchEvent(new Event("init"));
+                battleStats = JSON.parse(test);
                 toggleScreen(screens.battle.elm);
 
             }

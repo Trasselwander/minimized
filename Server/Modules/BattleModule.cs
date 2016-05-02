@@ -57,7 +57,7 @@ namespace Server.Modules
 
                             break;
                         case "2": // Magisk attack
-                            user.userStats.magicattack
+                            //user.userStats.magicattack
 
                             break;
                         case "3": // Snabbattack

@@ -1,21 +1,39 @@
-﻿screens.battle.elm.addEventListener("init", () => {
+﻿screens.battle.elm.addEventListener("toggled", () => {
 
 });
 
 window.addEventListener("load", () => {
     document.getElementById("battle_attack_1").onclick = () => {
-        normalAttack();
+        sendRequest("/battle/attack/1"), (test, error) => {
+            if (!error) {
+                battleStats = JSON.parse(test);
+                normalAttack();
+            }
+        }
     }
+
     document.getElementById("battle_attack_2").onclick = () => {
-        magicAttack();
+        sendRequest("/battle/attack/2"), (test, error) => {
+            if (!error) {
+                battleStats = JSON.parse(test);
+                magicAttack();
+            }
+        }
     }
     document.getElementById("battle_attack_3").onclick = () => {
-        fastAttack();
+        sendRequest("/battle/attack/3"), (test, error) => {
+            if (!error) {
+                battleStats = JSON.parse(test);
+                fastAttack();
+            }
+        }
     }
     document.getElementById("battle_attack_4").onclick = () => {
-        defence();
+        sendRequest("/battle/attack/4"), (test, error) => {
+            if (!error) {
+                battleStats = JSON.parse(test);
+                defence();
+            }
+        }
     }
-
-
-
 });
