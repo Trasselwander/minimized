@@ -295,8 +295,6 @@ function manageBattleLoop() {
             that.particles[i].draw(ctx);
             that.particles[i].update(i);
         }
-        if (i < 1 && playerRatio <= 0 && u < 1 || i < 1 && enemyRatio <= 0 && u < 1) {
-            screens.battle.elm.dispatchEvent(new Event('dead'));
-        }
+        if (i < 1 && playerRatio <= 0 && u < 1 || i < 1 && enemyRatio <= 0 && u < 1) screens.battle.elm.dispatchEvent(new Event('dead'));
     }
 }
