@@ -4,11 +4,12 @@ screens.battle.elm.addEventListener("toggled", () => {
 
 });
 screens.battle.elm.addEventListener("dead", () => {
-    battle.stopLoop();
+    console.log("asdf");
     toggleScreen(screens.attack.elm);
-
+    battle.stopLoop();
 });
 function attackAny(attackID, target) {
+    console.log("attcking any" + attackID);
     switch (attackID) {
         case 1:
             createFireWork(target, false, 15);
@@ -20,31 +21,33 @@ function attackAny(attackID, target) {
             createFireWork(target, true, 5);
             break;
         case 4:
-            createParticles(target);
+            createBattleParticles(target);
             break;
     }
 }
+var charWidth = 120,
+    charHeight = 150;
 function createFireWork(target, fastAttack, width) { // target == true => attacking enemy, hue == true => fastattack
     if (fastAttack) {
         battle.hue = 50;
         baseSpeed = 8;
     }
     else {
-        battle.hue = randomInt(0, 360)
+        battle.hue = randomDouble(0, 360)
         baseSpeed = 2;
     }
     if (target)
-        fireworks.push(new Firework(130, ch / 2 + 30, cw - 120 + randomInt(-charWidth / 2, charWidth / 5), ch / 2 + randomInt(-charHeight / 2, charHeight / 2), 15, baseSpeed, width));
+        battle.fireworks.push(new Firework(130, battle.ch / 2 + 30, battle.cw - 120 + randomDouble(-charWidth / 2, charWidth / 5), battle.ch / 2 + randomDouble(-charHeight / 2, charHeight / 2), 15, baseSpeed, width));
     else
-        fireworks.push(new Firework(cw - 100, ch / 2, 150 + randomInt(-charWidth / 2, charWidth / 5), ch / 2 + randomInt(-charHeight / 2, charHeight / 2), 15, baseSpeed, width));
+        battle.fireworks.push(new Firework(battle.cw - 100, battle.ch / 2, 150 + randomDouble(-charWidth / 2, charWidth / 5), battle.ch / 2 + randomDouble(-charHeight / 2, charHeight / 2), 15, baseSpeed, width));
 }
-function createParticles(target) { //target == true => player buff;
-    battle.hue = randomInt(0, 360);
+function createBattleParticles(target) { //target == true => player buff;
+    battle.hue = randomDouble(0, 360);
     battle.width = 1;
-    var count = randomInt(25, 40);
+    var count = 30;
     while (count--) {
-        if (target) particles.push(new Particle(150 + randomInt(-charWidth / 2, charWidth / 5), ch / 2 + randomInt(-charHeight / 2, charHeight / 2), randomInt(4, 16)));
-        else particles.push(new Particle(cw - 120 + randomInt(-charWidth / 2, charWidth / 5), ch / 2 + randomInt(-charHeight / 2, charHeight / 2), randomInt(4, 16)));
+        if (target) battle.particles.push(new Particle(150 + randomDouble(-charWidth / 2, charWidth / 5), battle.ch / 2 + randomDouble(-charHeight / 2, charHeight / 2), randomDouble(4, 16), 1));
+        else battle.particles.push(new Particle(battle.cw - 120 + randomDouble(-charWidth / 2, charWidth / 5), battle.ch / 2 + randomDouble(-charHeight / 2, charHeight / 2), randomDouble(4, 16), 1));
     }
 }
 
@@ -57,20 +60,24 @@ screens.overview.elm.addEventListener("player", () => {
 
 });
 function attackCallback(data, attackID) {
+    console.log("setting hp", data);
+
     battle.player.currentHP = data.playerHP;
     battle.enemy.currentHP = data.enemyHP;
+    console.log(battle.player.currentHP / battle.player.hp);
+    console.log(battle.enemy.currentHP / battle.enemy.hp);
 
     if (data.playerFirstRound) {
         attackAny(attackID, true);
-        setTimeout(1000, function (attackID) {
+        setTimeout(function (attackID) {
             attackAny(attackID, false);
-        }, data.enemyAttackType);
+        }, 1000, data.enemyAttackType);
     }
     else {
         attackAny(data.enemyAttackType, false);
-        setTimeout(1000, function (attackID) {
+        setTimeout(function (attackID) {
             attackAny(attackID, true);
-        }, attackID);
+        }, 1000, attackID);
     }
 }
 
@@ -78,24 +85,24 @@ window.addEventListener("load", () => {
     battle = new manageBattleLoop();
 
     document.getElementById("battle_attack_1").onclick = () => {
-        sendRequest("/battle/attack/1"), (test, error) => {
-            if (!error) attackCallback(JSON.parse(test), 1);                
-        }
+        sendRequest("/battle/attack/1", (test, error) => {
+            if (!error) attackCallback(JSON.parse(test), 1);
+        });
     }
 
     document.getElementById("battle_attack_2").onclick = () => {
-        sendRequest("/battle/attack/2"), (test, error) => {
+        sendRequest("/battle/attack/2", (test, error) => {
             if (!error) attackCallback(JSON.parse(test), 2);
-        }
+        });
     }
     document.getElementById("battle_attack_3").onclick = () => {
-        sendRequest("/battle/attack/3"), (test, error) => {
+        sendRequest("/battle/attack/3", (test, error) => {
             if (!error) attackCallback(JSON.parse(test), 3);
-        }
+        });
     }
     document.getElementById("battle_attack_4").onclick = () => {
-        sendRequest("/battle/attack/4"), (test, error) => {
+        sendRequest("/battle/attack/4", (test, error) => {
             if (!error) attackCallback(JSON.parse(test), 4);
-        }
+        });
     }
 });

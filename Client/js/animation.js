@@ -31,7 +31,7 @@ function Firework(sx, sy, tx, ty, color, speed, width) {
     this.angle = Math.atan2(ty - sy, tx - sx);
     this.speed = speed;
     this.acceleration = 1.05;
-    this.brightness = randomInt(color - 5, color + 5) || randomInt(50, 70);
+    this.brightness = randomDouble(color - 5, color + 5) || randomDouble(50, 70);
     // circle target indicator radius
     this.targetRadius = 1;
 }
@@ -63,7 +63,7 @@ Firework.prototype.update = function (index) {
     if (this.distanceTraveled >= this.distanceToTarget) {
         createParticles(this.tx, this.ty, this.brightness, this.width);
         // remove the firework, use the index passed into the update function to determine which to remove
-        fireworks.splice(index, 1);
+        battle.fireworks.splice(index, 1);
     } else {
         // target not reached, keep traveling
         this.x += vx;
@@ -78,7 +78,7 @@ Firework.prototype.draw = function (ctx, hue) {
     ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
     ctx.lineTo(this.x, this.y);
     if (this.color) ctx.strokeStyle = 'hsl(' + this.color + ', 100%, ' + this.brightness + '%)';
-    else ctx.strokeStyle = 'hsl(' + hue + ', 100%, ' + this.brightness + '%)';
+    else ctx.strokeStyle = 'hsl(' + battle.hue + ', 100%, ' + this.brightness + '%)';
     ctx.lineWidth = this.width;
     ctx.stroke();
 
@@ -100,18 +100,18 @@ function Particle(x, y, color, width) {
         this.coordinates.push([this.x, this.y]);
     }
     // set a random angle in all possible directions, in radians
-    this.angle = randomInt(0, Math.PI * 2);
-    this.speed = randomInt(1, 10);
+    this.angle = randomDouble(0, Math.PI * 2);
+    this.speed = randomDouble(1, 10);
     // friction will slow the particle down
     this.friction = 0.95;
     // gravity will be applied and pull the particle down
     this.gravity = 1;
     // set the hue to a random number +-20 of the overall hue variable
-    this.hue = randomInt(hue - 40, hue + 40);
-    this.brightness = color || randomInt(50, 80);
+    this.hue = randomDouble(battle.hue - 40, battle.hue + 40);
+    this.brightness = color || randomDouble(50, 80);
     this.alpha = 1;
     // set how fast the particle fades out
-    this.decay = randomInt(0.015, 0.03);
+    this.decay = randomDouble(0.015, 0.03);
 }
 
 // update particle
@@ -130,12 +130,12 @@ Particle.prototype.update = function (index) {
 
     // remove the particle once the alpha is low enough, based on the passed in index
     if (this.alpha <= this.decay) {
-        particles.splice(index, 1);
+        battle.particles.splice(index, 1);
     }
 }
 
 // draw particle
-Particle.prototype.draw = function () {
+Particle.prototype.draw = function (ctx) {
     ctx.beginPath();
     // move to the last tracked coordinates in the set, then draw a line to the current x and y
     ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
@@ -148,10 +148,10 @@ Particle.prototype.draw = function () {
 
 // create particle group/explosion
 function createParticles(x, y, color) {
-    // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased particles though
+    // increase the particle count for a bigger explosion, beware of the canvas performance hit with the increased this.particles though
     var particleCount = 30;
     while (particleCount--) {
-        particles.push(new Particle(x, y, color));
+        battle.particles.push(new Particle(x, y, color));
     }
 }
 
@@ -162,8 +162,6 @@ function manageBattleLoop() {
 		ctx = canvas.getContext('2d'),
 		cw = canvas.parentElement.offsetWidth,  //window.innerWidth,
 		ch = canvas.parentElement.offsetHeight,
-		fireworks = [],
-		particles = [],
 		limiterTotal = 5,
 		limiterTick = 0,
 		timerTotal = 8,
@@ -172,8 +170,12 @@ function manageBattleLoop() {
 		mx,
 		my;
 
+    this.fireworks = [];
+    this.particles = [];
     canvas.width = cw;
     canvas.height = ch;
+    this.cw = cw;
+    this.ch = ch;
 
     var playerRatio = 1,
         enemyRatio = 1;
@@ -187,11 +189,11 @@ function manageBattleLoop() {
     };
     function drawBattleLife() {
 
-        if (playerRatio > player.currentHP / player.hp) {
-            playerRatio -= player.currentHP / 1000;
+        if (playerRatio > that.player.currentHP / that.player.hp) {
+            playerRatio -= that.player.currentHP / 1000;
         }
-        if (enemyRatio > enemy.currentHP / enemy.hp) {
-            playerRatio -= enemy.currentHP / 1000;
+        if (enemyRatio > that.enemy.currentHP / that.enemy.hp) {
+            enemyRatio -= that.enemy.currentHP / 1000;
         }
         if (playerRatio <= 0 || enemyRatio <= 0) screens.battle.elm.dispatchEvent(new Event('dead'));
 
@@ -232,7 +234,7 @@ function manageBattleLoop() {
         loopCheck = false;
     }
 
-
+    var that = this;
     function loop() {
         // this function will run endlessly with requestAnimationFrame
 
@@ -244,7 +246,7 @@ function manageBattleLoop() {
         ctx.globalCompositeOperation = "source-over";
 
         drawBattleLife();
-        // increase the hue to get different colored fireworks over time
+        // increase the hue to get different colored this.fireworks over time
         this.hue += 0.15;
 
         // normally, clearRect() would be used to clear the canvas
@@ -255,21 +257,21 @@ function manageBattleLoop() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
         ctx.fillRect(0, 0, cw, ch);
         // change the composite operation back to our main mode
-        // lighter creates bright highlight points as the fireworks and particles overlap each other
+        // lighter creates bright highlight points as the this.fireworks and this.particles overlap each other
         ctx.globalCompositeOperation = 'lighter';
 
         // loop over each firework, draw it, update it
-        var i = fireworks.length;
+        var i = that.fireworks.length;
         while (i--) {
-            fireworks[i].draw();
-            fireworks[i].update(i);
+            that.fireworks[i].draw(ctx, hue);
+            that.fireworks[i].update(i);
         }
 
         // loop over each particle, draw it, update it
-        var i = particles.length;
+        var i = that.particles.length;
         while (i--) {
-            particles[i].draw();
-            particles[i].update(i);
+            that.particles[i].draw(ctx);
+            that.particles[i].update(i);
         }
     }
 }
