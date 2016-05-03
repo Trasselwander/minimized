@@ -64,7 +64,7 @@ namespace Server.Modules
 
                 Users.SaveAttack(a);
 
-                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(new Battle() { enemyHP = a.DHP, playerHP = a.AHP }));
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(new Battle() { enemyHP = a.DHP, playerHP = a.AHP, enemyAttackType = int.Parse(eatk) }));
                 // Update here!.
 
                 // Who is to attack first?
@@ -84,7 +84,7 @@ namespace Server.Modules
             switch (attack)
             {
                 case "1": // Normal attack
-                    damage = (int)(1 - 1 / (Math.Max(user.userStats.physicalattack / (enemy.userStats.physicaldefence * Math.Pow(1.25, eup)), 1) * 2)) * user.userStats.physicalattack; // 50% reduction if physicalattack == physicaldefence (MAX). 
+                    damage = (int)Math.Ceiling((1 - 1 / (Math.Max(user.userStats.physicalattack / (enemy.userStats.physicaldefence * Math.Pow(1.25, eup)), 1) * 2)) * user.userStats.physicalattack); // 50% reduction if physicalattack == physicaldefence (MAX). 
                     // 10 * (attck^2 / (defense + 10)) * attack
                     // HP = 12;
                     // Attack = 7;
@@ -94,10 +94,10 @@ namespace Server.Modules
                     // Justera efter varje league. 
                     break; //user.userStats.magicattack
                 case "2": // Magisk attack
-                    damage = (int)(1 - 1 / (Math.Max(user.userStats.magicattack / (enemy.userStats.magicdefence * Math.Pow(1.25, eup)), 1) * 2)) * user.userStats.magicattack; // 50% reduction if physicalattack == physicaldefence (MAX). 
+                    damage = (int)Math.Ceiling((1 - 1 / (Math.Max(user.userStats.magicattack / (enemy.userStats.magicdefence * Math.Pow(1.25, eup)), 1) * 2)) * user.userStats.magicattack); // 50% reduction if physicalattack == physicaldefence (MAX). 
                     break;
                 case "3": // Snabbattack
-                    damage = (int)((1 - 1 / (Math.Max(((user.userStats.speed * Math.Pow(1.25, eup)) * user.userStats.physicalattack) / enemy.userStats.physicaldefence, 1) * 2)) * (user.userStats.speed * Math.Pow(1.25, eup))); // 50% reduction if physicalattack == physicaldefence (MAX). 
+                    damage = (int)Math.Ceiling((1 - 1 / (Math.Max(((user.userStats.speed * Math.Pow(1.25, eup)) * user.userStats.physicalattack) / enemy.userStats.physicaldefence, 1) * 2)) * (user.userStats.speed * Math.Pow(1.25, eup))); // 50% reduction if physicalattack == physicaldefence (MAX). 
                     break;
                 default:
                     return 0;
