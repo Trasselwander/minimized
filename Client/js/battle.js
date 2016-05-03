@@ -3,6 +3,10 @@ screens.battle.elm.addEventListener("toggled", () => {
     battle.startLoop();
 
 });
+screens.battle.elm.addEventListener("detoggled", () => {
+    
+    battle.resetAnimation();
+});
 screens.battle.elm.addEventListener("dead", () => {
     console.log("asdf");
     toggleScreen(screens.attack.elm);

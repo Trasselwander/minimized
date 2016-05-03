@@ -157,6 +157,28 @@ function createParticles(x, y, color) {
 
 // main loop
 function manageBattleLoop() {
+
+    this.resetAnimation = function () {
+        that.fireworks = [];
+        that.particles = [];
+
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+        ctx.fillRect(0, 0, that.cw, that.ch);
+
+
+        that.player = {
+            hp: 0,
+            currentHP: 0
+        };
+        that.enemy = {
+            hp: 0,
+            currentHP: 0
+        };
+
+        playerRatio = 1,
+        enemyRatio = 1;
+    }
+
     this.hue = 120;
     var canvas = document.getElementById('battle_animation'),
 		ctx = canvas.getContext('2d'),
@@ -190,12 +212,11 @@ function manageBattleLoop() {
     function drawBattleLife() {
 
         if (playerRatio > that.player.currentHP / that.player.hp) {
-            playerRatio -= (that.player.currentHP + 1) / 100;
+            playerRatio -= (that.player.currentHP + 1) / 300;
         }
         if (enemyRatio > that.enemy.currentHP / that.enemy.hp) {
-            enemyRatio -= (that.enemy.currentHP + 1) / 100;
+            enemyRatio -= (that.enemy.currentHP + 1) / 300;
         }
-        if (playerRatio <= 0 || enemyRatio <= 0) screens.battle.elm.dispatchEvent(new Event('dead'));
 
         ctx.fillStyle = "rgb(188, 188, 188)";
         ctx.fillRect(32, ch / 2 + 115, 200, 6);
@@ -262,10 +283,10 @@ function manageBattleLoop() {
         ctx.globalCompositeOperation = 'lighter';
 
         // loop over each firework, draw it, update it
-        var i = that.fireworks.length;
-        while (i--) {
-            that.fireworks[i].draw(ctx, hue);
-            that.fireworks[i].update(i);
+        var u = that.fireworks.length;
+        while (u--) {
+            that.fireworks[u].draw(ctx, hue);
+            that.fireworks[u].update(u);
         }
 
         // loop over each particle, draw it, update it
@@ -273,6 +294,9 @@ function manageBattleLoop() {
         while (i--) {
             that.particles[i].draw(ctx);
             that.particles[i].update(i);
+        }
+        if (i < 1 && playerRatio <= 0 && u < 1 || i < 1 && enemyRatio <= 0 && u < 1) {
+            screens.battle.elm.dispatchEvent(new Event('dead'));
         }
     }
 }
