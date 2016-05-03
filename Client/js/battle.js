@@ -4,7 +4,7 @@ screens.battle.elm.addEventListener("toggled", () => {
 
 });
 screens.battle.elm.addEventListener("detoggled", () => {
-    
+
     battle.resetAnimation();
 });
 screens.battle.elm.addEventListener("dead", () => {
@@ -76,21 +76,44 @@ function attackCallback(data, attackID) {
     if (data.enemyHP <= 0) battle.enemy.currentHP = 0;
     else battle.enemy.currentHP = data.enemyHP;
 
-    console.log(battle.player.currentHP / battle.player.hp);
-    console.log(battle.enemy.currentHP / battle.enemy.hp);
-
-    if (data.playerFirstRound) {
+    if (data.playerFirstRound && data.playerHP < 1) { // gör en variabel på attack funktionen att den bara ska attakera en gång
+        console.log("player attacks first and player dies after");
         attackAny(attackID, true);
         setTimeout(function (attackID) {
             attackAny(attackID, false);
         }, 1000, data.enemyAttackType);
     }
-    else {
+    else if (!data.playerFirstRound && data.playerHP < 1) {
+        console.log("enemy attacks first and player dies");
+        attackAny(attackID, false);
+    }
+    else if (data.playerFirstRound && data.enemyHP < 1) {
+        console.log("player attacks first and enemy dies");
+        attackAny(attackID, true);
+    }
+    else if (!data.playerFirstRound && data.enemyHP < 1) {
+        console.log("enemy attacks first and enemy dies after");
         attackAny(data.enemyAttackType, false);
         setTimeout(function (attackID) {
             attackAny(attackID, true);
         }, 1000, attackID);
     }
+    else {
+        if (data.playerFirstRound) {
+            attackAny(attackID, true);
+            setTimeout(function (attackID) {
+                attackAny(attackID, false);
+            }, 1000, data.enemyAttackType);
+        }
+        else {
+            attackAny(data.enemyAttackType, false);
+            setTimeout(function (attackID) {
+                attackAny(attackID, true);
+            }, 1000, attackID);
+        }
+    }
+
+
 }
 
 window.addEventListener("load", () => {
