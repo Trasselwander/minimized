@@ -44,7 +44,7 @@ namespace Server.Modules
                 // Börja med 10 hp;
 
                 string aatk = ((string)parameters.id).ToLower();
-                string eatk = RandomService.rnd.Next(4 + 1) + "";
+                string eatk = RandomService.rnd.Next(1, 4 + 1) + "";
 
                 if (aatk == "4") a.DAUP++;
                 if (eatk == "4") a.DDUP++;
