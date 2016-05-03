@@ -98,19 +98,19 @@
 
     #current_exp {
         float: left;
-        background-color: rgb(229, 136, 30);
+        background-color: #efd14e;
         height: 100%;
         width: 50%;
-        border-bottom: 4px solid rgb(215, 126, 24);
+        border-bottom: 4px solid rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
     }
 
     #gained_exp {
         float: left;
-        background-color: rgb(123, 212, 70);
+        background-color: #f89393;
         width: 30%;
         height: 100%;
-        border-bottom: 4px solid rgb(105, 204, 45);
+        border-bottom: 4px solid rgba(0, 0, 0, 0.13);
         box-sizing: border-box;
     }
 }

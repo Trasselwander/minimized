@@ -59,16 +59,16 @@
   position: absolute; }
   #exp #current_exp {
     float: left;
-    background-color: #e5881e;
+    background-color: #efd14e;
     height: 100%;
     width: 50%;
-    border-bottom: 4px solid #d77e18;
+    border-bottom: 4px solid rgba(0, 0, 0, 0.1);
     box-sizing: border-box; }
   #exp #gained_exp {
     float: left;
-    background-color: #7bd446;
+    background-color: #f89393;
     width: 30%;
     height: 100%;
-    border-bottom: 4px solid #69cc2d;
+    border-bottom: 4px solid rgba(0, 0, 0, 0.13);
     box-sizing: border-box; }
 
