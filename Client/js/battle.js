@@ -101,7 +101,18 @@ function attackCallback(data, attackID) {
         }
     }
 
-
+    //if (data.playerFirstRound) {
+    //    attackAny(attackID, true);
+    //    setTimeout(function (attackID, hp) {
+    //        if (hp <= 0) attackAny(attackID, false);
+    //    }, 1000, data.enemyAttackType, data.enemyHP);
+    //}
+    //else {
+    //    attackAny(data.enemyAttackType, false);
+    //    setTimeout(function (attackID, hp) {
+    //        if (hp <= 0) attackAny(attackID, true);
+    //    }, 1000, attackID, data.playerHP);
+    //}
 }
 
 window.addEventListener("load", () => {
