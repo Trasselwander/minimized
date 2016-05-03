@@ -65,7 +65,7 @@ namespace Server.Modules
 
                 if (0 >= a.AHP || 0 >= a.DHP) // någon har dött // (e.lvl)^2/ a.lvl * x
                 {
-                    int scoex = (int)Math.Ceiling(Math.Pow(enemy.userStats.level, 2) / user.userStats.level);
+                    int scoex = (int)Math.Ceiling(Math.Pow(enemy.userStats.level + 2, 2) / user.userStats.level);
                     enemy.userStats.exp += (int)Math.Ceiling(scoex * 16 * 0.1);
 
                     if (0 >= a.AHP)
