@@ -146,7 +146,7 @@ namespace Server.Services
         public Battle GetBattle(int did, User user) // defender id
         {
             Attack a = GetAttack(user);
-            if (a == null) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "Raden Adam missade.");
+            if (a != null) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "Raden Adam missade.");
 
             User defender = GetUser(did);
             GetUserStats(defender);
