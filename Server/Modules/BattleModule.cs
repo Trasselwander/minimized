@@ -17,9 +17,10 @@ namespace Server.Modules
         {
             Get["/"] = parameters =>
             {
+                User user = AuthorizeUser();
+                Attack a = Users.GetAttack(user);
 
-
-                return null;
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(a));
             };
 
             Get["/init/{id}"] = parameters => // set time
