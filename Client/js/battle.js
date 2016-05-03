@@ -41,9 +41,9 @@ function createFireWork(target, fastAttack, width) { // target == true => attack
         baseSpeed = 2;
     }
     if (target)
-        battle.fireworks.push(new Firework(130, battle.ch / 2 + 30, battle.cw - 120 + randomDouble(-charWidth / 2, charWidth / 5), battle.ch / 2 + randomDouble(-charHeight / 2, charHeight / 2), 15, baseSpeed, width));
+        battle.fireworks.push(new Firework(130, battle.ch / 2 + 30, battle.cw - 120 + randomDouble(-charWidth / 2, charWidth / 5), battle.ch / 2 + randomDouble(-charHeight / 2, charHeight / 2), baseSpeed, width));
     else
-        battle.fireworks.push(new Firework(battle.cw - 100, battle.ch / 2, 150 + randomDouble(-charWidth / 2, charWidth / 5), battle.ch / 2 + randomDouble(-charHeight / 2, charHeight / 2), 15, baseSpeed, width));
+        battle.fireworks.push(new Firework(battle.cw - 100, battle.ch / 2, 150 + randomDouble(-charWidth / 2, charWidth / 5), battle.ch / 2 + randomDouble(-charHeight / 2, charHeight / 2), baseSpeed, width));
 }
 function createBattleParticles(target) { //target == true => player buff;
     battle.hue = randomDouble(0, 360);

@@ -6,7 +6,7 @@ function calculateDistance(p1x, p1y, p2x, p2y) {
 }
 
 // create firework
-function Firework(sx, sy, tx, ty, color, speed, width) {
+function Firework(sx, sy, tx, ty, speed, width) {
     // actual coordinates
     this.x = sx;
     this.y = sy;
@@ -31,7 +31,7 @@ function Firework(sx, sy, tx, ty, color, speed, width) {
     this.angle = Math.atan2(ty - sy, tx - sx);
     this.speed = speed;
     this.acceleration = 1.05;
-    this.brightness = randomDouble(color - 5, color + 5) || randomDouble(50, 70);
+    this.brightness = randomDouble(50, 70);
     // circle target indicator radius
     this.targetRadius = 1;
 }
@@ -79,6 +79,7 @@ Firework.prototype.draw = function (ctx, hue) {
     ctx.lineTo(this.x, this.y);
     if (this.color) ctx.strokeStyle = 'hsl(' + this.color + ', 100%, ' + this.brightness + '%)';
     else ctx.strokeStyle = 'hsl(' + battle.hue + ', 100%, ' + this.brightness + '%)';
+
     ctx.lineWidth = this.width;
     ctx.stroke();
 
