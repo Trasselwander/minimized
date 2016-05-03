@@ -58,7 +58,7 @@ screens.overview.elm.addEventListener("top10", () => { //player* but this code i
         rank.innerHTML = ind++;
         name.innerHTML = t.name;
         score.innerHTML = t.userStats.score;
-        name.lvl = t.userStats.level;
+        lvl.innerHTML = t.userStats.level;
     }
 
     for (var i = 10 - top10.length; i > 0; i--) trs[10 - i].style.display = "none"; // if less than 10 players;
