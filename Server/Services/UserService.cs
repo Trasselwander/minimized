@@ -61,6 +61,22 @@ namespace Server.Services
         public void IncrementStat(string stat, User u)
             => SQLite.GetConnection().Query("UPDATE userstats SET " + stat + " = " + stat + " + 1, skillpoints = skillpoints - 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID });
 
+        public void SaveScoreExpSPAndLevel(User u)
+            => SQLite.GetConnection().Query("UPDATE userstats SET score = @score, exp = @exp, level = @level, skillpoints = @sp WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID, score = u.userStats.score, exp = u.userStats.exp, level = u.userStats.level, sp = u.userStats.skillpoints });
+
+
+        public void UpdateLevel(User user)
+        {
+            if (user.userStats == null) GetUserStats(user);
+
+            while (user.userStats.score > (int)Math.Ceiling(10 * Math.Pow(user.userStats.exp, 1.4)))
+            {
+                user.userStats.score -= (int)Math.Ceiling(10 * Math.Pow(user.userStats.exp, 1.4));
+                user.userStats.level++;
+                user.userStats.skillpoints += 4;
+            }
+        }
+
         public void GetRank(User user)
         {
             if (user.userStats == null) return;
@@ -155,9 +171,9 @@ namespace Server.Services
             if (defender.LID != user.LID) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "Invalid defender id, user from another league.");
 
             SQLite.GetConnection().Query(@"INSERT INTO attacks (LID, AID, DID, DHP, AHP, start)
-                                             SELECT @lid AS LID, @aid AS AID, @did AS DID, @dhp AS DHP, @ahp AS AHP, @time as start", 
+                                             SELECT @lid AS LID, @aid AS AID, @did AS DID, @dhp AS DHP, @ahp AS AHP, @time as start",
                                                 new { lid = user.LID, aid = user.ID, did = defender.ID, dhp = defender.userStats.life, ahp = user.userStats.life, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
-            
+
             return new Battle { enemyHP = defender.userStats.life, playerHP = user.userStats.life };
         }
 

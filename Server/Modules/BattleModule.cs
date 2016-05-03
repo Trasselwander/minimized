@@ -63,6 +63,16 @@ namespace Server.Modules
                     if (a.AHP > 0) a.DHP -= aa;
                 }
 
+                if (0 >= a.AHP || 0 >= a.DHP) // någon har dött // (e.lvl)^2/ a.lvl * x
+                {
+                    int scoex = (int)Math.Ceiling(Math.Pow(enemy.userStats.level, 2) / user.userStats.level);
+                    user.userStats.score += scoex;
+                    user.userStats.exp += scoex;
+
+                    Users.UpdateLevel(user);
+                    Users.SaveScoreExpSPAndLevel(user);
+                }
+
                 Users.SaveAttack(a);
 
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(new Battle() { enemyHP = a.DHP, playerHP = a.AHP, enemyAttackType = int.Parse(eatk), playerFirstRound = user.userStats.speed * Math.Pow(1.25, a.DAUP) >= enemy.userStats.speed * Math.Pow(1.25, a.DDUP) }));
