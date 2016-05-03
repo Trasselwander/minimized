@@ -135,3 +135,12 @@ function getDaysHoursMins(time) {
 
     return { days: days, hours: hours, mins: mins, secs: secs };
 }
+
+window.requestAnimFrame = (function () {
+    return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+})();
