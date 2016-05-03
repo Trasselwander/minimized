@@ -165,7 +165,7 @@ namespace Server.Services
             => SQLite.GetConnection().Query<Attack>("SELECT * FROM attacks WHERE AHP > 0 AND DHP > 0 AND AID = @uid", new { uid = user.ID }).FirstOrDefault();
 
         public void SaveAttack(Attack attack)
-            => SQLite.GetConnection().Query<Attack>("UPSATE attacks SET AHP = @ahp, DHP = @dhp, DDUP = @ddup, DAUP = @daup WHERE AHP > 0 AND DHP > 0 AND AID = @aid", new { aid = attack.AID, ahp = attack.AHP, dhp = attack.DHP, ddup = attack.DDUP, daup = attack.DAUP }).FirstOrDefault();
+            => SQLite.GetConnection().Query<Attack>("UPDATE attacks SET AHP = @ahp, DHP = @dhp, DDUP = @ddup, DAUP = @daup WHERE AHP > 0 AND DHP > 0 AND AID = @aid", new { aid = attack.AID, ahp = attack.AHP, dhp = attack.DHP, ddup = attack.DDUP, daup = attack.DAUP }).FirstOrDefault();
 
         public class Attack
         {
