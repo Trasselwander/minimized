@@ -190,10 +190,10 @@ function manageBattleLoop() {
     function drawBattleLife() {
 
         if (playerRatio > that.player.currentHP / that.player.hp) {
-            playerRatio -= that.player.currentHP / 1000;
+            playerRatio -= (that.player.currentHP + 1) / 100;
         }
         if (enemyRatio > that.enemy.currentHP / that.enemy.hp) {
-            enemyRatio -= that.enemy.currentHP / 1000;
+            enemyRatio -= (that.enemy.currentHP + 1) / 100;
         }
         if (playerRatio <= 0 || enemyRatio <= 0) screens.battle.elm.dispatchEvent(new Event('dead'));
 
@@ -208,6 +208,7 @@ function manageBattleLoop() {
         ctx.fillRect(cw - 232, ch / 2 + 115, 200, 6);
         ctx.fillStyle = "rgb(51, 204, 51)";
         ctx.fillRect(cw - 231, ch / 2 + 116, 198 * enemyRatio, 2);
+
         ctx.fillStyle = "rgb(0, 153, 0)";
         ctx.fillRect(cw - 231, ch / 2 + 118, 198 * enemyRatio, 2);
     }

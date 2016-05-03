@@ -52,18 +52,26 @@ function createBattleParticles(target) { //target == true => player buff;
 }
 
 screens.attack.elm.addEventListener("enemy", () => {
-    battle.enemy.hp = battle.enemy.currentHP = enemy.userStats.life;
+    if (enemy.userStats.life <= 0) var life = 0;
+    else var life = enemy.userStats.life;
+    battle.enemy.hp = battle.enemy.currentHP = life;
 
 });
 screens.overview.elm.addEventListener("player", () => {
-    battle.player.hp = battle.player.currentHP = player.userStats.life;
+    if (player.userStats.life <= 0) var life = 0;
+    else var life = player.userStats.life;
+    battle.player.hp = battle.player.currentHP = life;
 
 });
 function attackCallback(data, attackID) {
     console.log("setting hp", data);
 
-    battle.player.currentHP = data.playerHP;
-    battle.enemy.currentHP = data.enemyHP;
+    if (data.playerHP <= 0) battle.player.currentHP = 0;
+    else battle.player.currentHP = data.playerHP;
+
+    if (data.enemyHP <= 0) battle.enemy.currentHP = 0;
+    else battle.enemy.currentHP = data.enemyHP;
+
     console.log(battle.player.currentHP / battle.player.hp);
     console.log(battle.enemy.currentHP / battle.enemy.hp);
 
