@@ -434,7 +434,10 @@
         </div>
     </div>
 
-
+    <div id="exp">
+        <div id="current_exp"></div>
+        <div id="gained_exp"></div>
+    </div>
     <div id="leaguetoplist" class="content">
         <div class="holder">
             <div class="menu">
@@ -459,8 +462,7 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
@@ -495,6 +497,10 @@
             battle: {
                 elm: document.getElementById("battle"),
                 visible: false,
+            },
+            exp: {
+                elm: document.getElementById("exp"),
+                visible: false,
             }
         }
     </script>
@@ -503,6 +509,7 @@
     <script src="lib/easeljs.min.js"></script>
     <script src="js/hexstat.js"></script>
 
+    <script src="js/exp.js"></script>
     <script src="js/battle.js"></script>
     <script src="js/leaguetoplist.js"></script>
     <script src="js/animation.js"></script>

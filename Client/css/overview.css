@@ -52,3 +52,23 @@
       width: initial;
       margin-bottom: 20px; } }
 
+#exp {
+  width: 100%;
+  height: 10px;
+  display: inline-block;
+  position: absolute; }
+  #exp #current_exp {
+    float: left;
+    background-color: #e5881e;
+    height: 100%;
+    width: 50%;
+    border-bottom: 4px solid #d77e18;
+    box-sizing: border-box; }
+  #exp #gained_exp {
+    float: left;
+    background-color: #7bd446;
+    width: 30%;
+    height: 100%;
+    border-bottom: 4px solid #69cc2d;
+    box-sizing: border-box; }
+

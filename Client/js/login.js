@@ -88,9 +88,11 @@ window.addEventListener("load", () => {
 
 screens.login.elm.addEventListener("toggled", () => { //detoggled
     document.getElementById("logout_btn").classList.add("hidden");
+    document.getElementById("exp").style.display = "none";
 });
 
 screens.login.elm.addEventListener("detoggled", () => { //detoggled
     document.getElementById("logout_btn").classList.remove("hidden");
     console.log("visible");
+    document.getElementById("exp").style.display = null;
 });
