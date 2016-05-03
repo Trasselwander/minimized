@@ -64,7 +64,7 @@ namespace Server.Modules
 
                 Users.SaveAttack(a);
 
-                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(new Battle() { enemyHP = a.DHP, playerHP = a.AHP, enemyAttackType = int.Parse(eatk) }));
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(new Battle() { enemyHP = a.DHP, playerHP = a.AHP, enemyAttackType = int.Parse(eatk), playerFirstRound = user.userStats.speed * Math.Pow(1.25, a.DAUP) >= enemy.userStats.speed * Math.Pow(1.25, a.DDUP) }));
                 // Update here!.
 
                 // Who is to attack first?

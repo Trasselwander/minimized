@@ -186,6 +186,7 @@ namespace Server.Services
             public int playerHP { get; set; }
             public int enemyHP { get; set; }
             public int enemyAttackType { get; set; }
+            public bool playerFirstRound { get; set; }
         }
 
         public class League
