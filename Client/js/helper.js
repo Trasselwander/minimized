@@ -12,19 +12,16 @@ if (location.hostname == "localhost") {
 user = {
     name: localStorage.getItem("name"),
     password: localStorage.getItem("password"), // HASHED
-    email: localStorage.getItem("email"), // HASHED
 
     save: function () {
         if (this.name) localStorage.setItem("name", this.name);
         if (this.password) localStorage.setItem("password", this.password);
-        if (this.email) localStorage.setItem("email", this.email);
     },
     remove: function () {
-        this.name = this.password = this.email = null;   // subject to change
+        this.name = this.password = null;   // subject to change
 
         localStorage.removeItem("name");
         localStorage.removeItem("password");
-        localStorage.removeItem("email");
     }
 }
 

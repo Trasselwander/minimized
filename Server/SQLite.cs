@@ -23,7 +23,6 @@ namespace Server
                                     hash CHAR(255) NOT NULL,
                                     salt CHAR(255) NOT NULL,
                                     lastloggedin INTEGER NOT NULL,
-                                    email CHAR(50),
                                     LID INTEGER,
                                     HID INTEGER,
                                     bestrank INTEGER NOT NULL,

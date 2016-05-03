@@ -23,7 +23,6 @@
         }
     }
 
-
     #login_password, #login_name {
         border: 1px solid rgba($blue, $medium);
 
@@ -32,7 +31,7 @@
         }
     }
 
-    #register_password, #register_name, #register_email, #register_password_repeat {
+    #register_password, #register_name, #register_password_repeat {
         border: 1px solid rgba($green, $medium);
 
         &:hover, &:active {

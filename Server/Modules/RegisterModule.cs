@@ -10,13 +10,10 @@ namespace Server.Modules
         public RegisterModule()
             : base("api/register")
         {
-            Get["/{email}"] = parameters =>
+            Get["/"] = parameters =>
             {
-                UTF8Encoding.UTF8.GetString(Convert.FromBase64String(parameters.email));
-
                 UserService.User auth = GetNameAndPasswordFromAuth();
-                auth.email = parameters.email != null ? Encoding.UTF8.GetString(Convert.FromBase64String(parameters.email)) : null;
-                Users.CreateUser(auth.name, auth.hash, auth.email);
+                Users.CreateUser(auth.name, auth.hash);
 
                 UserService.User u = AuthorizeUser();
                 return CreateResponse(HttpStatusCode.OK);

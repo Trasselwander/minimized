@@ -16,7 +16,7 @@ namespace Server.Modules
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Services.UserService.User u = Users.CreateUser("test" + i, "" + hashpw("asdasd"), "test" + i);
+                    Services.UserService.User u = Users.CreateUser("test" + i, "" + hashpw("asdasd"));
                     u = Users.GetUser(u.name);
                     Users.JoinLeague(u, 1);
                     u.LID = 1;

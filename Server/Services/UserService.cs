@@ -16,9 +16,6 @@ namespace Server.Services
         public User GetUser(int uid)
             => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE ID=@uid", new { uid = uid }).FirstOrDefault();
 
-        public User GetUserByEmail(string email)
-            => SQLite.GetConnection().Query<User>("SELECT * FROM users WHERE email=@email", new { email = email }).FirstOrDefault();
-
         public UserStats GetUserStats(int uid, int lid)
             => SQLite.GetConnection().Query<UserStats>("SELECT * FROM userstats WHERE UID=@uid AND LID=@lid", new { uid = uid, lid = lid }).FirstOrDefault();
 
@@ -78,15 +75,15 @@ namespace Server.Services
             user.userStats.rank = ind;
         }
 
-        public User CreateUser(string name, string hash, string email)
+        public User CreateUser(string name, string hash)
         {
-            User u = new User() { name = name, hash = hash, email = email };
+            User u = new User() { name = name, hash = hash };
 
             if (GetUser(name) != null) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "Username already in use.");
 
             CryptoService.HashAndSavePassword(hash, u);
-            SQLite.GetConnection().Query(@"INSERT INTO users (name, email, hash, salt, lastloggedin, bestrank, age) SELECT @name as name, @email as email, @hash as hash, @salt as salt, @time as lastloggedin, (SELECT COUNT(*) FROM users) AS bestrank, @time AS age",
-                                            new { name = u.name, email = u.email, hash = u.hash, salt = u.salt, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
+            SQLite.GetConnection().Query(@"INSERT INTO users (name, hash, salt, lastloggedin, bestrank, age) SELECT @name as name, @hash as hash, @salt as salt, @time as lastloggedin, (SELECT COUNT(*) FROM users) AS bestrank, @time AS age",
+                                            new { name = u.name, hash = u.hash, salt = u.salt, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
 
             return GetUser(name);
         }
@@ -226,8 +223,6 @@ namespace Server.Services
             public string hash { get; set; }
             [JsonIgnore]
             public string salt { get; set; }
-            [JsonIgnore]
-            public string email { get; set; }
 
             public int? LID { get; set; }
             public int? HID { get; set; }

@@ -16,9 +16,9 @@
     border: 1px solid rgba(33, 150, 243, 0.4); }
     #login #login_password:hover, #login #login_password:active, #login #login_name:hover, #login #login_name:active, #register #login_password:hover, #register #login_password:active, #register #login_name:hover, #register #login_name:active {
       border: 1px solid rgba(33, 150, 243, 0.72); }
-  #login #register_password, #login #register_name, #login #register_email, #login #register_password_repeat, #register #register_password, #register #register_name, #register #register_email, #register #register_password_repeat {
+  #login #register_password, #login #register_name, #login #register_password_repeat, #register #register_password, #register #register_name, #register #register_password_repeat {
     border: 1px solid rgba(76, 175, 80, 0.4); }
-    #login #register_password:hover, #login #register_password:active, #login #register_name:hover, #login #register_name:active, #login #register_email:hover, #login #register_email:active, #login #register_password_repeat:hover, #login #register_password_repeat:active, #register #register_password:hover, #register #register_password:active, #register #register_name:hover, #register #register_name:active, #register #register_email:hover, #register #register_email:active, #register #register_password_repeat:hover, #register #register_password_repeat:active {
+    #login #register_password:hover, #login #register_password:active, #login #register_name:hover, #login #register_name:active, #login #register_password_repeat:hover, #login #register_password_repeat:active, #register #register_password:hover, #register #register_password:active, #register #register_name:hover, #register #register_name:active, #register #register_password_repeat:hover, #register #register_password_repeat:active {
       border: 1px solid rgba(76, 175, 80, 0.72); }
   #login .holder, #register .holder {
     margin: 80px auto;

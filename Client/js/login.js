@@ -39,14 +39,13 @@ window.addEventListener("load", () => {
         sendRegister();
     }
 
-    document.getElementById("register_email").onkeypress = (e) => { // resgister from enter
+    document.getElementById("register_password_repeat").onkeypress = (e) => { // resgister from enter
         if (e.keyCode == 13) sendRegister();
     }
 
     function sendRegister() {
         user.name = document.getElementById("register_name").value;
         user.password = superhash(document.getElementById("register_password").value);
-        user.email = document.getElementById("register_email").value;
 
         if (document.getElementById("register_password_repeat").classList.contains("wrong")) {
             swal({
@@ -58,7 +57,7 @@ window.addEventListener("load", () => {
         }
 
         console.log(user.name, user.password);
-        sendRequest("/register/" + (user.email ? btoa(user.email) : ""), (text, error) => {
+        sendRequest("/register/", (text, error) => {
             if (!error) {
                 toggleScreen(screens.overview.elm);
                 user.save();
