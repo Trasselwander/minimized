@@ -110,6 +110,7 @@ screens.overview.elm.addEventListener("player", () => { //player* but this code 
     pstats.getElementsByClassName("char_physD")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.physicaldefence;
     pstats.getElementsByClassName("char_magA")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.magicattack;
     pstats.getElementsByClassName("char_magD")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.magicdefence;
+    pstats.getElementsByClassName("char_sp")[0].getElementsByTagName('span')[0].innerHTML = player.userStats.skillpoints;
 
     var sp_arr = ["char_life", "char_speed", "char_physA", "char_physD", "char_magA", "char_magD"];
 
@@ -135,6 +136,7 @@ screens.overview.elm.addEventListener("player", () => { //player* but this code 
 
     ustats.getElementsByClassName("char_level")[0].innerHTML = player.userStats.level;
     ustats.getElementsByClassName("char_exp")[0].innerHTML = player.userStats.exp;
+    ustats.getElementsByClassName("char_expleft")[0].innerHTML = Math.ceil(10 * Math.pow(player.userStats.level, 1.4)) - player.userStats.exp;
     ustats.getElementsByClassName("char_rank")[0].innerHTML = player.userStats.rank;
     ustats.getElementsByClassName("char_bestRank")[0].innerHTML = player.userStats.bestrank;
     ustats.getElementsByClassName("char_wins")[0].innerHTML = player.userStats.wins;

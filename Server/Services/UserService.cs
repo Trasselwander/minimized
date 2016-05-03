@@ -69,7 +69,7 @@ namespace Server.Services
         {
             if (user.userStats == null) GetUserStats(user);
 
-            while (user.userStats.exp > (int)Math.Ceiling(10 * Math.Pow(user.userStats.level, 1.4)))
+            while (user.userStats.exp >= (int)Math.Ceiling(10 * Math.Pow(user.userStats.level, 1.4)))
             {
                 user.userStats.exp -= (int)Math.Ceiling(10 * Math.Pow(user.userStats.level, 1.4));
                 user.userStats.level++;
