@@ -67,7 +67,7 @@ namespace Server.Modules
                 {
                     int scoex = (int)Math.Ceiling(Math.Pow(enemy.userStats.level, 2) / user.userStats.level);
                     user.userStats.score += scoex;
-                    user.userStats.exp += scoex;
+                    user.userStats.exp += scoex * 16;
 
                     Users.UpdateLevel(user);
                     Users.SaveScoreExpSPAndLevel(user);
