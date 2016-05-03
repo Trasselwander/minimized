@@ -22,11 +22,12 @@ namespace Server.Modules
                 return null;
             };
 
-            Get["/init/{id:int}"] = parameters => // set time
+            Get["/init/{id}"] = parameters => // set time
             {
                 User user = AuthorizeUser();
-                if ((string)parameters.id == null) return CreateResponse(HttpStatusCode.BadRequest, "Invalid defender id.");
-                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetBattle(parameters.id, user)));
+                string s = (string)parameters.id;
+                if (s == null) return CreateResponse(HttpStatusCode.BadRequest, "Invalid defender id.");
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetBattle(int.Parse(s), user)));
             };
 
             Get["/attack/{id}"] = parameters => // 

@@ -103,7 +103,7 @@ function superhash(s) { // hash --> reserved by browser funktionen finns kanske 
 
 
 function randomDouble(min, max) {
-    return Math.random() * (max - min + 1) + min;
+    return Math.random() * (max - min) + min;
 }
 
 
