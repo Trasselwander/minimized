@@ -213,10 +213,10 @@ function manageBattleLoop() {
     function drawBattleLife() {
 
         if (playerRatio > that.player.currentHP / that.player.hp) {
-            playerRatio -= (that.player.currentHP + 1) / 300;
+            playerRatio -= 0.01;
         }
         if (enemyRatio > that.enemy.currentHP / that.enemy.hp) {
-            enemyRatio -= (that.enemy.currentHP + 1) / 300;
+            enemyRatio -= 0.01;
         }
 
         ctx.fillStyle = "rgb(188, 188, 188)";
@@ -296,6 +296,6 @@ function manageBattleLoop() {
             that.particles[i].draw(ctx);
             that.particles[i].update(i);
         }
-        if (i < 1 && playerRatio <= 0 && u < 1 || i < 1 && enemyRatio <= 0 && u < 1) screens.battle.elm.dispatchEvent(new Event('dead'));
+        if (that.particles.length < 1 && that.fireworks.length < 1 && (playerRatio <= 0 || enemyRatio <= 0)) screens.battle.elm.dispatchEvent(new Event('dead'));
     }
 }
