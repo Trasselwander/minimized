@@ -41,14 +41,16 @@ var canvas = document.getElementById('battle_animation'),
 // set canvas dimensions
 canvas.width = cw;
 canvas.height = ch;
-
+var playerRatio = 1,
+    enemyRatio1;
 function drawBattleLife() {
 
-
-
-
-    var playerRatio = battleStats.playerHP / player.userStats.life,
-        enemyRatio = battleStats.enemyHP / enemy.userStats.life;
+    if (playerRatio > player.userStats.life / battleStats.playerHP) {
+        playerRatio -= 0.1;
+    }
+    if (enemyRatio > enemy.userStats.life / battleStats.enemyHP) {
+        playerRatio -= 0.1;
+    }
 
     ctx.fillStyle = "rgb(188, 188, 188)";
     ctx.fillRect(32, ch / 2 + 115, 200, 6);

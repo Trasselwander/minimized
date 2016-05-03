@@ -79,6 +79,7 @@ namespace Server
                                     AID INTEGER NOT NULL,
                                     DID INTEGER NOT NULL,
                                     AHP INTEGER NOT NULL,
+                                    DHP INTEGER NOT NULL,
                                     DDUP INTEGER NOT NULL,
                                     DAUP INTEGER NOT NULL,
                                     start INTEGER NOT NULL)"); // AID = attacker id, DID = defender id (both derived from UID)
