@@ -31,6 +31,9 @@ namespace Server.Services
         public void GetUserLeague(User user)
             => user.league = user.LID != null ? GetUserLeague((int)user.LID) : null;
 
+        public List<User> GetUsersByLeague(League league)
+            => SQLite.GetConnection().Query<User>("SELECT * FROM users where LID = @lid", new { lid = league.ID }).ToList();
+
         public void CreateLeague(League l)
             => SQLite.GetConnection().Query("INSERT INTO leagues (name, start, end) VALUES (@name, @start, @end)", new { l.name, l.start, l.end });
 
@@ -144,6 +147,7 @@ namespace Server.Services
 
                 l.leader = SQLite.GetConnection().Query<string>(@"SELECT name FROM users INNER JOIN userstats ON users.ID=userstats.UID AND userstats.LID=@lid AND users.LID=@lid ORDER BY SCORE DESC LIMIT 1", new { lid = l.ID }).FirstOrDefault();
 
+                GetLeagueStatsByLeague(l);
                 l.life = data.life;
                 l.speed = data.speed;
                 l.physicalattack = data.physicalattack;
@@ -183,9 +187,35 @@ namespace Server.Services
         public void SaveAttack(Attack attack)
             => SQLite.GetConnection().Query<Attack>("UPDATE attacks SET AHP = @ahp, DHP = @dhp, DDUP = @ddup, DAUP = @daup WHERE AHP > 0 AND DHP > 0 AND AID = @aid", new { aid = attack.AID, ahp = attack.AHP, dhp = attack.DHP, ddup = attack.DDUP, daup = attack.DAUP }).FirstOrDefault();
 
+        public List<Attack> GetAttacksByID(User user)
+            => SQLite.GetConnection().Query<Attack>("SELECT * FROM attacks where AID = @uid", new { uid = user.ID }).ToList();
+        public List<Attack> GetAttacksByLeague(League league)
+            => SQLite.GetConnection().Query<Attack>("SELECT * FROM attacks where LID = @lid", new { lid = league.ID }).ToList();
+
+        public void GetWinsAndLossesByID(User user)
+        {
+            List<Attack> total = GetAttacksByID(user);
+            for (int i = 0; i < total.Count; i++)
+            {
+                if (total[i].LID == user.LID)
+                {
+                    if (total[i].AHP <= 0) user.userStats.losses++;
+                    else if (total[i].DHP <= 0) user.userStats.wins++;
+                }
+                if (total[i].AHP <= 0) user.totallosses++;
+                else if (total[i].DHP <= 0) user.totalwins++;
+            }
+        }
+        public void GetLeagueStatsByLeague(League league)
+        {
+            league.totalfights = GetAttacksByLeague(league).Count;
+            league.totalplayers = GetUsersByLeague(league).Count;
+            league.highestlevel = SQLite.GetConnection().Query<int>(@"SELECT level FROM userstats INNER JOIN users ON users.ID=userstats.UID AND userstats.LID=@lid AND users.LID=@lid ORDER BY SCORE DESC LIMIT 1", new { lid = league.ID }).FirstOrDefault();
+        }
         public class Attack
         {
             public int ID { get; set; }
+            public int LID { get; set; }
             public int AID { get; set; }
             public int DID { get; set; }
             public int DHP { get; set; }
@@ -225,7 +255,7 @@ namespace Server.Services
             public int magicdefence { get; set; }
 
             public string leader { get; set; } //
-            // mostactive, etc.
+                                               // mostactive, etc.
         }
 
         public class User

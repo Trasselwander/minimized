@@ -22,6 +22,7 @@ namespace Server.Modules
                 Users.GetUserStats(user);
                 Users.GetUserLeague(user);
                 Users.GetRank(user);
+                Users.GetWinsAndLossesByID(user);
 
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(user));
             };

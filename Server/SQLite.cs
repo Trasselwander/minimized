@@ -26,9 +26,7 @@ namespace Server
                                     LID INTEGER,
                                     HID INTEGER,
                                     bestrank INTEGER NOT NULL,
-                                    age INTEGER NOT NULL,
-                                    totalwins INTEGER NOT NULL DEFAULT 0,
-                                    totallosses INTEGER NOT NULL DEFAULT 0)");
+                                    age INTEGER NOT NULL)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userstats (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
@@ -45,8 +43,6 @@ namespace Server
                                     score INTEGER NOT NULL DEFAULT 0,
                                     exp INTEGER NOT NULL DEFAULT 0,
                                     bestrank INTEGER NOT NULL,
-                                    wins INTEGER NOT NULL DEFAULT 0,
-                                    losses INTEGER NOT NULL DEFAULT 0,
                                     skillpoints INTEGER DEFAULT 4)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS userhats (
