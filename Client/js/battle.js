@@ -8,7 +8,9 @@ screens.battle.elm.addEventListener("detoggled", () => {
     battle.resetAnimation();
 });
 screens.battle.elm.addEventListener("dead", () => {
-    console.log("asdf");
+    if (battle.enemy.currentHP < battle.player.currentHP) swal("Toppen", "Du vann!", "success")        
+    else swal("Oops...", "Du förlorade!", "error");
+    
     toggleScreen(screens.attack.elm);
     battle.stopLoop();
 });
