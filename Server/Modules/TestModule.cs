@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nancy;
+using Server.Services;
+using Newtonsoft.Json;
 
 namespace Server.Modules
 {
@@ -28,6 +30,18 @@ namespace Server.Modules
 
                 return null;
             };
+
+            Get["/users2"] = parameters =>
+            {
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(RandomService.rnd.Next(1, 10)));
+            };
+
+
+            Get["/users3"] = parameters =>
+            {
+                return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(Users.GetUser("adam")));
+            };
+
         }
 
         int hashpw(string pw)
