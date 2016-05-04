@@ -2,6 +2,7 @@
 using Server.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace Server.Modules
             if (this.Request.Headers.Authorization == null || !this.Request.Headers.Authorization.Contains(' '))
                 throw new HttpErrorException(HttpStatusCode.Unauthorized, "Missing login info.");
 
-            string[] cred = UTF8Encoding.UTF8.GetString(Convert.FromBase64String(this.Request.Headers.Authorization.Split(' ')[1])).Split(':');
+            string[] cred = Encoding.UTF8.GetString(Convert.FromBase64String(this.Request.Headers.Authorization.Split(' ')[1])).Split(':');
             if (cred.Length != 2) throw new HttpErrorException(HttpStatusCode.Unauthorized, "Missing login info.");
             return new UserService.User() { name = cred[0], hash = cred[1] };
         }
@@ -40,7 +41,7 @@ namespace Server.Modules
 
         public static Response CreateResponse(HttpStatusCode status, string message)
         {
-            byte[] b = UTF8Encoding.UTF8.GetBytes(message ?? "Error");
+            byte[] b = Encoding.UTF8.GetBytes(message ?? "Error");
             Response r = new Response() { StatusCode = status };
             r.Contents = s => { try { s.Write(b, 0, b.Length); } catch (Exception) { } };
 
