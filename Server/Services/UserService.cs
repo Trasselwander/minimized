@@ -175,7 +175,7 @@ namespace Server.Services
             if (defender.LID != user.LID) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "Invalid defender id, user from another league.");
 
             SQLite.GetConnection().Query(@"INSERT INTO attacks (LID, AID, DID, DHP, AHP, start)
-                                             SELECT @lid AS LID, @aid AS AID, @did AS DID, @dhp AS DHP, @ahp AS AHP, @time as start",
+                                             SELECT @lid AS LID, @aid AS AID, @did AS DID, @dhp AS DHP, @ahp AS AHP, @time AS start",
                                                 new { lid = user.LID, aid = user.ID, did = defender.ID, dhp = defender.userStats.life, ahp = user.userStats.life, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
 
             return new Battle { enemyHP = defender.userStats.life, playerHP = user.userStats.life };
@@ -225,6 +225,7 @@ namespace Server.Services
             public long start { get; set; }
 
             public int damage { get; set; } // dynamic
+            public int DTHP { get; set; }
         }
 
         public class Battle

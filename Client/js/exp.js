@@ -5,6 +5,8 @@ screens.overview.elm.addEventListener("player", () => {
 
     if (enemy != null) {
         var expgain = Math.ceil(Math.pow(enemy.userStats.level + 2, 2) / player.userStats.level) * 16;
+        if (expgain + exp > totalexp) expgain = totalexp - exp;
+
         document.getElementById("gained_exp").style.width = (expgain / totalexp) * 100 + '%';
     }
 

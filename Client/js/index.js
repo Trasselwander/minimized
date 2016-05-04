@@ -3,6 +3,22 @@
 document.getElementById("overview").addEventListener("toggled", () => {
     getPlayer();
     screens.overview.visible = true;
+    sendRequest("/battle/", (test, error) => {
+        if (!error) {
+            var data = JSON.parse(test)
+            if (data != null) {
+                console.log("test = ", data);
+
+                battle.enemy.hp = data.DTHP;
+                battle.enemy.currentHP = data.DHP;
+
+
+                toggleScreen(screens.battle.elm);
+                setTimeout(function () { battle.player.currentHP = data.AHP; }, 300);
+                
+            }
+        }
+    });
 });
 
 screens.overview.elm.addEventListener("detoggled", () => {

@@ -20,6 +20,20 @@ namespace Server.Modules
                 User user = AuthorizeUser();
                 Attack a = Users.GetAttack(user);
 
+                if (a == null) return CreateResponse(HttpStatusCode.OK);
+
+                User defender = Users.GetUser(a.DID);
+
+                if (defender.LID == null)
+                {
+                    a.AHP = 0;
+                    Users.SaveAttack(a);
+                    return CreateResponse(HttpStatusCode.OK);
+                }
+
+                Users.GetUserStats(defender);
+                a.DTHP = defender.userStats.life;
+
                 return CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(a));
             };
 
