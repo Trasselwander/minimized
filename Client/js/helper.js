@@ -25,6 +25,8 @@ user = {
     }
 }
 
+player = enemy = null;
+
 window.addEventListener("load", () => {
     if (!user.name || !user.password) toggleScreen(screens.login.elm);
     else sendRequest("/login/", (text, error) => {

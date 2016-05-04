@@ -58,16 +58,18 @@
   display: inline-block;
   position: absolute; }
   #exp #current_exp {
+    transition: width .5s ease;
     float: left;
     background-color: #efd14e;
     height: 100%;
-    width: 50%;
+    width: 0;
     border-bottom: 4px solid rgba(0, 0, 0, 0.1);
     box-sizing: border-box; }
   #exp #gained_exp {
+    transition: width .5s ease;
     float: left;
     background-color: #f89393;
-    width: 30%;
+    width: 0;
     height: 100%;
     border-bottom: 4px solid rgba(0, 0, 0, 0.13);
     box-sizing: border-box; }
