@@ -7,13 +7,13 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            using (var host = new NancyHost(new Uri("http://localhost:1234"), new CustomBootstraper()))
+            using (var host = new NancyHost(new Uri("http://localhost:1235"), new CustomBootstraper()))
             {
                 Console.WriteLine("Creating database...");
                 SQLite.InitDatabase();
 
                 host.Start();
-                Console.WriteLine("Running nancy on http://localhost:1234");
+                Console.WriteLine("Running nancy on http://localhost:1235");
                 Console.ReadLine();
             }
         }
