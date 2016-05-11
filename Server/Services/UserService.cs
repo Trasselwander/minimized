@@ -22,6 +22,9 @@ namespace Server.Services
         public League GetUserLeague(int lid)
             => SQLite.GetConnection().Query<League>("SELECT * FROM leagues WHERE ID=@lid", new { lid = lid }).FirstOrDefault();
 
+        public bool GetLeagueEndByLeague(int lid)
+            => SQLite.GetConnection().Query<int>("SELECT 1 FROM leagues WHERE ID=@lid AND end < @timenow LIMIT 1", new { lid = lid, timenow = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) }).FirstOrDefault() == 1;
+
         public UserStats GetUserStats(string name)
             => SQLite.GetConnection().Query<UserStats>("SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND users.name=@name", new { name = name }).FirstOrDefault();
 
@@ -173,6 +176,8 @@ namespace Server.Services
 
             if (user.userStats == null) GetUserStats(user);
             if (defender.LID != user.LID) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "Invalid defender id, user from another league.");
+
+            if (GetLeagueEndByLeague((int)user.LID)) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "Invalid league id, league has already ended.");
 
             SQLite.GetConnection().Query(@"INSERT INTO attacks (LID, AID, DID, DHP, AHP, start)
                                              SELECT @lid AS LID, @aid AS AID, @did AS DID, @dhp AS DHP, @ahp AS AHP, @time AS start",
