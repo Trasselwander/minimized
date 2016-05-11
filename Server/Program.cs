@@ -1,5 +1,6 @@
 ﻿using System;
 using Nancy.Hosting.Self;
+using Server.Modules;
 
 namespace Server
 {
@@ -14,6 +15,11 @@ namespace Server
 
                 host.Start();
                 Console.WriteLine("Running nancy on http://localhost:1235");
+
+                Console.WriteLine("Starting timers..");
+                TimerModule.initTimers();
+
+                Console.WriteLine("Press any key to stop the server..");
                 Console.ReadLine();
             }
         }
