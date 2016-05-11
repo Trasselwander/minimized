@@ -72,6 +72,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ExitCommand.cs" />
+    <Compile Include="Commands\GiveCommand.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\LeagueCommand.cs" />
     <Compile Include="CustomBootstrapper.cs" />
     <Compile Include="HttpErrorException.cs" />
     <Compile Include="Modules\BattleModule.cs" />
@@ -81,6 +85,7 @@
     <Compile Include="Modules\PlayersModule.cs" />
     <Compile Include="Modules\RegisterModule.cs" />
     <Compile Include="Modules\TestModule.cs" />
+    <Compile Include="Services\CommandService.cs" />
     <Compile Include="Services\TimerModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

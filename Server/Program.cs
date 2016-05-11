@@ -6,6 +6,8 @@ namespace Server
 {
     class Program
     {
+        public static bool stop = false;
+
         static void Main(string[] args)
         {
             long[] times = new long[] { 5 * 60 * 1000, 30 * 60 * 1000, 6 * 60 * 60 * 1000 }; // 5min, 30min, 6h
@@ -26,8 +28,28 @@ namespace Server
                     Services.TimerService.Timers.Add(t);
                 }
 
-                Console.WriteLine("Press any key to stop the server..");
-                Console.ReadLine();
+                Services.CommandService.RegisteredCommands.Add("league", new Commands.LeagueCommand());
+                Services.CommandService.RegisteredCommands.Add("help", new Commands.HelpCommand());
+                Services.CommandService.RegisteredCommands.Add("exit", new Commands.ExitCommand());
+
+                Console.WriteLine("Write exit to terminate and help for some help");
+
+                while (!stop)
+                {
+                    string cmd = Console.ReadLine();
+                    Console.WriteLine();
+
+                    try
+                    {
+                        Services.CommandService.Process(cmd);
+                    }
+                    catch (Exception)
+                    {
+                        Console.Write("A command should not be able to crash the whole server, something smells rotten... *YOUR CODE*");
+                    }
+                    Console.WriteLine();
+                }
+                
             }
         }
     }
