@@ -34,6 +34,9 @@ namespace Server.Services
         public void GetUserLeague(User user)
             => user.league = user.LID != null ? GetUserLeague((int)user.LID) : null;
 
+        public League GetLeague(string name, long start, long end)
+            => SQLite.GetConnection().Query<League>("SELECT * FROM leagues WHERE name=@name AND start=@start AND end=@end LIMIT 1", new { name = name, start = start, end = end }).FirstOrDefault();
+
         public List<User> GetUsersByLeague(League league)
             => SQLite.GetConnection().Query<User>("SELECT * FROM users where LID = @lid", new { lid = league.ID }).ToList();
 
@@ -65,7 +68,7 @@ namespace Server.Services
             => SQLite.GetConnection().Query("UPDATE users SET lastloggedin=@time WHERE users.ID = @uid", new { uid = u.ID, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
 
         public void IncrementStat(string stat, User u)
-            => SQLite.GetConnection().Query("UPDATE userstats SET " + stat + " = " + stat + " + 1, skillpoints = skillpoints - 1 WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID });
+            => SQLite.GetConnection().Query("UPDATE userstats SET " + stat + " = " + stat + " + 1, skillpoints = skillpoints - 1 WHERE userstats.UID = @uid AND userstats.LID = @lid AND userstats.skillpoints > 0", new { uid = u.ID, lid = u.LID }).FirstOrDefault();
 
         public void SaveScoreExpSPAndLevel(User u)
             => SQLite.GetConnection().Query("UPDATE userstats SET score = @score, exp = @exp, level = @level, skillpoints = @sp WHERE userstats.UID = @uid AND userstats.LID = @lid", new { uid = u.ID, lid = u.LID, score = u.userStats.score, exp = u.userStats.exp, level = u.userStats.level, sp = u.userStats.skillpoints });

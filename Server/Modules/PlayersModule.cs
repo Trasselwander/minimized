@@ -56,7 +56,7 @@ namespace Server.Modules
                 Users.GetUserStats(user);
 
                 if (user.userStats == null || user.userStats.skillpoints < 1)
-                    return CreateResponse(HttpStatusCode.BadRequest);
+                    return CreateResponse(HttpStatusCode.BadRequest, "Not enough skillpoints");
 
                 switch (((string)parameters.id).ToLower())
                 {
