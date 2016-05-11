@@ -140,7 +140,7 @@ namespace Server.Modules
                     damage = (int)Math.Ceiling((1 - 1 / (Math.Max(user.userStats.magicattack / (enemy.userStats.magicdefence * Math.Pow(1.25, eup)), 1) * 2)) * user.userStats.magicattack); // 50% reduction if physicalattack == physicaldefence (MAX). 
                     break;
                 case "3": // Snabbattack
-                    damage = (int)Math.Ceiling((1 - 1 / (Math.Max(((user.userStats.speed * Math.Pow(1.25, eup)) * user.userStats.physicalattack) / enemy.userStats.physicaldefence, 1) * 2)) * (user.userStats.speed * Math.Pow(1.25, eup))); // 50% reduction if physicalattack == physicaldefence (MAX). 
+                    damage = (int)Math.Ceiling((1 - 1 / (Math.Max(((user.userStats.speed * Math.Pow(1.25, eup)) * user.userStats.physicalattack) / enemy.userStats.physicaldefence, 1) * 2)) * (user.userStats.speed * Math.Pow(1.25, eup)) / (user.userStats.speed * 0.5)); // 50% reduction if physicalattack == physicaldefence (MAX). 
                     break;
                 default:
                     return 0;

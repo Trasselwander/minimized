@@ -58,7 +58,7 @@ namespace Server
             (new UserService()).CreateLeague(new UserService.League() {
                 name = (new Random()).NextDouble() > .5 ? "ADAM" : "DANIEL",
                 start = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds),
-                end = (long)((DateTime.UtcNow.AddHours(10) - new DateTime(1970, 1, 1)).TotalMilliseconds)
+                end = (long)((DateTime.UtcNow.AddHours(5) - new DateTime(1970, 1, 1)).TotalMilliseconds)
             });
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS hats (
