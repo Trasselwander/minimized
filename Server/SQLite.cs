@@ -11,9 +11,7 @@ namespace Server
 {
     class SQLite
     {
-        private static SqliteConnection connection = new SqliteConnection("Data Source=minimal.db;Version=3");
-
-        public static SqliteConnection GetConnection() => connection;
+        public static SqliteConnection GetConnection() => new SqliteConnection("Data Source=minimal.db;Version=3");
 
         public static void InitDatabase()
         {
