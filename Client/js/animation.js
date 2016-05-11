@@ -183,8 +183,8 @@ function manageBattleLoop() {
     this.hue = 120;
     var canvas = document.getElementById('battle_animation'),
 		ctx = canvas.getContext('2d'),
-		cw = canvas.parentElement.offsetWidth,  //window.innerWidth,
-		ch = canvas.parentElement.offsetHeight,
+		cw = canvas.parentElement.clientWidth,  //window.innerWidth,
+		ch = canvas.parentElement.clientHeight,
 		limiterTotal = 5,
 		limiterTick = 0,
 		timerTotal = 8,
