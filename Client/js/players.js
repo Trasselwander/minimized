@@ -18,7 +18,10 @@ function getEnemy() {
 }
 
 function getTop10() {
-    if (!player.LID) return;
+    if (!player.LID) {
+        screens.overview.elm.dispatchEvent(new Event("top10"));
+        return;
+    }
 
     sendRequest("/leagues/top10/" + player.LID, (test, error) => {
         if (!error) {

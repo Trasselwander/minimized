@@ -62,6 +62,8 @@ screens.attack.elm.addEventListener("enemy", () => {
 
 });
 screens.overview.elm.addEventListener("player", () => {
+    if (player == null || player.userStats == null) return;
+
     if (player.userStats.life <= 0) var life = 0;
     else var life = player.userStats.life;
     battle.player.hp = battle.player.currentHP = life;

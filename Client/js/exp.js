@@ -1,5 +1,7 @@
 ﻿
 screens.overview.elm.addEventListener("player", () => {
+    if (player == null || player.userStats == null) return;
+
     var exp = player.userStats.exp,
         totalexp = Math.ceil(10 * Math.pow(player.userStats.level, 1.4));
 

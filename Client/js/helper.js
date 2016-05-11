@@ -25,7 +25,7 @@ user = {
     }
 }
 
-player = enemy = null;
+player = enemy = top10 = null;
 
 window.addEventListener("load", () => {
     if (!user.name || !user.password) toggleScreen(screens.login.elm);

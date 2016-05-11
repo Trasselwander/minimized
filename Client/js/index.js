@@ -4,7 +4,7 @@ document.getElementById("overview").addEventListener("toggled", () => {
     getPlayer();
     screens.overview.visible = true;
     sendRequest("/battle/", (test, error) => {
-        if (!error) {
+        if (!error && test) {
             var data = JSON.parse(test)
             if (data != null) {
                 console.log("test = ", data);
@@ -15,7 +15,6 @@ document.getElementById("overview").addEventListener("toggled", () => {
 
                 toggleScreen(screens.battle.elm);
                 setTimeout(function () { battle.player.currentHP = data.AHP; }, 300);
-                
             }
         }
     });
@@ -47,6 +46,15 @@ window.addEventListener("load", () => {
 });
 
 screens.overview.elm.addEventListener("top10", () => { //player* but this code is never used.
+
+    if (top10 == null || top10.length == 0) {
+        document.getElementById("top10_holder").style.display = "none";
+        return;
+    }
+    else {
+        document.getElementById("top10_holder").style.display = null;
+    }
+
     if (!screens.overview.visible)
         return;
 
@@ -78,8 +86,6 @@ screens.overview.elm.addEventListener("top10", () => { //player* but this code i
     }
 
     for (var i = 10 - top10.length; i > 0; i--) trs[10 - i].style.display = "none"; // if less than 10 players;
-
-    console.log(top10);
 });
 
 screens.overview.elm.addEventListener("player", () => { //player* but this code is never used.
@@ -111,6 +117,8 @@ screens.overview.elm.addEventListener("player", () => { //player* but this code 
     if (lldhm.mins != 0) info_currses.innerHTML = lldhm.mins + (lldhm.mins == 1 ? " minuts" : " minuters");
     if (lldhm.hours != 0) info_currses.innerHTML = lldhm.hours + (lldhm.hours == 1 ? " timmes" : " timmars");
     if (lldhm.days != 0) info_currses.innerHTML = lldhm.days + (lldhm.days == 1 ? " dags" : " dagars");
+
+    if (player.userStats == null) return;
 
     document.getElementById("info_rank").innerHTML = player.userStats.rank;
 
