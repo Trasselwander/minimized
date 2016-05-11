@@ -58,7 +58,7 @@ function sendRequest(action, callback) { // implement send data.
 
     var req = new XMLHttpRequest();
     req.open('GET', host + action, true);
-    req.setRequestHeader("Authorization", "Basic " + btoa(user.name + ":" + user.password));
+    req.setRequestHeader("Authorization", "Basic " + btoa(encodeURIComponent(user.name) + ":" + encodeURIComponent(user.password)));
 
     req.onreadystatechange = function () {
         if (this.readyState == 4) {
