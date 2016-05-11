@@ -168,7 +168,7 @@ namespace Server.Services
             User defender = GetUser(did);
             GetUserStats(defender);
 
-            int timelimit = SQLite.GetConnection().Query<int>(@"SELECT 1 FROM attacks WHERE start > @time LIMIT 1", new { time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) - 4000, uid = user.ID, lid = user.LID }).FirstOrDefault();
+            int timelimit = SQLite.GetConnection().Query<int>(@"SELECT 1 FROM attacks WHERE start > @time AND AID = @uid AND LID = @lid LIMIT 1", new { time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) - 4000, uid = user.ID, lid = user.LID }).FirstOrDefault();
             if (timelimit == 1) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "You can't attack that fast.");
 
             if (user.userStats == null) GetUserStats(user);
