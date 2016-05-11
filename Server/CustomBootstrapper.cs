@@ -1,6 +1,7 @@
 ﻿using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Conventions;
+using Nancy.Responses;
 using Nancy.TinyIoc;
 using Server.Modules;
 
@@ -10,10 +11,22 @@ namespace Server
     {
         protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
         {
-            pipelines.OnError.AddItemToEndOfPipeline((ctx, exception) =>
+            pipelines.OnError += (ctx, exception) =>
             {
-                return (exception is HttpErrorException) ? HelperModule.CreateResponse((exception as HttpErrorException).Status, (exception as HttpErrorException).Message) : null;
-            });
+                if (exception is HttpErrorException)
+                {
+                    HttpErrorException err = exception as HttpErrorException;
+                    ctx.Response = HelperModule.CreateResponse(err.Status, err.Message);
+
+                    ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")
+                        .WithHeader("Access-Control-Allow-Methods", "POST,GET")
+                        .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type, Authorization");
+
+                    return ctx.Response;
+                }
+
+                return null;
+            };
 
             pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) =>
             {
@@ -21,6 +34,8 @@ namespace Server
                                 .WithHeader("Access-Control-Allow-Methods", "POST,GET")
                                 .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type, Authorization");
             });
+
+            base.RequestStartup(container, pipelines, context);
         }
     }
 }
