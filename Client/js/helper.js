@@ -111,20 +111,22 @@ function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function getNiceTime(Time) { // argument namn ska aldrig ha stora bokstäver
+function getNiceTime(Time, Reverse) { // argument namn ska aldrig ha stora bokstäver
     var endTime = "Slutad";
+    console.log(Time, Reverse);
+    if (Time < 0 && Reverse) Time *= -1;
     if (Math.floor(Time / 1000) > 0) {
-        if (Math.floor(Time / 1000) == 1) endTime = 1 + " sekund";
-        else endTime = Math.floor(Time / 1000) + " sekunder";
+        if (Math.floor(Time / 1000) == 1) (Time < 0 && Reverse) ? endTime = -1 + " sekund" : endTime = 1 + " sekund";
+        else (Time < 0 && Reverse) ? endTime = -Math.floor(Time / 1000) + " sekund" : endTime = Math.floor(Time / 1000) + " sekunder";
         if (Math.floor(Time / (1000 * 60)) > 0) {
-            if (Math.floor(Time / (1000 * 60)) == 1) endTime = 1 + " minut";
-            else endTime = Math.floor(Time / (1000 * 60)) + " minuter";
+            if (Math.floor(Time / (1000 * 60)) == 1) (Time < 0 && Reverse) ? endTime = -1 + " minut" : endTime = 1 + " minut";
+            else (Time < 0 && Reverse) ? endTime = -Math.floor(Time / (1000 * 60)) + " minuter" : endTime = Math.floor(Time / (1000 * 60)) + " minuter";
             if (Math.floor(Time / (1000 * 60 * 60)) > 0) {
-                if (Math.floor(Time / (1000 * 60 * 60)) == 1) endTime = 1 + " timme";
-                else endTime = Math.floor(Time / (1000 * 60 * 60)) + " timmar";
+                if (Math.floor(Time / (1000 * 60 * 60)) == 1) (Time < 0 && Reverse) ? endTime = -1 + " timme" : endTime = 1 + " timme";
+                else (Time < 0 && Reverse) ? endTime = -Math.floor(Time / (1000 * 60 * 60)) + " timmar" : endTime = Math.floor(Time / (1000 * 60 * 60)) + " timmar";
                 if (Math.floor(Time / (1000 * 60 * 60 * 24)) > 0) {
-                    if (Math.floor(Time / (1000 * 60 * 60 * 24)) == 1) endTime = 1 + " dag";
-                    else endTime = Math.floor(Time / (1000 * 60 * 60 * 24)) + " dagar";
+                    if (Math.floor(Time / (1000 * 60 * 60 * 24)) == 1) (Time < 0 && Reverse) ? endTime = -1 + " dag" : endTime = 1 + " dag";
+                    else (Time < 0 && Reverse) ? endTime = -Math.floor(Time / (1000 * 60 * 60 * 24)) + " dagar" : endTime = Math.floor(Time / (1000 * 60 * 60 * 24)) + " dagar";
                 }
             }
         }

@@ -23,6 +23,7 @@ screens.league.elm.addEventListener("toggled", () => {
 
             league = JSON.parse(test);
             for (var i = 0; i < league.length; i++) {
+                //if (league[i].end <= new Date().getTime() + 1000 * 60 * 5) continue;
                 var clone = document.getElementById("shadow_league");
                 var newleague = clone.cloneNode(true);
                 newleague.getElementsByClassName("league_name")[0].innerHTML = league[i].name;
@@ -31,7 +32,7 @@ screens.league.elm.addEventListener("toggled", () => {
                 var newstatstbl = newleague.getElementsByClassName("stats-table")[0];
                 var timenow = new Date().getTime(); // borde göra en funktion för detta
 
-                newstatstbl.getElementsByClassName("age")[0].innerHTML = getNiceTime(timenow - league[i].start);
+                newstatstbl.getElementsByClassName("age")[0].innerHTML = getNiceTime(timenow - league[i].start, true);
                 newstatstbl.getElementsByClassName("timeleft")[0].innerHTML = getNiceTime(league[i].end - timenow);
 
                 newstatstbl.getElementsByClassName("totalplayers")[0].innerHTML = league[i].totalplayers;
