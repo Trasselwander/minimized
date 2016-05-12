@@ -45,7 +45,7 @@ namespace Server.Commands
                         start += int.Parse(command[3]) * 60 * 1000;
                     }
 
-                    Users.CreateLeague(new UserService.League() { name = name, start = start, end = end });
+                    Users.CreateLeague(new League() { name = name, start = start, end = end });
                     Console.WriteLine("Leauge created with the name " + name);
                     break;
                 case "list":

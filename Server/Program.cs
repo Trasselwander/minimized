@@ -11,12 +11,6 @@ namespace Server
 
         static void Main(string[] args)
         {
-            KeyValuePair<long, bool>[] times = 
-            {
-                new KeyValuePair<long, bool>(5 * 60 * 1000, true),
-                new KeyValuePair<long, bool>(30 * 60 * 1000, true),
-                new KeyValuePair<long, bool>(6 * 60 * 60 * 1000 , false),
-            };
 
             using (var host = new NancyHost(new Uri("http://localhost:1235"), new CustomBootstraper()))
             {
@@ -27,15 +21,12 @@ namespace Server
                 Console.WriteLine("Running nancy on http://localhost:1235");
 
                 Console.WriteLine("Starting timers..");
-                for (int i = 0; i < times.Length; i++)
-                {
-                    Services.TimerService t = new Services.TimerService(times[i].Key, times[i].Value);
-                    Services.TimerService.Timers.Add(t);
-                }
+                Services.TimerService.InitTimers();
 
                 Services.CommandService.RegisteredCommands.Add("league", new Commands.LeagueCommand());
                 Services.CommandService.RegisteredCommands.Add("help", new Commands.HelpCommand());
                 Services.CommandService.RegisteredCommands.Add("exit", new Commands.ExitCommand());
+                Services.CommandService.RegisteredCommands.Add("db", new Commands.DbCommand());
 
                 Console.WriteLine("Write exit to terminate and help for some help");
 

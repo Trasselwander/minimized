@@ -57,17 +57,20 @@ namespace Server
                                     start INTEGER NOT NULL,
                                     end INTEGER NOT NULL)");
 
-            (new UserService()).CreateLeague(new UserService.League() {
-                name = (new Random()).NextDouble() > .5 ? "ADAM" : "DANIEL",
-                start = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds),
-                end = (long)((DateTime.UtcNow.AddHours(5) - new DateTime(1970, 1, 1)).TotalMilliseconds)
-            });
-
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS hats (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                                     name CHAR(50) NOT NULL,
                                     url CHAR(70) NOT NULL)");
 
+            GetConnection().Query(@"CREATE TABLE IF NOT EXISTS leaguehats (
+                                    ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                    HID INTEGER NOT NULL,
+                                    tag CHAR(12) NOT NULL)");
+
+            GetConnection().Query(@"CREATE TABLE IF NOT EXISTS login_actvity (
+                                    ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                    UID INTEGER NOT NULL,
+                                    time INTEGER NOT NULL)");
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS attacks (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
