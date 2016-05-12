@@ -247,7 +247,9 @@ namespace Server.Services
         public class League
         {
             public int ID { get; set; }
+            public int HID { get; set; }
             public string name { get; set; }
+            public string tag { get; set; }
             public long start { get; set; } // age
             public long end { get; set; } // time left
 

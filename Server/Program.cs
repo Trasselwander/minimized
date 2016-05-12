@@ -1,6 +1,7 @@
 ﻿using System;
 using Nancy.Hosting.Self;
 using Server.Modules;
+using System.Collections.Generic;
 
 namespace Server
 {
@@ -10,8 +11,12 @@ namespace Server
 
         static void Main(string[] args)
         {
-            long[] times = new long[] { 5 * 60 * 1000, 30 * 60 * 1000, 6 * 60 * 60 * 1000 }; // 5min, 30min, 6h
-            bool[] skipfirst = new bool[] { true, true, false }; // 5min, 30min, 6h
+            KeyValuePair<long, bool>[] times = 
+            {
+                new KeyValuePair<long, bool>(5 * 60 * 1000, true),
+                new KeyValuePair<long, bool>(30 * 60 * 1000, true),
+                new KeyValuePair<long, bool>(6 * 60 * 60 * 1000 , false),
+            };
 
             using (var host = new NancyHost(new Uri("http://localhost:1235"), new CustomBootstraper()))
             {
@@ -24,7 +29,7 @@ namespace Server
                 Console.WriteLine("Starting timers..");
                 for (int i = 0; i < times.Length; i++)
                 {
-                    Services.TimerService t = new Services.TimerService(times[i], skipfirst[i]);
+                    Services.TimerService t = new Services.TimerService(times[i].Key, times[i].Value);
                     Services.TimerService.Timers.Add(t);
                 }
 

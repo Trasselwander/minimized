@@ -51,7 +51,9 @@ namespace Server
 
             GetConnection().Query(@"CREATE TABLE IF NOT EXISTS leagues (
                                     ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                                    HID INTEGER DEFAULT -1,
                                     name CHAR(50) NOT NULL,
+                                    tag CHAR(12) DEFAULT NULL,
                                     start INTEGER NOT NULL,
                                     end INTEGER NOT NULL)");
 
