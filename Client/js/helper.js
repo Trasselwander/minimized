@@ -113,7 +113,7 @@ function randomInt(min, max) {
 
 function getNiceTime(Time, Reverse) { // argument namn ska aldrig ha stora bokstäver
     var endTime = "Slutad";
-    console.log(Time, Reverse);
+    //console.log(Time, Reverse);
     if (Time < 0 && Reverse) Time *= -1;
     if (Math.floor(Time / 1000) > 0) {
         if (Math.floor(Time / 1000) == 1) (Time < 0 && Reverse) ? endTime = -1 + " sekund" : endTime = 1 + " sekund";
