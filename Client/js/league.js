@@ -89,11 +89,7 @@ screens.league.elm.addEventListener("toggled", () => {
                         jl.classList.add("orange");
                         jl.dataset.leaguename = league[i].name;
                         jl.onclick = function () {
-
-
                             var name = this.dataset.leaguename;
-                            console.log(name);
-
                             swal({
                                 title: "Are you sure?",
                                 text: "Leaving a league will remove your progress in the current one!",
@@ -102,7 +98,7 @@ screens.league.elm.addEventListener("toggled", () => {
                                 confirmButtonColor: "#DD6B55",
                                 confirmButtonText: "Yes, leave!",
                                 closeOnConfirm: false
-                            }, function (name) {
+                            }, function () {
                                 sendRequest("/leagues/leave", () => {
                                     if (!error) {
                                         toggleScreen(screens.overview.elm);
@@ -114,7 +110,6 @@ screens.league.elm.addEventListener("toggled", () => {
                                     }
                                 });
                             });
-
 
                         }
                     }
