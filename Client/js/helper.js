@@ -114,13 +114,17 @@ function randomInt(min, max) {
 function getNiceTime(Time) { // argument namn ska aldrig ha stora bokstäver
     var endTime = "Slutad";
     if (Math.floor(Time / 1000) > 0) {
-        endTime = Math.floor(Time / 1000) + " sekunder";
+        if (Math.floor(Time / 1000) == 1) endTime = 1 + " sekund";
+        else endTime = Math.floor(Time / 1000) + " sekunder";
         if (Math.floor(Time / (1000 * 60)) > 0) {
-            endTime = Math.floor(Time / (1000 * 60)) + " minuter";
+            if (Math.floor(Time / (1000 * 60)) == 1) endTime = 1 + " minut";
+            else endTime = Math.floor(Time / (1000 * 60)) + " minuter";
             if (Math.floor(Time / (1000 * 60 * 60)) > 0) {
-                endTime = Math.floor(Time / (1000 * 60 * 60)) + " timmar";
+                if (Math.floor(Time / (1000 * 60 * 60)) == 1) endTime = 1 + " timme";
+                else endTime = Math.floor(Time / (1000 * 60 * 60)) + " timmar";
                 if (Math.floor(Time / (1000 * 60 * 60 * 24)) > 0) {
-                    endTime = Math.floor(Time / (1000 * 60 * 60 * 24)) + " dagar";
+                    if (Math.floor(Time / (1000 * 60 * 60 * 24)) == 1) endTime = 1 + " dag";
+                    else endTime = Math.floor(Time / (1000 * 60 * 60 * 24)) + " dagar";
                 }
             }
         }
