@@ -1,15 +1,10 @@
 ﻿using Nancy;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server
 {
     public class HttpErrorException : Exception
     {
-
         public HttpErrorException(HttpStatusCode status, string message)
             : base(message)
         {

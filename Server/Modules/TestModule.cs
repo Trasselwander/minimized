@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Nancy;
+﻿using Nancy;
 using Server.Services;
 using Newtonsoft.Json;
 
@@ -18,7 +13,7 @@ namespace Server.Modules
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Services.UserService.User u = Users.CreateUser("test" + i, "" + hashpw("asdasd"));
+                    UserService.User u = Users.CreateUser("test" + i, "" + hashpw("asdasd"));
                     u = Users.GetUser(u.name);
                     Users.JoinLeague(u, 1);
                     u.LID = 1;

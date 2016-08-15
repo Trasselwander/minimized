@@ -1,7 +1,5 @@
 ﻿using Nancy;
 using Nancy.Bootstrapper;
-using Nancy.Conventions;
-using Nancy.Responses;
 using Nancy.TinyIoc;
 using Server.Modules;
 

@@ -1,7 +1,5 @@
 ﻿using Nancy;
 using Server.Services;
-using System;
-using System.Text;
 
 namespace Server.Modules
 {
