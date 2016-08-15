@@ -1,0 +1,13 @@
+﻿[Unit]
+Description=Minimized server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=mono /home/pi/min2/Server.exe
+StandardOutput=syslog
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

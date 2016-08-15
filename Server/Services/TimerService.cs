@@ -1,9 +1,5 @@
-﻿using Server.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using static Server.Services.UserService;
 
@@ -82,14 +78,16 @@ namespace Server.Services
             startTimer();
 
             string name = (new Random()).NextDouble() > .5 ? "Eld Tävling" : "Vatten Tävling";
-            long start = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds),
-                end = (long)((DateTime.UtcNow.AddMilliseconds(getRemainingMs(ms)) - new DateTime(1970, 1, 1)).TotalMilliseconds);
+
+            long start = Helper.GetTimestamp(),
+                end = Helper.GetTimestamp() + (long)getRemainingMs(ms);
 
             Users.CreateLeague(new League()
             {
                 name = name,
                 start = start,
-                end = end
+                end = end,
+                tag = ms / 1000 + ""
             });
 
             if (currentLID != -1)

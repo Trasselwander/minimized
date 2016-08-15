@@ -78,6 +78,7 @@
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\LeagueCommand.cs" />
     <Compile Include="CustomBootstrapper.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="HttpErrorException.cs" />
     <Compile Include="Modules\BattleModule.cs" />
     <Compile Include="Modules\HelperModule.cs" />

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
 using Newtonsoft.Json;
 
@@ -41,7 +39,7 @@ namespace Server.Services
             => SQLite.GetConnection().Query<User>("SELECT * FROM users where LID = @lid", new { lid = league.ID }).ToList();
 
         public void CreateLeague(League l)
-            => SQLite.GetConnection().Query("INSERT INTO leagues (name, start, end) VALUES (@name, @start, @end)", new { l.name, l.start, l.end });
+            => SQLite.GetConnection().Query("INSERT INTO leagues (name, tag, start, end) VALUES (@name, @tag, @start, @end)", new { name = l.name, tag = l.tag, start = l.start, end = l.end });
 
         public void SetScore(User u) // Do not use this function.
             => SQLite.GetConnection().Query("UPDATE userstats SET score=@score WHERE userstats.UID = @uid AND userstats.LID = @lid", new { score = u.userStats.score, uid = u.ID, lid = u.LID });
