@@ -1,8 +1,7 @@
-﻿#!/bin/bash          
+#!/usr/bin/sh
+path=$(readlink -f mini.service)
 
-ln -s mini.service /etc/systemd/system/mini.service #should probably be installed somewhere else in userspace.
-
-systemctl enable mini.service
+systemctl enable ${path}
 systemctl start mini.service
 
 echo "Done installing mini.service"

@@ -1,10 +1,11 @@
-﻿[Unit]
+[Unit]
 Description=Minimized server
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=mono /home/pi/min2/Server.exe
+ExecStart=/usr/bin/mono /home/pi/min2/Server.exe
+WorkingDirectory=/home/pi/min2
 StandardOutput=syslog
 Restart=always
 RestartSec=5s

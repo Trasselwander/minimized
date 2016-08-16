@@ -1,5 +1,6 @@
 ﻿using System;
 using Nancy.Hosting.Self;
+using Server.Services;
 
 namespace Server
 {
@@ -16,11 +17,11 @@ namespace Server
             {
                 Console.WriteLine("Running in client mode.");
 
-                Services.CommandService.RegisteredCommands.Add("league", new Commands.LeagueCommand());
-                Services.CommandService.RegisteredCommands.Add("help", new Commands.HelpCommand());
-                Services.CommandService.RegisteredCommands.Add("exit", new Commands.ExitCommand());
-                Services.CommandService.RegisteredCommands.Add("db", new Commands.DbCommand());
-                Services.CommandService.RegisteredCommands.Add("cli", new Commands.CliCommand());
+                CommandService.RegisteredCommands.Add("league", new Commands.LeagueCommand());
+                CommandService.RegisteredCommands.Add("help", new Commands.HelpCommand());
+                CommandService.RegisteredCommands.Add("exit", new Commands.ExitCommand());
+                CommandService.RegisteredCommands.Add("db", new Commands.DbCommand());
+                CommandService.RegisteredCommands.Add("cli", new Commands.CliCommand());
 
                 Console.WriteLine("Write exit to terminate and help for some help");
 
@@ -29,7 +30,7 @@ namespace Server
                 {
                     try
                     {
-                        Services.CommandService.Process(cmd);
+                        CommandService.Process(cmd);
                     }
                     catch (Exception)
                     {
@@ -48,9 +49,10 @@ namespace Server
                     host.Start();
                     Console.WriteLine("Running nancy on http://localhost:1235");
 
-                    Console.WriteLine("Starting timers..");
-                    Services.TimerService.InitTimers();
+                    Console.WriteLine("Enabling timers..");
+                    TimerService.InitTimers();
 
+                    Console.WriteLine("Done.");
                     while (true) System.Threading.Thread.Sleep(10);
                 }
             }
