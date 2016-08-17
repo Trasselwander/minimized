@@ -23,10 +23,10 @@
       background-color: rgba(18, 221, 64, 0.43); }
     .stats-table .char_sp_up i {
       display: initial; }
+  .stats-table tbody tr:last-child, .stats-table tbody tr.last {
+    border-bottom: none; }
   .stats-table tr {
     border-bottom: 1px solid #ddd; }
-    .stats-table tr:last-child {
-      border-bottom: none; }
     .stats-table tr:first-child {
       /*Overrides :last-child*/
       border-bottom: 1px solid #ddd; }

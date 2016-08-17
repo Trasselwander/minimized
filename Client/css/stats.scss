@@ -1,76 +1,78 @@
 ﻿.stats-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    max-width: 600px;
+     border-collapse: collapse;
+     border-spacing: 0;
+     max-width: 600px;
 
-    &.top10 {
-        width: 100%;
-        max-width: initial;
-    }
+     &.top10 {
+          width: 100%;
+          max-width: initial;
+     }
 
-    &#player_dataStats, &#player_skill_points {
-        vertical-align: middle;
-    }
+     &#player_dataStats, &#player_skill_points {
+          vertical-align: middle;
+     }
 
-    &#player_skill_points {
-        font-weight: 800;
-        color: red;
-        min-width: 12px;
-    }
+     &#player_skill_points {
+          font-weight: 800;
+          color: red;
+          min-width: 12px;
+     }
 
-    th {
-        text-align: left;
-    }
+     th {
+          text-align: left;
+     }
 
-    i {
-        padding-left: 10px;
-        display: none;
-    }
+     i {
+          padding-left: 10px;
+          display: none;
+     }
 
-    .char_sp_up {
-        cursor: pointer;
-        transition: background-color .2s ease-in-out;
+     .char_sp_up {
+          cursor: pointer;
+          transition: background-color .2s ease-in-out;
 
-        &:hover {
-            background-color: rgba(18, 221, 64, 0.43);
-        }
+          &:hover {
+               background-color: rgba(18, 221, 64, 0.43);
+          }
 
-        i {
-            display: initial;
-        }
-    }
+          i {
+               display: initial;
+          }
+     }
 
-    tr {
-        border-bottom: 1px solid #ddd;
+     tbody tr {
+          &:last-child, &.last {
+               border-bottom: none;
+          }
+     }
 
-        &:last-child {
-            border-bottom: none;
-        }
+     tr {
+          border-bottom: 1px solid #ddd;
 
-        &:first-child { /*Overrides :last-child*/
-            border-bottom: 1px solid #ddd;
-        }
-    }
+          &:first-child { /*Overrides :last-child*/
+               border-bottom: 1px solid #ddd;
+          }
+     }
 
-    th, td {
-        padding: 4px;
-        border-right: 1px solid #ddd;
-        min-width: 40px;
+     th, td {
+          padding: 4px;
+          border-right: 1px solid #ddd;
+          min-width: 40px;
 
-        &.red {
-            color: #FC1E1E;
-        }
+          &.red {
+               color: #FC1E1E;
+          }
 
-        &.blue {
-            color: #087BEE;
-        }
+          &.blue {
+               color: #087BEE;
+          }
 
-        &.green {
-            color: #51E773;
-        }
+          &.green {
+               color: #51E773;
+          }
 
-        &:last-child {
-            border-right: none;
-        }
-    }
+          &:last-child {
+               border-right: none;
+          }
+     }
 }
