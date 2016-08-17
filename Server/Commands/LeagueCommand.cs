@@ -24,13 +24,13 @@ namespace Server.Commands
                 case "create":
                     if (command.Length != 2 + 3 && command.Length != 2 + 2)
                     {
-                        Console.WriteLine("Invalid ammount of parameters, use league create name|start|end where end and start is in minutes from now");
+                        Console.WriteLine("Invalid ammount of parameters, use league create name|[start]|end where end and start is in minutes from now");
                         return;
                     }
 
                     string name = command[2];
                     long end, start;
-                    end = start = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds);
+                    end = start = Helper.GetTimestamp();
 
                     if (command.Length == 3 + 2)
                     {
@@ -39,7 +39,7 @@ namespace Server.Commands
                     }
                     else
                     {
-                        start += int.Parse(command[3]) * 60 * 1000;
+                        end += int.Parse(command[3]) * 60 * 1000;
                     }
 
                     Users.CreateLeague(new League() { name = name, start = start, end = end });

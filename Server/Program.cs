@@ -26,19 +26,21 @@ namespace Server
                 Console.WriteLine("Write exit to terminate and help for some help");
 
                 string cmd = string.Join(" ", args);
-                do
+                while (true)
                 {
                     try
                     {
                         CommandService.Process(cmd);
+                        if (stop) return;
                     }
                     catch (Exception)
                     {
                         Console.Write("A command should not be able to crash the whole server, something smells rotten... *YOUR CODE*");
                     }
                     Console.WriteLine();
+
                     cmd = Console.ReadLine();
-                } while (!stop);
+                }
             }
             else
             {

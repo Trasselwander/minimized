@@ -21,7 +21,7 @@ namespace Server.Services
             => SQLite.GetConnection().Query<League>("SELECT * FROM leagues WHERE ID=@lid", new { lid = lid }).FirstOrDefault();
 
         public bool GetLeagueEndByLeague(int lid)
-            => SQLite.GetConnection().Query<int>("SELECT 1 FROM leagues WHERE ID=@lid AND end < @timenow LIMIT 1", new { lid = lid, timenow = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) }).FirstOrDefault() == 1;
+            => SQLite.GetConnection().Query<int>("SELECT 1 FROM leagues WHERE ID=@lid AND end < @timenow LIMIT 1", new { lid = lid, timenow = Helper.GetTimestamp() }).FirstOrDefault() == 1;
 
         public UserStats GetUserStats(string name)
             => SQLite.GetConnection().Query<UserStats>("SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND users.name=@name", new { name = name }).FirstOrDefault();
@@ -63,7 +63,7 @@ namespace Server.Services
             }, new { lid = lid }).ToList();
 
         public void UpdateLastLoggedIn(User u)
-            => SQLite.GetConnection().Query("UPDATE users SET lastloggedin=@time WHERE users.ID = @uid", new { uid = u.ID, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
+            => SQLite.GetConnection().Query("UPDATE users SET lastloggedin=@time WHERE users.ID = @uid", new { uid = u.ID, time = Helper.GetTimestamp() });
 
         public void IncrementStat(string stat, User u)
             => SQLite.GetConnection().Query("UPDATE userstats SET " + stat + " = " + stat + " + 1, skillpoints = skillpoints - 1 WHERE userstats.UID = @uid AND userstats.LID = @lid AND userstats.skillpoints > 0", new { uid = u.ID, lid = u.LID }).FirstOrDefault();
@@ -106,7 +106,7 @@ namespace Server.Services
 
             CryptoService.HashAndSavePassword(hash, u);
             SQLite.GetConnection().Query(@"INSERT INTO users (name, hash, salt, lastloggedin, bestrank, age) SELECT @name as name, @hash as hash, @salt as salt, @time as lastloggedin, (SELECT COUNT(*) FROM users) AS bestrank, @time AS age",
-                                            new { name = u.name, hash = u.hash, salt = u.salt, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
+                                            new { name = u.name, hash = u.hash, salt = u.salt, time = Helper.GetTimestamp() });
 
             return GetUser(name);
         }
@@ -172,7 +172,7 @@ namespace Server.Services
             User defender = GetUser(did);
             GetUserStats(defender);
 
-            int timelimit = SQLite.GetConnection().Query<int>(@"SELECT 1 FROM attacks WHERE start > @time AND AID = @uid AND LID = @lid LIMIT 1", new { time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) - 4000, uid = user.ID, lid = user.LID }).FirstOrDefault();
+            int timelimit = SQLite.GetConnection().Query<int>(@"SELECT 1 FROM attacks WHERE start > @time AND AID = @uid AND LID = @lid LIMIT 1", new { time = Helper.GetTimestamp() - 4000, uid = user.ID, lid = user.LID }).FirstOrDefault();
             if (timelimit == 1) throw new HttpErrorException(Nancy.HttpStatusCode.BadRequest, "You can't attack that fast.");
 
             if (user.userStats == null) GetUserStats(user);
@@ -182,7 +182,7 @@ namespace Server.Services
 
             SQLite.GetConnection().Query(@"INSERT INTO attacks (LID, AID, DID, DHP, AHP, start)
                                              SELECT @lid AS LID, @aid AS AID, @did AS DID, @dhp AS DHP, @ahp AS AHP, @time AS start",
-                                                new { lid = user.LID, aid = user.ID, did = defender.ID, dhp = defender.userStats.life, ahp = user.userStats.life, time = (long)((DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalMilliseconds) });
+                                                new { lid = user.LID, aid = user.ID, did = defender.ID, dhp = defender.userStats.life, ahp = user.userStats.life, time = Helper.GetTimestamp() });
 
             return new Battle { enemyHP = defender.userStats.life, playerHP = user.userStats.life };
         }
