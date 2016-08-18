@@ -1,531 +1,499 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-     <title>A minimal game</title>
-     <link rel="stylesheet" href="lib/fa/css/font-awesome.min.css" />
-     <link rel="stylesheet" href="lib/swal/sweetalert.css" />
+    <title>A minimal game</title>
+    <link rel="stylesheet" href="lib/fa/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="lib/swal/sweetalert.css" />
 
-     <link rel="stylesheet" href="css/league.css" />
-     <link rel="stylesheet" href="css/buttons.css" />
-     <link rel="stylesheet" type="text/css" href="css/login.css">
-     <link rel="stylesheet" type="text/css" href="css/overview.css">
-     <link rel="stylesheet" type="text/css" href="css/main.css">
-     <link rel="stylesheet" type="text/css" href="css/stats.css">
-     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/league.css" />
+    <link rel="stylesheet" href="css/buttons.css" />
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" type="text/css" href="css/overview.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/stats.css">
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 <body>
-     <div id="login" class="content">
-          <div class="holder">
-               <h1>Logga in</h1>
-               <input type="text" id="login_name" placeholder="Användarnamn" class="inline" />
-               <input type="password" id="login_password" placeholder="Lösenord" class="inline" />
-               <button id="login_btn" class="material-btn inline">LOGGA IN</button>
-               <span id="reg">REGISTRERA DIG</span>
-          </div>
-     </div>
-     <div id="register" class="content">
-          <div class="holder">
-               <h1>Registrera dig!</h1>
-               <input type="text" id="register_name" placeholder="Användarnamn" class="inline" />
-               <input type="password" id="register_password" placeholder="Lösenord" class="inline" />
-               <input type="password" id="register_password_repeat" placeholder="Samma lösenord igen" class="inline" />
-               <button id="register_btn" class="material-btn inline green">REGISTRERA DIG</button>
-               <span id="log">LOGGA IN</span>
-          </div>
-     </div>
-     <div id="overview" class="content">
-          <div class="holder">
-               <div class="menu">
-                    <button id="attack_btn" class="material-btn red">ATTACKERA</button>
-                    <button id="league_btn" class="material-btn orange">TÄVLINGAR</button>
-                    <button id="logout_btn" class="material-btn black">LOGGA UT</button>
-               </div>
-               <h3>Info</h3>
-               <div class="info" style="font-size:initial">
-                    <div>
-                         <strong class="info_name">Adam</strong> är <span id="info_age_days_holder"><strong id="info_age_days">3 dagar</strong>,</span> <span id="info_age_hours_holder"><strong id="info_age_hours">4 timmmar</strong> och </span><strong id="info_age_minutes">27 minuter</strong> gammal. Just nu bär han <strong id="info_hat">Links hat</strong><span id="info_currentsession_addon" style="display: none;">.</span><span id="info_currentsession_holder">, och efter <strong id="info_currentsession">30 minuters</strong> hårt arbete är han fortfarande aktiv och letar för fullt efter nya hattar.</span> Just nu ligger <strong class="info_name">Adam</strong> på rank <strong id="info_rank">1</strong>.
+    <div style="display:none" id="game"></div>
+
+    <div id="login" class="content">
+        <div class="holder">
+            <h1>Logga in</h1>
+            <input type="text" id="login_name" placeholder="Användarnamn" class="inline" />
+            <input type="password" id="login_password" placeholder="Lösenord" class="inline" />
+            <button id="login_btn" class="material-btn inline">LOGGA IN</button>
+            <span id="reg">REGISTRERA DIG</span>
+        </div>
+    </div>
+    <div id="register" class="content">
+        <div class="holder">
+            <h1>Registrera dig!</h1>
+            <input type="text" id="register_name" placeholder="Användarnamn" class="inline" />
+            <input type="password" id="register_password" placeholder="Lösenord" class="inline" />
+            <input type="password" id="register_password_repeat" placeholder="Samma lösenord igen" class="inline" />
+            <button id="register_btn" class="material-btn inline green">REGISTRERA DIG</button>
+            <span id="log">LOGGA IN</span>
+        </div>
+    </div>
+    <div id="overview" class="content">
+        <div class="holder">
+            <div class="menu">
+                <button id="attack_btn" class="material-btn red">ATTACKERA</button>
+                <button id="league_btn" class="material-btn orange">TÄVLINGAR</button>
+                <button id="logout_btn" class="material-btn black">LOGGA UT</button>
+            </div>
+            <h3>Info</h3>
+            <div class="info" style="font-size:initial">
+                <div>
+                    <strong class="info_name">Adam</strong> är <span id="info_age_days_holder"><strong id="info_age_days">3 dagar</strong>,</span> <span id="info_age_hours_holder"><strong id="info_age_hours">4 timmmar</strong> och </span><strong id="info_age_minutes">27 minuter</strong> gammal. Just nu bär han <strong id="info_hat">Links hat</strong><span id="info_currentsession_addon" style="display: none;">.</span><span id="info_currentsession_holder">, och efter <strong id="info_currentsession">30 minuters</strong> hårt arbete är han fortfarande aktiv och letar för fullt efter nya hattar.</span> Just nu ligger <strong class="info_name">Adam</strong> på rank <strong id="info_rank">1</strong>.
+                </div>
+            </div>
+            <div id="stats_holder">
+                <h3>Statistik</h3>
+                <div class="info">
+                    <div class="one-third">
+                        <canvas id="main" width="200" height="200"></canvas>
                     </div>
-               </div>
-               <div id="stats_holder">
-                    <h3>Statistik</h3>
-                    <div class="info">
-                         <div class="one-third">
-                              <canvas id="main" width="200" height="200"></canvas>
-                         </div>
-                         <div class="one-third">
-                              <table class="stats-table" id="player_dataStats">
-                                   <tbody>
-                                        <tr>
-                                             <td>
-                                                  Liv:
-                                             </td>
-                                             <td class="char_life"><span></span><i>+</i></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Snabbhet:
-                                             </td>
-                                             <td class="char_speed "><span></span><i>+</i></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Attack:
-                                             </td>
-                                             <td class="char_physA "><span></span><i>+</i></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Försvar:
-                                             </td>
-                                             <td class="char_physD "><span></span><i>+</i></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Magi attack:
-                                             </td>
-                                             <td class="char_magA "><span></span><i>+</i></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Magi försvar:
-                                             </td>
-                                             <td class="char_magD "><span></span><i>+</i></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Skillpoints:
-                                             </td>
-                                             <td class="char_sp "><span></span></td>
-                                        </tr>
-                                   </tbody>
-                              </table>
-                         </div>
-                         <div class="one-third">
-                              <table class="stats-table" id="player_userStats">
-                                   <tbody>
-                                        <tr>
-                                             <td>
-                                                  LV:
-                                             </td>
-                                             <td class="char_level"></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  EXP:
-                                             </td>
-                                             <td class="char_exp"></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  EXP kvar:
-                                             </td>
-                                             <td class="char_expleft"></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Rank:
-                                             </td>
-                                             <td class="char_rank"></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Bästa rank:
-                                             </td>
-                                             <td class="char_bestRank"></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Vunnit:
-                                             </td>
-                                             <td class="char_wins"></td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Förlorat:
-                                             </td>
-                                             <td class="char_losses"></td>
-                                        </tr>
-                                   </tbody>
-                              </table>
-                         </div>
+                    <div class="one-third">
+                        <table class="stats-table" id="player_dataStats">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Liv:
+                                    </td>
+                                    <td class="char_life"><span></span><i>+</i></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Snabbhet:
+                                    </td>
+                                    <td class="char_speed "><span></span><i>+</i></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Attack:
+                                    </td>
+                                    <td class="char_physA "><span></span><i>+</i></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Försvar:
+                                    </td>
+                                    <td class="char_physD "><span></span><i>+</i></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Magi attack:
+                                    </td>
+                                    <td class="char_magA "><span></span><i>+</i></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Magi försvar:
+                                    </td>
+                                    <td class="char_magD "><span></span><i>+</i></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Skillpoints:
+                                    </td>
+                                    <td class="char_sp "><span></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-               </div>
-
-               <h3>Hattar</h3>
-               <div class="info" style="font-size:initial">
-                    Tyvärr har Adam inga hattar än.
-               </div>
-               <!--<h3>Hattar2</h3>
-               <div class="info" style="font-size:initial">
-                   <div class="hats">
-                       <div class="hat">
-                           <img src="img/CowBoyHat.png" />
-                           <span>Cowboy hatten</span>
-                       </div>
-                       <div class="hat active">
-                           <img src="img/LinksHat.png" />
-                           <span>Links hat</span>
-                       </div>
-                       <div class="hat">
-                           <img src="img/MagicHat.png" />
-                           <span>Den magiska hatten</span>
-                       </div>
-                       <div class="hat">
-                           <img src="img/VikingHat.png" />
-                           <span>Vikingarnas hat</span>
-                       </div>
-                       <div class="hat">
-                           <img src="img/GoldenHat.png" />
-                           <span>Guld hatten</span>
-                       </div>
-                   </div>
-               </div>-->
-               <div id="top10_holder" style="display:none">
-                    <h3>Top 10</h3>
-                    <div class="info">
-                         <table class="stats-table top10" style="font-size:initial">
-                              <thead>
-                                   <tr>
-                                        <th>
-                                             Rank
-                                        </th>
-                                        <th>
-                                             Namn
-                                        </th>
-                                        <th>
-                                             Poäng
-                                        </th>
-                                        <th>
-                                             Level
-                                        </th>
-                                   </tr>
-                              </thead>
-                              <tbody>
-                                   <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                   </tr>
-                                   <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                   </tr>
-                                   <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                   </tr>
-                                   <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                   </tr>
-                                   <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                   </tr>
-                                   <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                   </tr>
-                                   <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                   </tr>
-                                   <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                   </tr>
-                                   <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                   </tr>
-                                   <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                   </tr>
-                              </tbody>
-                         </table>
+                    <div class="one-third">
+                        <table class="stats-table" id="player_userStats">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        LV:
+                                    </td>
+                                    <td class="char_level"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        EXP:
+                                    </td>
+                                    <td class="char_exp"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        EXP kvar:
+                                    </td>
+                                    <td class="char_expleft"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Rank:
+                                    </td>
+                                    <td class="char_rank"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Bästa rank:
+                                    </td>
+                                    <td class="char_bestRank"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Vunnit:
+                                    </td>
+                                    <td class="char_wins"></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Förlorat:
+                                    </td>
+                                    <td class="char_losses"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-               </div>
-          </div>
-     </div>
+                </div>
+            </div>
 
-
-     <div id="battle" class="content">
-          <div class="holder">
-               <h3>Fight</h3>
-
-               <canvas id="battle_animation"></canvas>
-
-               <div class="menu">
-                    <button id="battle_attack_1" class="material-btn green">NORMAL ATTACK</button>
-                    <button id="battle_attack_2" class="material-btn red">MAGISK ATTACK</button>
-                    <button id="battle_attack_3" class="material-btn orange">SNABB ATTACK</button>
-                    <button id="battle_attack_4" class="material-btn black">FÖRSVAR</button>
-               </div>
-
-
-          </div>
-     </div>
-
-     <div id="attack" class="content">
-          <div class="holder">
-
-               <h3>Attackera</h3>
-               <div class="info">
-                    <div class="one-half">
-                         <canvas id="canvas_attack" width="300" height="300"></canvas>
+            <h3>Hattar</h3>
+            <div class="info" style="font-size:initial">
+                Tyvärr har Adam inga hattar än.
+            </div>
+            <!--<h3>Hattar2</h3>
+            <div class="info" style="font-size:initial">
+                <div class="hats">
+                    <div class="hat">
+                        <img src="img/CowBoyHat.png" />
+                        <span>Cowboy hatten</span>
                     </div>
-                    <div class="one-half">
-                         <table class="stats-table" id="attack_diff_table">
-                              <thead>
-                                   <tr>
-                                        <th></th>
-                                        <th id="player_attack_name">
-                                             Adam
-                                        </th>
-                                        <th id="enemy_attack_name">
-                                             Adam2
-                                        </th>
-                                        <th></th>
-                                   </tr>
-                              </thead>
-                              <tbody>
-                                   <tr>
-                                        <td>
-                                             Liv:
-                                        </td>
-                                        <td class="char_life">1</td>
-                                        <td class="enemy_life">2</td>
-                                        <td class="life_diff">-1</td>
-                                   </tr>
-                                   <tr>
-                                        <td>
-                                             Snabbhet:
-                                        </td>
-                                        <td class="char_speed">4</td>
-                                        <td class="enemy_speed">2</td>
-                                        <td class="speed_diff">+2</td>
-                                   </tr>
-                                   <tr>
-                                        <td>
-                                             Attack:
-                                        </td>
-                                        <td class="char_physA">1</td>
-                                        <td class="enemy_physA">1</td>
-                                        <td class="physA_diff">0</td>
-                                   </tr>
-                                   <tr>
-                                        <td>
-                                             Försvar:
-                                        </td>
-                                        <td class="char_physD">6</td>
-                                        <td class="enemy_physD">5</td>
-                                        <td class="physD_diff">+1</td>
-                                   </tr>
-                                   <tr>
-                                        <td>
-                                             Magi attack:
-                                        </td>
-                                        <td class="char_magA">4</td>
-                                        <td class="enemy_magA">6</td>
-                                        <td class="magA_diff">-2</td>
-                                   </tr>
-                                   <tr>
-                                        <td>
-                                             Magi försvar:
-                                        </td>
-                                        <td class="char_magD">0</td>
-                                        <td class="enemy_magD">0</td>
-                                        <td class="magD_diff">0</td>
-                                   </tr>
-                                   <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>tot:</td>
-                                        <td class="total_diff">0</td>
-                                   </tr>
-                              </tbody>
-                         </table>
+                    <div class="hat active">
+                        <img src="img/LinksHat.png" />
+                        <span>Links hat</span>
                     </div>
-               </div>
-
-               <div class="menu">
-                    <button id="attack_request_btn" class="material-btn red">ATTACKERA</button>
-                    <button id="next_match_btn" class="material-btn orange">NÄSTA MATCH</button>
-                    <button id="cancel_btn" class="material-btn black">AVBRYT</button>
-               </div>
-          </div>
-     </div>
-
-
-     <div id="league" class="content">
-          <div class="holder">
-               <div class="menu">
-                    <button class="back_btn  material-btn black">TILLBAKA</button>
-               </div>
-               <div id="shadow_league" style="display:none">
-                    <h3 class="league_name">Tävlingar</h3>
-                    <div class="info">
-                         <div class="one-half">
-                              <canvas class="canvas_league" width="250" height="250"></canvas>
-                         </div>
-                         <div class="one-half">
-                              <table class="stats-table">
-                                   <tbody>
-                                        <tr>
-                                             <td>
-                                                  Ålder:
-                                             </td>
-                                             <td class="age">1</td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Tid Kvar:
-                                             </td>
-                                             <td class="timeleft">4</td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Antal Spelare:
-                                             </td>
-                                             <td class="totalplayers">1</td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Högsta Level:
-                                             </td>
-                                             <td class="highestlevel">6</td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Antal Fighter:
-                                             </td>
-                                             <td class="totalfights">4</td>
-                                        </tr>
-                                        <tr>
-                                             <td>
-                                                  Ledare:
-                                             </td>
-                                             <td class="leader">4</td>
-                                        </tr>
-                                   </tbody>
-                              </table>
-                              <div class="menu" style="margin-bottom: 0; margin-top: 10px;">
-                                   <button class="joinleague_btn material-btn green">GÅ MED</button>
-                                   <button class="toplist_btn material-btn">TOPPLISTA</button>
-                              </div>
-                         </div>
+                    <div class="hat">
+                        <img src="img/MagicHat.png" />
+                        <span>Den magiska hatten</span>
                     </div>
-               </div>
-          </div>
-     </div>
-
-     <div id="exp">
-          <div id="current_exp"></div>
-          <div id="gained_exp" style="display:none"></div>
-     </div>
-     <div id="leaguetoplist" class="content">
-          <div class="holder">
-               <div class="menu">
-                    <button class="back_btn  material-btn black">TILLBAKA</button>
-               </div>
-               <h3 id="leaguetoplist_leaguename"></h3>
-               <div class="info">
-                    <table class="stats-table top10 top" style="font-size:initial">
-                         <thead>
-                              <tr>
-                                   <th>
-                                        Rank
-                                   </th>
-                                   <th>
-                                        Namn
-                                   </th>
-                                   <th>
-                                        Poäng
-                                   </th>
-                                   <th>
-                                        Level
-                                   </th>
-                              </tr>
-                         </thead>
-                         <tbody></tbody>
+                    <div class="hat">
+                        <img src="img/VikingHat.png" />
+                        <span>Vikingarnas hat</span>
+                    </div>
+                    <div class="hat">
+                        <img src="img/GoldenHat.png" />
+                        <span>Guld hatten</span>
+                    </div>
+                </div>
+            </div>-->
+            <div id="top10_holder" style="display:none">
+                <h3>Top 10</h3>
+                <div class="info">
+                    <table class="stats-table top10" style="font-size:initial">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Rank
+                                </th>
+                                <th>
+                                    Namn
+                                </th>
+                                <th>
+                                    Poäng
+                                </th>
+                                <th>
+                                    Level
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
                     </table>
-               </div>
-          </div>
-     </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-     <script>
-          screens = {
-               login: {
-                    elm: document.getElementById("login"),
-                    visible: false,
-               },
-               register: {
-                    elm: document.getElementById("register"),
-                    visible: false,
-               },
-               overview: {
-                    elm: document.getElementById("overview"),
-                    visible: false,
-               },
-               attack: {
-                    elm: document.getElementById("attack"),
-                    visible: false,
-               },
-               league: {
-                    elm: document.getElementById("league"),
-                    visible: false,
-               },
-               leaguetoplist: {
-                    elm: document.getElementById("leaguetoplist"),
-                    visible: false,
-               },
-               battle: {
-                    elm: document.getElementById("battle"),
-                    visible: false,
-               },
-               exp: {
-                    elm: document.getElementById("exp"),
-                    visible: false,
-               }
-          }
-     </script>
-     <script src="lib/swal/sweetalert.min.js"></script>
-     <script src="lib/tweenjs.min.js"></script>
-     <script src="lib/easeljs.min.js"></script>
-     <script src="js/hexstat.js"></script>
 
-     <script src="js/exp.js"></script>
-     <script src="js/battle.js"></script>
-     <script src="js/leaguetoplist.js"></script>
-     <script src="js/animation.js"></script>
-     <script src="js/helper.js"></script>
-     <script src="js/attack.js"></script>
-     <script src="js/index.js"></script>
-     <script src="js/players.js"></script>
-     <script src="js/login.js"></script>
-     <script src="js/league.js"></script>
-     <script src="js/material-btn.js"></script>
+    <div id="battle" class="content">
+        <div class="holder">
+            <h3>Fight</h3>
 
-     <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic" rel="stylesheet" />
+            <canvas id="battle_animation"></canvas>
+
+            <div class="menu">
+                <button id="battle_attack_1" class="material-btn green">NORMAL ATTACK</button>
+                <button id="battle_attack_2" class="material-btn red">MAGISK ATTACK</button>
+                <button id="battle_attack_3" class="material-btn orange">SNABB ATTACK</button>
+                <button id="battle_attack_4" class="material-btn black">FÖRSVAR</button>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div id="attack" class="content">
+        <div class="holder">
+
+            <h3>Attackera</h3>
+            <div class="info">
+                <div class="one-half">
+                    <canvas id="canvas_attack" width="300" height="300"></canvas>
+                </div>
+                <div class="one-half">
+                    <table class="stats-table" id="attack_diff_table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th id="player_attack_name">
+                                    Adam
+                                </th>
+                                <th id="enemy_attack_name">
+                                    Adam2
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Liv:
+                                </td>
+                                <td class="char_life">1</td>
+                                <td class="enemy_life">2</td>
+                                <td class="life_diff">-1</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Snabbhet:
+                                </td>
+                                <td class="char_speed">4</td>
+                                <td class="enemy_speed">2</td>
+                                <td class="speed_diff">+2</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Attack:
+                                </td>
+                                <td class="char_physA">1</td>
+                                <td class="enemy_physA">1</td>
+                                <td class="physA_diff">0</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Försvar:
+                                </td>
+                                <td class="char_physD">6</td>
+                                <td class="enemy_physD">5</td>
+                                <td class="physD_diff">+1</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Magi attack:
+                                </td>
+                                <td class="char_magA">4</td>
+                                <td class="enemy_magA">6</td>
+                                <td class="magA_diff">-2</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Magi försvar:
+                                </td>
+                                <td class="char_magD">0</td>
+                                <td class="enemy_magD">0</td>
+                                <td class="magD_diff">0</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>tot:</td>
+                                <td class="total_diff">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="menu">
+                <button id="attack_request_btn" class="material-btn red">ATTACKERA</button>
+                <button id="next_match_btn" class="material-btn orange">NÄSTA MATCH</button>
+                <button id="cancel_btn" class="material-btn black">AVBRYT</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="league" class="content">
+        <div class="holder">
+            <div class="menu">
+                <button id="endedcurrent_btn" class="material-btn red">SLUTADE</button>
+                <button class="back_btn material-btn black">TILLBAKA</button>
+            </div>
+            <div id="shadow_league" style="display:none">
+                <h3 class="league_name">Tävlingar</h3>
+                <div class="info">
+                    <div class="one-half">
+                        <canvas class="canvas_league" width="250" height="250"></canvas>
+                    </div>
+                    <div class="one-half">
+                        <table class="stats-table">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        Ålder:
+                                    </td>
+                                    <td class="age">1</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Tid Kvar:
+                                    </td>
+                                    <td class="timeleft">4</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Antal Spelare:
+                                    </td>
+                                    <td class="totalplayers">1</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Högsta Level:
+                                    </td>
+                                    <td class="highestlevel">6</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Antal Fighter:
+                                    </td>
+                                    <td class="totalfights">4</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Ledare:
+                                    </td>
+                                    <td class="leader">4</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="menu" style="margin-bottom: 0; margin-top: 10px;">
+                            <button class="joinleague_btn material-btn green">GÅ MED</button>
+                            <button class="toplist_btn material-btn">TOPPLISTA</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="exp">
+        <div id="current_exp"></div>
+        <div id="gained_exp" style="display:none"></div>
+    </div>
+    <div id="leaguetoplist" class="content">
+        <div class="holder">
+            <div class="menu">
+                <button class="back_btn  material-btn black">TILLBAKA</button>
+            </div>
+            <h3 id="leaguetoplist_leaguename"></h3>
+            <div class="info">
+                <table class="stats-table top10 top" style="font-size:initial">
+                    <thead>
+                        <tr>
+                            <th>
+                                Rank
+                            </th>
+                            <th>
+                                Namn
+                            </th>
+                            <th>
+                                Poäng
+                            </th>
+                            <th>
+                                Level
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="lib/swal/sweetalert.min.js"></script>
+    <script src="lib/tweenjs.min.js"></script>
+    <script src="lib/easeljs.min.js"></script>
+    <script src="js/hexstat.js"></script>
+
+    <script src="js/helper.js"></script>
+    <script src="js/game.js"></script>
+
+    <script src="js/exp.js"></script>
+    <script src="js/battle.js"></script>
+    <script src="js/leaguetoplist.js"></script>
+    <script src="js/animation.js"></script>
+    <script src="js/attack.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/league.js"></script>
+    <script src="js/material-btn.js"></script>
+
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic" rel="stylesheet" />
 </body>
 </html>
