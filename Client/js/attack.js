@@ -5,11 +5,11 @@ document.getElementById("attack").addEventListener("toggled", () => {
     attack_hexstat.arr = [];
     screens.attack.visible = true;
 
-    getPlayer();
-    getEnemy();
+    api.getPlayer();
+    api.getEnemy();
 });
 
-screens.attack.elm.addEventListener("enemy", () => {
+api.elm.addEventListener("enemy", () => {
     console.log(enemy);
 
     if (enemy_loaded == true) {
@@ -23,7 +23,7 @@ screens.attack.elm.addEventListener("enemy", () => {
 
 });
 
-document.getElementById("attack").addEventListener("detoggled", () => {
+document.getElementById("attack").addEventListener("detoggled", () => { /*this should be a screen*/
     attack_hexstat.arr = [];
     screens.attack.visible = false;
 });
@@ -55,10 +55,9 @@ function displayData() {
     totdiff.innerHTML = totdiffval;
     totdiff.classList.remove("blue", "green", "red");
     totdiff.classList.add((totdiffval == 0) ? "blue" : ((totdiffval > 0) ? "green" : "red"));
-
-
 }
-document.getElementById("overview").addEventListener("player", () => {
+
+api.elm.addEventListener("player", () => {
     if (!screens.attack.visible)
         return;
 
@@ -66,18 +65,23 @@ document.getElementById("overview").addEventListener("player", () => {
 
         attack_hexstat.maxskill = Math.max(player.userStats.life, player.userStats.speed, player.userStats.physicalattack, player.userStats.physicaldefence, player.userStats.magicattack, player.userStats.magicdefence, enemy.userStats.life, enemy.userStats.speed, enemy.userStats.physicalattack, enemy.userStats.physicaldefence, enemy.userStats.magicattack, enemy.userStats.magicdefence);
 
-        attack_hexstat.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(38, 94, 209, 0.5)" },
-            { "life": enemy.userStats.life, "speed": enemy.userStats.speed, "physicalattack": enemy.userStats.physicalattack, "physicaldefence": enemy.userStats.physicaldefence, "magicattack": enemy.userStats.magicattack, "magicdefence": enemy.userStats.magicdefence, "color": "rgba(18, 149, 33, 0.5)" }])
+        //attack_hexstat.animate([{ "life": player.userStats.life, "speed": player.userStats.speed, "physicalattack": player.userStats.physicalattack, "physicaldefence": player.userStats.physicaldefence, "magicattack": player.userStats.magicattack, "magicdefence": player.userStats.magicdefence, "color": "rgba(38, 94, 209, 0.5)" },
+        //    { "life": enemy.userStats.life, "speed": enemy.userStats.speed, "physicalattack": enemy.userStats.physicalattack, "physicaldefence": enemy.userStats.physicaldefence, "magicattack": enemy.userStats.magicattack, "magicdefence": enemy.userStats.magicdefence, "color": "rgba(18, 149, 33, 0.5)" }])
+        player.userStats.color = "rgba(38, 94, 209, 0.5)";
+        enemy.userStats.color = "rgba(18, 149, 33, 0.5)";
+
+        attack_hexstat.animate([player.userStats, enemy.userStats]);
         displayData();
     }
     else enemy_loaded = true;
-
-
-
 });
 
 
 window.addEventListener("load", () => {
+    attack_hexstat = new hexstat("canvas_attack");
+    attack_hexstat.drawLines();
+    attack_hexstat.drawOutline();
+
     document.getElementById("cancel_btn").onclick = () => {
         toggleScreen(screens.overview.elm);
     }
@@ -85,15 +89,8 @@ window.addEventListener("load", () => {
         toggleScreen(screens.attack.elm);
     }
     document.getElementById("attack_request_btn").onclick = () => {
-        sendRequest("/battle/init/" + enemy.ID, (test, error) => {
-            if (!error) {
-                battleStats = JSON.parse(test);
-                toggleScreen(screens.battle.elm);
-
-            }
+        api.getBattleInit(() => {
+            toggleScreen(screens.battle.elm);
         });
     }
-    attack_hexstat = new hexstat("canvas_attack");
-    attack_hexstat.drawLines();
-    attack_hexstat.drawOutline();
 });

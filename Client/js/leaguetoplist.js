@@ -1,11 +1,12 @@
 ﻿
 var top_hex = {};
 
-screens.leaguetoplist.elm.addEventListener("toplist", () => { // Is this the right event?
+api.elm.addEventListener("leaguetop", () => { // Is this the right event?
     var tbl = screens.leaguetoplist.elm.getElementsByClassName("stats-table")[0];
     var bdy = tbl.getElementsByTagName("tbody")[0];
     var ln = document.getElementById("leaguetoplist_leaguename");
     ln.innerHTML = ln.dataset.leaguename;
+    bdy.innerHTML = "";
 
     var pscore, ind = 1;
 

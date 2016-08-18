@@ -1,19 +1,24 @@
-﻿var battle;
+﻿var battle,
+    charWidth = 120,
+    charHeight = 150;
+
 screens.battle.elm.addEventListener("toggled", () => {
     battle.startLoop();
 });
+
 screens.battle.elm.addEventListener("detoggled", () => {
     battle.resetAnimation();
 });
-screens.battle.elm.addEventListener("dead", () => {
+
+api.elm.addEventListener("dead", () => {
     if (battle.enemy.currentHP < battle.player.currentHP) swal("Toppen", "Du vann!", "success")
     else swal("Oops...", "Du förlorade!", "error");
 
     toggleScreen(screens.attack.elm);
     battle.stopLoop();
 });
+
 function attackAny(attackID, target) {
-    console.log("attcking any" + attackID);
     switch (attackID) {
         case 1:
             createFireWork(target, false, 15);
@@ -29,8 +34,7 @@ function attackAny(attackID, target) {
             break;
     }
 }
-var charWidth = 120,
-    charHeight = 150;
+
 function createFireWork(target, fastAttack, width) { // target == true => attacking enemy, hue == true => fastattack
     if (fastAttack) {
         battle.hue = 50;
@@ -55,22 +59,19 @@ function createBattleParticles(target) { //target == true => player buff;
     }
 }
 
-screens.attack.elm.addEventListener("enemy", () => {
-    if (enemy.userStats.life <= 0) var life = 0;
-    else var life = enemy.userStats.life;
-    battle.enemy.hp = battle.enemy.currentHP = life;
-
+api.elm.addEventListener("enemy", () => {
+    enemy.userStats.life = Math.max(enemy.userStats.life, 0);
+    battle.enemy.hp = battle.enemy.currentHP = enemy.userStats.life;
 });
-screens.overview.elm.addEventListener("player", () => {
+
+api.elm.addEventListener("player", () => {
     if (player == null || player.userStats == null) return;
 
-    if (player.userStats.life <= 0) var life = 0;
-    else var life = player.userStats.life;
-    battle.player.hp = battle.player.currentHP = life;
-
+    player.userStats.life = Math.max(player.userStats.life, 0);
+    battle.player.hp = battle.player.currentHP = player.userStats.life;
 });
+
 function attackCallback(data, attackID) {
-    console.log("setting hp", data);
 
     if (data.playerHP <= 0) battle.player.currentHP = 0;
     else battle.player.currentHP = data.playerHP;
@@ -79,16 +80,12 @@ function attackCallback(data, attackID) {
     else battle.enemy.currentHP = data.enemyHP;
 
 
-    if (!data.playerFirstRound && data.playerHP < 1) {
-        console.log("enemy attacks first and player dies");
+    if (!data.playerFirstRound && data.playerHP < 1) 
         attackAny(attackID, false);
-    }
-    else if (data.playerFirstRound && data.enemyHP < 1) {
-        console.log("player attacks first and enemy dies");
+    else if (data.playerFirstRound && data.enemyHP < 1) 
         attackAny(attackID, true);
-    }
-
     else {
+
         if (data.playerFirstRound) {
             attackAny(attackID, true);
             setTimeout(function (attackID) {
@@ -101,20 +98,8 @@ function attackCallback(data, attackID) {
                 attackAny(attackID, true);
             }, 1000, attackID);
         }
-    }
 
-    //if (data.playerFirstRound) {
-    //    attackAny(attackID, true);
-    //    setTimeout(function (attackID, hp) {
-    //        if (hp <= 0) attackAny(attackID, false);
-    //    }, 1000, data.enemyAttackType, data.enemyHP);
-    //}
-    //else {
-    //    attackAny(data.enemyAttackType, false);
-    //    setTimeout(function (attackID, hp) {
-    //        if (hp <= 0) attackAny(attackID, true);
-    //    }, 1000, attackID, data.playerHP);
-    //}
+    }
 }
 
 window.addEventListener("load", () => {
