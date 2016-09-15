@@ -1,6 +1,7 @@
 ﻿using System;
 using Nancy.Hosting.Self;
 using Server.Services;
+using System.Threading.Tasks;
 
 namespace Server
 {
@@ -55,9 +56,13 @@ namespace Server
                     TimerService.InitTimers();
 
                     Console.WriteLine("Done.");
-                    while (true) System.Threading.Thread.Sleep(10);
+                    while (true) MainAsync().Wait();
                 }
             }
+        }
+        static async Task MainAsync()
+        {
+           await Task.Delay(10);
         }
     }
 }
