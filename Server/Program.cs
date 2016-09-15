@@ -56,13 +56,13 @@ namespace Server
                     TimerService.InitTimers();
 
                     Console.WriteLine("Done.");
-                    while (true) MainAsync().Wait();
+                    while (true) AsyncSleep(10).Wait();
                 }
             }
         }
-        static async Task MainAsync()
+        static async Task AsyncSleep(int milliseconds)
         {
-           await Task.Delay(10);
+           await Task.Delay(milliseconds);
         }
     }
 }
