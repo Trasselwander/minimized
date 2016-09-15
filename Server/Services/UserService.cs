@@ -132,13 +132,13 @@ namespace Server.Services
         public void LeaveLeague(User u)
             => SQLite.GetConnection().QueryMultiple(@"UPDATE users SET LID=null WHERE users.ID = @uid;", new { uid = u.ID, u.LID });
 
-        public List<League> GetLeagues()
+        public List<League> GetLeagues(int offset = 0)
         {
             List<League> leauge = SQLite.GetConnection().Query<League>("SELECT * FROM leagues").ToList();
 
             foreach (var l in leauge)
             {
-                var d = SQLite.GetConnection().Query<League>(@"SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND userstats.LID=@lid AND users.LID=@lid", new { lid = l.ID }).FirstOrDefault();
+                var d = SQLite.GetConnection().Query<League>(@"SELECT * FROM userstats INNER JOIN users ON userstats.UID=users.ID AND userstats.LID=@lid AND users.LID=@lid LIMIT 20 OFFSET @offset", new { lid = l.ID, offset = offset }).FirstOrDefault();
 
                 var data = SQLite.GetConnection().Query<League>(@"SELECT 
                                                                     SUM(userstats.life) AS life, 
