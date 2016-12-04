@@ -23,9 +23,8 @@ namespace Server.Services
             {
                 new KeyValuePair<long, bool>(5 * 60 * 1000, true),
                 new KeyValuePair<long, bool>(30 * 60 * 1000, true),
-                new KeyValuePair<long, bool>(6 * 60 * 60 * 1000 , false),
+                new KeyValuePair<long, bool>(6 * 60 * 60 * 1000, false),
             };
-
 
             for (int i = 0; i < timers.Length; i++)
             {
@@ -49,26 +48,21 @@ namespace Server.Services
             return ms - (new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds % ms);
         }
 
-        public void Init(double mss, bool skipfirst)
+        public void Init(double mss, bool skipfirst = false)
         {
             ms = mss;
             currentLID = -1;
 
             if (!skipfirst)
-            {
                 restartLeaugeAndAward();
-            }
             else
-            {
-                timer = new Timer(); // to reset timer.Elapsed
-                timer.Elapsed += (sender, e) => restartLeaugeAndAward();
                 startTimer();
-            }
         }
 
         private void startTimer()
         {
-            timer.Stop();
+            timer = new Timer(); // to reset timer.Elapsed
+            timer.Elapsed += (sender, e) => restartLeaugeAndAward();
             timer.Interval = getRemainingMs(ms);
             timer.Start();
         }
@@ -100,7 +94,6 @@ namespace Server.Services
 
             currentLID = Users.GetLeague(name, start, end).ID;
         }
-
 
         public void Stop()
         {
