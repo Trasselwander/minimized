@@ -1,5 +1,5 @@
 ﻿
-if (location.hostname == "localhost") {
+if (location.hostname == "localhost" || location.hostname == "") {
      host = "http://localhost:1235";
 } else if (location.hostname.startsWith("192.168", 0)) {
      host = "http://192.168.1.150:1336";
