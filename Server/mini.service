@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/mono /home/pi/min2/Server.exe
-WorkingDirectory=/home/pi/min2
+ExecStart=/usr/bin/mono /home/pi/mini/Server.exe
+WorkingDirectory=/home/pi/mini
 StandardOutput=syslog
 Restart=always
 RestartSec=5s
